@@ -1,5 +1,7 @@
 # System Files #
 *.DS_Store
 # Komodo Files #
-.komodoprojects
+*.komodoprojects
 documents/*
+slideshow/*
+albums/*
