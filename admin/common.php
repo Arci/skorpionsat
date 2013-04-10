@@ -73,7 +73,8 @@ function getHeader($pageName, $goodLogon){
 			<?php if($goodLogon == true){ ?>
                         <ul>
 				<li <?php if($pageName == "news") echo "class=\"active\""; ?>><a href='news.php'><span class="shadow">Gestisci notizie</span></a></li>
-				<li <?php if($pageName == "album") echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='album.php'><span class="shadow">Gestisci album e foto</span></a></li>
+				<li <?php if($pageName == "album") echo "class=\"active\""; ?>><a href='album.php'><span class="shadow">Gestisci album e foto</span></a></li>
+				<li <?php if($pageName == "slideshow") echo "class=\"active last\""; else echo "class=\"last\""; ?>><a href='slideshow.php'><span class="shadow">Gestisci slideshow</span></a></li>
 			</ul>
 			<?php } ?>
                     </div>
@@ -85,8 +86,9 @@ function getHeader($pageName, $goodLogon){
 
 function getFooter(){
 	?>
+	
 	<div id="footer">
-		<p>2013. skorpionsat.com. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
+		<p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
 		Designed By <a href="#">Alice Vittoria Cappelletti</a>
 		<div id="admin"><p><a href="../index.php">Torna al sito</a></p></div>
 	</div></div>
