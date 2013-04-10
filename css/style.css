@@ -106,7 +106,7 @@ body{
 
 /*----- PAGE CONTENT -----*/
 #content{
-	padding: 3.5% 2.5% 2.5% 2.5%;
+	padding: 3em 2.5% 3em 2.5%;
 	background-image: url(../img/background_05.png);
 	border-radius: 1em;
 	margin-bottom: 1%;
@@ -121,15 +121,15 @@ body{
 }
 
 #main-container{
+	
 }
 
 .slide{
-	display: none;
+	vidibility: hidden;
 }
 
 .slide img{
 	width: 100%;
-	height: 55%;
 }
 
 .current {
@@ -194,6 +194,10 @@ body{
 	margin-left: 1em;
 }
 
+#download div a span:hover{
+	border-bottom: 0.15em solid #303030;
+}
+
 #download div .first{
 	margin-top: 1em;
 }
@@ -224,20 +228,60 @@ body{
 
 #contact div{
 	display: block;
-	cursor: pointer;
 	margin-left: 1em;
 	margin-bottom: 0.3em;
 	letter-spacing: 0.1em;
 }
 
+#contact div a:hover{
+	border-bottom: 0.15em solid #303030;
+}
+
 #contact img{
-	margin-right: 1em;
+	margin-right: 0.5em;
 	vertical-align: middle;
+	margin-bottom: 0.5em;
 }
 
 .phone-thumbnail{
 	width: 1.2em;
 	height: 1.2em;
+}
+
+/*----- GALLERY -----*/
+div#main-wrapper{
+}
+
+div#wrapper{
+	
+}
+
+.album-image img{
+	width: 100%;
+}
+
+.description{
+	
+}
+
+.button-left{
+	
+}
+
+.album-title{
+	
+}
+
+.album-date{
+	
+}
+
+.album-description{
+	
+}
+
+.button-right{
+	
 }
 
 /*----- FOOTER -----*/

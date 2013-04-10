@@ -29,7 +29,7 @@ function buildContent(){
                 <div><a href="mailto:presidente@skorpionsat.com">Presidente</a></div>
                 <div><a href="mailto:segretario@skorpionsat.com">Segretario</a></div>
                 <div><a href="mailto:noleggi@skorpionsat.com">Responsabile noleggi</a></div>
-                <div><img src="img/phone.png" class="phone-thumbnail" />3287526556</div>
+                <div><img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />3287526556</div> <!-- TODO vero numero -->
             </div> 
         </div>
         <div id="play-right" class="right">
