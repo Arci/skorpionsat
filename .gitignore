@@ -2,6 +2,7 @@
 *.DS_Store
 # Komodo Files #
 *.komodoproject
+# Projects Directories #
 documents/*
 slideshow/*
 albums/*

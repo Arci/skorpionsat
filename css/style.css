@@ -229,7 +229,7 @@ body{
 #contact div{
 	display: block;
 	margin-left: 1em;
-	margin-bottom: 0.3em;
+	margin-bottom: 0.33em;
 	letter-spacing: 0.1em;
 }
 
@@ -250,16 +250,21 @@ body{
 
 /*----- GALLERY -----*/
 div#main-wrapper{
+	
 }
 
-div.album-preview{
+div#album-preview{
+	overflow: hidden;
+	position: relative;
+        background-color: transparent;
+}
+
+div#album-image{
 	position: relative;
 }
 
-.album-image{
-}
-
-.album-image img{
+.album-slider{
+	position: absolute;
 	width: 100%;
 	height: 50em;
 }
@@ -268,17 +273,25 @@ div.album-preview{
 	position: absolute;
 	top: 42em;
 	z-index: 1;
+	height: 8em;
 	color: #909090;
-	background-color: #303030;
+	/*background-color: #303030;*/
+	background-color: #FFFFFF;
 	opacity: 0.85;
 	width: 100%;
 }
 
 .info-container{
-	margin-top: 0.2em;
-	padding-left: 3%;
+	height: 8em;
+	position: relative;
+	overflow: hidden;
+	width: 90%;
+}
+
+.info{
+	position: absolute;
+	padding: 0.2em 0 0 3%;
 	font-size: 1.4em;
-	width: 86%;
 	line-height: 1.4em;
 }
 
@@ -286,9 +299,16 @@ div.album-preview{
 	width: 5%;
 }
 
-.button-left, .button-right{
-	height: 8em;
+#button-left{
+	height: 6em;
 	cursor: pointer;
+	padding: 1em 0 1em 1em;
+}
+
+#button-right{
+	height: 6em;
+	cursor: pointer; 
+	padding: 1em 1em 1em 0;
 }
 
 .album-date{
@@ -308,6 +328,10 @@ div.album-preview{
 	font-size: 1.07em;
 	font-style: italic;
 	margin-top: 0.6em;
+}
+
+.title-link:hover{
+	text-decoration: underline;
 }
 
 /*----- FOOTER -----*/
