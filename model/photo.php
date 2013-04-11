@@ -6,10 +6,11 @@ class Photo {
     private $name;
     private $description;
     private $rating;
+    private $isAlbumCover;
     
     protected $max_file_name_lenght = 20;
     
-    public function __construct($album = null, $name = null, $description = "", $rating = null){
+    public function __construct($album = null, $name = null, $description = "", $rating = null, $isAlbumCover = false){
         $this->setName($name);
         $this->setAlbumID($album);
         $this->setDescription($description);
@@ -18,6 +19,12 @@ class Photo {
         }else{
             $this->setRating($rating);
         }
+        if($isAlbumCover == "t"){
+            $this->setIfIsAlbumCover(true);
+        }else{
+            $this->setIfIsAlbumCover(false);
+        }
+        
     }
 
     public function getID(){
@@ -38,6 +45,10 @@ class Photo {
         
     public function getRating(){
         return $this->rating;
+    }
+    
+    public function isAlbumCover(){
+        return $this->isAlbumCover;
     }
     
     public function setID($id){
@@ -63,6 +74,11 @@ class Photo {
     
     public function setRating($rating){
         $this->rating = $rating;
+        return $this;
+    }
+    
+    public function setIfIsAlbumCover($isAlbumCover){
+        $this->isAlbumCover = $isAlbumCover;
         return $this;
     }
     

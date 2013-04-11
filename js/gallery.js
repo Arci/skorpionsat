@@ -30,6 +30,10 @@ $(document).ready(function()
     $('#album-image').css("height", height_box);
     $("#button-left").css({"opacity": "0" });
     $("#button-left").css({"cursor": "default" });
+    if(numberOfImages < 2){
+          $("#button-right").css({"opacity": "0" });
+          $("#button-right").css({"cursor": "default" });      
+    }
     
     //TODO rimuovere stampe su console
     console.log("@load - numberOfImages: " + numberOfImages + ", current: " + current);

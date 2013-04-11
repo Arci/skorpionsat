@@ -7,17 +7,19 @@ require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/database.php");
 
-buildTopPage();
+buildTopPage("");
 
 buildContent();
 
 buildBottomPage();
 
 function buildContent(){
-    echo "<table style='width: 900em; border: 1em solid #999; margin: 0 auto; border-collapse: collapse;'><tr valign='top'>";
+    echo "<table
+        style='width: 100%; font-size: 1.1em; background-image: url(img/background_05.png); margin: 0 auto; line-height: 3em;
+        '><tr valign='top'>";
     
     //creo il database (lo droppo se esiste)
-    echo "<td style='border: 1em solid #999; width: 230em; padding: 10em;'>";
+    echo "<td style='border-right: 0.5em solid #000000; width: 230em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Installazione Database</u></b></span></p>";
     DbConnection::getConnection();
     if(mysql_select_db(Database::DB_NAME)){
@@ -32,7 +34,7 @@ function buildContent(){
     echo "</td>";
     
     //elimino precedenti upload
-    echo "<td style='border: 1em solid #999; width: 280em; padding: 10em;'>";
+    echo "<td style='border-right: 0.5em solid #000000; width: 280em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Gestione File System</u></b></span></p>";
     if(!file_exists("albums")){
         echo "<p>Trying to create albums folder</p>";
@@ -50,7 +52,7 @@ function buildContent(){
     echo "</td>";
     
     //creo le tabelle
-    echo "<td style='border: 1em solid #999; width: 220em; padding: 10em;'>";
+    echo "<td style='width: 220em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Inserimento Tabelle </b></u></span></p>";
     echo "<p>Trying to insert Tables into database</p>";
     $createTable = Database::getStructure();

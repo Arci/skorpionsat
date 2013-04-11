@@ -86,7 +86,12 @@ function create(){
                 $album = $albumController->loadByName($album->getName());
                 if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
                     for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-                        $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i]);
+                        if($i==0){
+                            //first image is defalt album cover
+                            $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i], "", 0, true);
+                        }else{
+                            $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i]);
+                        }
                         $photoController = new PhotoController();
                         $photoController->upload($photo, $_FILES["fileselect"]["tmp_name"][$i]);
                     }
@@ -178,12 +183,12 @@ function edit(){
                 foreach($_POST["photo"] as $selected){
                     try{
                         $photoController->delete($photoController->loadByID($selected));
+                        showOptions();
+                        echo "<p>Le foto selezionate sono state eliminate</p>";
                     }catch (Exception $e){
                         echo "<p class=\"error\">".$e->getMessage()."</p>";
                     }
                 }
-                showOptions();
-                echo "<p>Le foto selezionate sono state eliminate</p>";
             }else{
                 $prev = array("name" => $_POST["name"],
                                 "date" => $_POST["date"],
@@ -195,11 +200,37 @@ function edit(){
             $albumController = new AlbumController();
             try{
                 $albumController->delete($albumController->loadByID($albumID));
+                showOptions();
+                echo "<p>L'album &egrave stato eliminato</p>";
             }catch (Exception $e){
                 echo "<p class=\"error\">".$e->getMessage()."</p>";
             }
-            showOptions();
-            echo "<p>L'album &egrave stato eliminato</p>";
+        }else if($_POST["action"] == "Imposta foto selezionata come copertina"){
+            $error = array();
+            if(!array_key_exists("photo", $_POST)){
+                $error[] = "devi selezionare almeno una foto!";
+            }
+            if(count($error) == 0){
+                $photoController = new PhotoController();
+                $selected = $_POST["photo"][0];
+                try{
+                    $photo = $photoController->loadByID($selected);
+                    $exCover = $photoController->loadAlbumCover($photo->getAlbumID());
+                    $exCover->setIfIsAlbumCover(false);
+                    $photoController->update($exCover);
+                    $photo->setIfIsAlbumCover(true);
+                    $photoController->update($photo);
+                    showOptions();
+                    echo "<p>La foto selezionata &egrave stata impostata come copertina</p>";
+                }catch (Exception $e){
+                    echo "<p class=\"error\">".$e->getMessage()."</p>";
+                }
+            }else{
+                $prev = array("name" => $_POST["name"],
+                                "date" => $_POST["date"],
+                                "description" => $_POST["description"]);
+                showEditForm(false,$error, $_POST["album"], $prev);
+            }
         }
     }else{
         if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
@@ -249,7 +280,11 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         echo "<p><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"".reverseDate($album->getDate())."\"/></p>";
         $count = 1;
         foreach($photoList as $photo){
-            echo "<div class=\"album-div left\">";
+            if($photo->isAlbumCover()){
+                echo "<div class=\"album-div left album-cover\">";
+            }else{
+                echo "<div class=\"album-div left\">";
+            }
             if($prev != null && array_key_exists("selected", $prev) && in_array($photo->getID(), $prev["selected"])){
                 echo "<input class=\"album-checkbox\" type=\"checkbox\" name=\"photo[]\" value=\"".$photo->getID()."\" checked =\"checked\"/>";
             }else{
@@ -269,6 +304,7 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         }
         echo "<p><input type=\"submit\" name=\"action\" value=\"Salva\" />";
         echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" />";
+        echo " <input type=\"submit\" name=\"action\"value=\"Imposta foto selezionata come copertina\" />";
         echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" /></p>";
     }
     echo "</form>";
@@ -367,7 +403,11 @@ function showAddForm($select = true, $error = null, $albumID = null){
         echo "<p>Foto gi&agrave presenti nell'album:</p>";
         $count = 1;
         foreach($photoList as $photo){
-            echo "<div class=\"album-div left\">";
+            if($photo->isAlbumCover()){
+                echo "<div class=\"album-div left album-cover\">";
+            }else{
+                echo "<div class=\"album-div left\">";
+            }
             echo "<img class=\"thumbnail\"src=\"".$photoController->buildPath($photo)."\"/>";
             echo "<p>".$photo->getDescription()."</p>";
             echo "</div>";

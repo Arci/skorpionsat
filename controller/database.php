@@ -41,6 +41,7 @@ class Database{
     const PHOTO_NAME = "name";
     const PHOTO_RATING = "rating";
     const PHOTO_DESCRIPTION = "description";
+    const IS_ALBUM_COVER = "is_album_cover";
     
     static function getStructure(){
         $q = array();
@@ -65,6 +66,7 @@ class Database{
                 `" . self::PHOTO_NAME . "` varchar(255) NOT NULL,
                 `" . self::PHOTO_RATING . "` int,
                 `" . self::PHOTO_DESCRIPTION . "` varchar(100),
+		`" . self::IS_ALBUM_COVER . "` varchar(1),
                 PRIMARY KEY (`" . self::PHOTO_ID . "`),
 		FOREIGN KEY (`" . self::PHOTO_ALBUM . "`) REFERENCES " . self::TABLE_ALBUM . "(`" . self::ALBUM_ID . "`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1;";        

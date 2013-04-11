@@ -20,7 +20,7 @@ function buildContent(){
         <?php
         $albumController = new AlbumController();
         $albumList = $albumController->loadAll();
-        if(count($albumList) < 0){
+        if(count($albumList) == 0){
             echo "<p>Non ci sono album!</p>";
         }else{
             ?>
@@ -30,8 +30,7 @@ function buildContent(){
                         <?php
                         foreach($albumList as $album){
                             $photoController = new PhotoController();
-                            $photo = $photoController->loadByAlbum($album->getID(), 1);
-                            $photo= $photo[0];
+                            $photo = $photoController->loadAlbumCover($album->getID());
                             echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"#\"><img src=\"site/".$photoController->buildPath($photo)."\" /></a></div>";
                         }
                         ?>

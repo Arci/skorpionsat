@@ -150,6 +150,10 @@ body{
     border: 0.2em solid #303030;
 }
 
+#content .album-cover{
+    border: 0.2em solid #C00000 !important;
+}
+
 #content .album-textarea{
     width: 25.5em;
     height: 5em;
