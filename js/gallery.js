@@ -9,7 +9,6 @@ $(document).ready(function()
     
     $('.album-slider').each(function(){
         $(this).css("left",(width_box*numberOfImages));
-        
         numberOfImages++;
     });
     
@@ -18,6 +17,11 @@ $(document).ready(function()
         if($(this)[0].id != 1){
             $(this).css({"display" : "none"});
         }
+    });
+    
+    $("#album-image img").load(function(){
+        var offset_y = ($(this).height()/10 - height_box/10)/2;
+        $(this).css({"position" : "relative", "top" : -offset_y+"em"});
     });
     
     $('#album-preview').css("width", width_box);

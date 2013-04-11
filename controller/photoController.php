@@ -82,8 +82,12 @@ class PhotoController implements Controller{
         return $photoList;
     }
     
-    public function loadByAlbum($albumID){
-        $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID ORDER BY '".Database::PHOTO_RATING."' ASC";
+    public function loadByAlbum($albumID, $limit = 0){
+        if($limit > 0 ){
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID ORDER BY '".Database::PHOTO_RATING."' ASC LIMIT $limit";
+        }else{
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID ORDER BY '".Database::PHOTO_RATING."' ASC";
+        }
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(!$result){

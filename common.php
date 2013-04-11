@@ -48,6 +48,7 @@ function getHead($pageName){
 		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="<?php echo JS_PATH."slideshow.js" ?> "></script>
+		<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script>
 	</head>
 	<?php
 }
