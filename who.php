@@ -17,12 +17,30 @@ function buildContent(){
     <div id="content">
         <div id="mask">
             <div id="main-container">
-                <!-- TODO riempire dinamicamente leggendo la cartella -->
-                <div class="slide current"><img src="<?php echo SLIDESHOW_PATH . "1.jpg" ?>" /></div>
-                <div class="slide"><img src="<?php echo SLIDESHOW_PATH . "2.jpg" ?>" /></div>
-                <div class="slide"><img src="<?php echo SLIDESHOW_PATH . "3.jpg" ?>" /></div>
-                <div class="slide"><img src="<?php echo SLIDESHOW_PATH . "4.jpg" ?>" /></div>
-                <div class="slide"><img src="<?php echo SLIDESHOW_PATH . "5.jpg" ?>" /></div>
+                <?php
+                $arrayfiles = array();
+                $extensions = array('.jpg','.jpeg','.png');
+                $dirname = SLIDESHOW_PATH;
+                if(file_exists($dirname)){
+                        $handle = opendir($dirname);
+                        while (false !== ($file = readdir($handle))) { 
+                                if(is_file($dirname.$file)){
+                                        $ext = strtolower(substr($file, strrpos($file, "."), strlen($file)-strrpos($file, ".")));
+                                        if(in_array($ext,$extensions)){
+                                                array_push($arrayfiles,$file);
+                                        }
+                                }
+                        }
+                        $handle = closedir($handle);
+                }
+                for($i=0; $i< count($arrayfiles); $i++){
+                    if($i==0){
+                        ?><div class="slide current"><img src="<?php echo SLIDESHOW_PATH .$arrayfiles[$i] ?>" /></div><?php
+                    }else{
+                        ?><div class="slide"><img src="<?php echo SLIDESHOW_PATH .$arrayfiles[$i] ?>" /></div><?php
+                    }
+                }
+                ?>
             </div>
         </div>
         <div id="upper-shadow"><img src="<?php echo IMAGES_PATH . "upper_shadow.png" ?>" /></div>

@@ -4,3 +4,4 @@
 define("IMAGES_PATH", "img/");
 define("CSS_PATH", "css/");
 define("JS_PATH", "js/");
+define("SLIDESHOW_PATH", "../slideshow/");
