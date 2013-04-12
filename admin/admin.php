@@ -21,13 +21,13 @@ define('ROOT_PATH', "../forum");
 //$user->setup();
 //$loggedGood = false;
 //if ($user->data['user_id'] == ANONYMOUS ) {
-//    $message = '<p class="error">Effettua il login su <a href="../forum">forum</a> per usufruire di questo servizio!</p>';
+//    $message = '<p class="error">Effettua il login su <a class="back-to" href="../forum">forum</a> per usufruire di questo servizio!</p>';
 //} elseif($user->data['group_id'] == 9 /*Direttivo*/ || $user->data['group_id'] == 5 /*Admin*/) {
-//    $message =  '<p>Sei loggato come, ' . $user->data['username_clean'] ."</p>";
+//    $message =  '<p>Sei loggato come, <span class=\"admin-username\">' . $user->data['username_clean'] ."</span</p>";
 //    $_SESSION["username"] = $user->data['username_clean'];
     $loggedGood = true;
 //} else {
-//    $message = "<p>Ciao ".$user->data['username_clean'].", non hai i permessi, torna alla <a href=\"../index.php\">home</a></p>";
+//    $message = "<p>Ciao <span class=\"admin-username\">".$user->data['username_clean']."</span>, non hai i permessi, torna alla <a class="\back-to\" href=\"../index.php\">home</a></p>";
 //}
 
 buildTopPage("", $loggedGood);

@@ -44,10 +44,9 @@ function buildContent(){
 function showOptions(){
     ?>
     <ul>
-        <div class="left"><li><a href="album.php?mode=create">Crea nuovo album</a></li></div>
-        <div class="left"><li><a href="album.php?mode=edit">Modifica un album esistente</a></li></div>
-        <div class="left"><li><a href="album.php?mode=add">Aggiungi foto ad un album esistente</a></li></div>
-        <div class="clear"></div>
+        <div><li><a href="album.php?mode=create"><img src="img/create.png" class="small-thumbnail" /><span>Crea nuovo album</span></a></li></div>
+        <div><li><a href="album.php?mode=edit"><img src="img/edit.png" class="small-thumbnail" /><span>Modifica un album esistente</span></a></li></div>
+        <div><li><a href="album.php?mode=add"><img src="img/add.png" class="small-thumbnail" /><span>Aggiungi foto ad un album esistente</span></a></li></div>
     </ul>
     <?php
 }
@@ -110,6 +109,10 @@ function create(){
 }
 
 function showCreateForm($error = null, $prev = null){
+    echo "<div class=\"left\">
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">";
     echo "<form action=\"album.php?mode=create\" method=\"POST\" enctype=\"multipart/form-data\">";
     if($error){
         echo "<p class=\"error\">";
@@ -118,15 +121,17 @@ function showCreateForm($error = null, $prev = null){
         }
         echo "</p>";
     }
-    $old_name = $prev["name"];
-    echo "<p><label for=\"name\">Nome: </label><input type=\"text\" id=\"name\" name=\"name\" value=\"$old_name\"/></p>";
-    $old_description = $prev["description"];
-    echo "<p><label for=\"description\">Descrizione: </label><textarea id=\"description\" name=\"description\">$old_description</textarea></p>";
     $old_date = $prev["date"];
-    echo "<p><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"$old_date\"/></p>";
-    echo "<p><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
+    echo "<p class=\"date\"><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"$old_date\"/></p>";
+    $old_name = $prev["name"];
+    echo "<p class=\"title\"><label for=\"name\">Nome: </label><input type=\"text\" id=\"name\" name=\"name\" value=\"$old_name\"/></p>";
+    $old_description = $prev["description"];
+    echo "<p class=\"description-label\"><label for=\"description\">Descrizione: </label></p>
+            <p class=\"description\"><textarea id=\"description\" name=\"description\">$old_description</textarea></p>";
+    echo "<p class=\"file-input\"><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
     echo "<p><input type=\"submit\" value=\"Crea\" /></p>";
-    echo "</form>";
+    echo "</form></div>
+            <div class=\"clear\"></div>";
 }
 
 function edit(){
@@ -158,7 +163,7 @@ function edit(){
                     }
                 }
                 showOptions();
-                echo "<p>L'album &egrave stato registrato</p>";
+                echo "<p class=\"main-notice\">L'album &egrave stato registrato</p>";
             }else{
                 $selectedPhoto = array();
                 if(array_key_exists("photo", $_POST)){
@@ -184,7 +189,7 @@ function edit(){
                     try{
                         $photoController->delete($photoController->loadByID($selected));
                         showOptions();
-                        echo "<p>Le foto selezionate sono state eliminate</p>";
+                        echo "<p class=\"main-notice\">Le foto selezionate sono state eliminate</p>";
                     }catch (Exception $e){
                         echo "<p class=\"error\">".$e->getMessage()."</p>";
                     }
@@ -201,7 +206,7 @@ function edit(){
             try{
                 $albumController->delete($albumController->loadByID($albumID));
                 showOptions();
-                echo "<p>L'album &egrave stato eliminato</p>";
+                echo "<p class=\"main-notice\">L'album &egrave stato eliminato</p>";
             }catch (Exception $e){
                 echo "<p class=\"error\">".$e->getMessage()."</p>";
             }
@@ -221,7 +226,7 @@ function edit(){
                     $photo->setIfIsAlbumCover(true);
                     $photoController->update($photo);
                     showOptions();
-                    echo "<p>La foto selezionata &egrave stata impostata come copertina</p>";
+                    echo "<p class=\"main-notice\">La foto selezionata &egrave stata impostata come copertina</p>";
                 }catch (Exception $e){
                     echo "<p class=\"error\">".$e->getMessage()."</p>";
                 }
@@ -247,6 +252,13 @@ function edit(){
 }
 
 function showEditForm($select = true, $error = null, $albumID = null, $prev = null){
+    echo "<div class=\"left\">
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">";
+    if($select){
+        echo "<p class=\"list-title\">Seleziona un album:</p>";
+    }
     echo "<form action=\"album.php?mode=edit\" method=\"POST\">";
     if($error){
         echo "<p class=\"error\">";
@@ -260,7 +272,7 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         $albumList = $albumController->loadAll();
         if(count($albumList) > 0){
             foreach($albumList as $album){
-                echo"<p><input type=\"radio\" id=\"album".$album->getID()."\" name=\"album\" value=\"".$album->getID()."\" />
+                echo"<p class=\"form-list\"><input type=\"radio\" id=\"album".$album->getID()."\" name=\"album\" value=\"".$album->getID()."\" />
                         <label for=\"album".$album->getID()."\">".$album->getName()."</label></p>";
             }
             echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
@@ -275,9 +287,10 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         $photoList = $photoController->loadByAlbum($album->getID());
         
         echo "<p><input type=\"hidden\" name=\"album\" value=\"".$album->getID()."\" /></p>";
-        echo "<p><label for=\"name\">Nome: </label><input type=\"text\" id=\"name\" name=\"name\" value=\"".$album->getName()."\"/></p>";
-        echo "<p><label for=\"description\">Descrizione: </label><textarea id=\"description\" name=\"description\">".$album->getDescription()."</textarea></p>";
-        echo "<p><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"".reverseDate($album->getDate())."\"/></p>";
+        echo "<p class=\"date\"><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"".reverseDate($album->getDate())."\"/></p>";
+        echo "<p class=\"title\"><label for=\"name\">Nome: </label><input type=\"text\" id=\"name\" name=\"name\" value=\"".$album->getName()."\"/></p>";
+        echo "<p class=\"description-label\"><label for=\"description\">Descrizione: </label></p>
+                <p class=\"description\"><textarea id=\"description\" name=\"description\">".$album->getDescription()."</textarea></p>";
         $count = 1;
         foreach($photoList as $photo){
             if($photo->isAlbumCover()){
@@ -302,12 +315,13 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         if($count > 0){
             echo "<p class=\"clear\"></p>";
         }
-        echo "<p><input type=\"submit\" name=\"action\" value=\"Salva\" />";
-        echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" />";
+        echo "<p><input type=\"submit\" name=\"action\" value=\"Salva Modifiche\" />";
         echo " <input type=\"submit\" name=\"action\"value=\"Imposta foto selezionata come copertina\" />";
-        echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" /></p>";
+        echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" onClick=\"alert('Stai per uscire')\" />";
+        echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" onClick=\"alert('Stai per uscire')\"/></p>";
     }
-    echo "</form>";
+    echo "</form></div>
+            <div class=\"clear\"></div>";
 }
 
 function add(){
@@ -370,6 +384,13 @@ function add(){
 }
 
 function showAddForm($select = true, $error = null, $albumID = null){
+    echo "<div class=\"back-menu-container left\">
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">";
+    if($select){
+        echo"<p class=\"list-title\">Seleziona un album:</p>";
+    }
     echo "<form action=\"album.php?mode=add\" method=\"POST\" enctype=\"multipart/form-data\">";
     if($error){
         echo "<p class=\"error\">";
@@ -383,7 +404,7 @@ function showAddForm($select = true, $error = null, $albumID = null){
         $albumList = $albumController->loadAll();
         if(count($albumList) > 0){
             foreach($albumList as $album){
-                echo"<p><input type=\"radio\" id=\"album".$album->getID()."\" name=\"album\" value=\"".$album->getID()."\" />
+                echo"<p class=\"form-list\"><input type=\"radio\" id=\"album".$album->getID()."\" name=\"album\" value=\"".$album->getID()."\" />
                         <label for=\"album".$album->getID()."\">".$album->getName()."</label></p>";
             }
             echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
@@ -397,10 +418,11 @@ function showAddForm($select = true, $error = null, $albumID = null){
         $album = $albumController->loadByID($albumID);
         $photoList = $photoController->loadByAlbum($album->getID());
         
-        echo "<p>Titolo: ".$album->getName()."</p>";
-        echo "<p>Descrizione: ".$album->getDescription()."</p>";
-        echo "<p>Data: ".reverseDate($album->getDate())."</p>";
-        echo "<p>Foto gi&agrave presenti nell'album:</p>";
+        echo "<p class=\"date\">Data: <span>".reverseDate($album->getDate())."</span></p>";
+        echo "<p class=\"title\">Titolo: <span>".$album->getName()."</span></p>";
+        echo "<p class=\"description-label\">Descrizione:</p>";
+        echo "<p class=\"description-plain\">".$album->getDescription()."</p>";
+        echo "<p class=\"photo-info\">Foto gi&agrave presenti nell'album:</p>";
         $count = 1;
         foreach($photoList as $photo){
             if($photo->isAlbumCover()){
@@ -421,8 +443,9 @@ function showAddForm($select = true, $error = null, $albumID = null){
             echo "<p class=\"clear\"></p>";
         }
         echo "<p><input type=\"hidden\" name=\"album\" value=\"$albumID\" /></p>";
-        echo "<p><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
+        echo "<p class=\"file-input\"><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
         echo "<p><input type=\"submit\" value=\"Aggiungi\" /></p>";
     }
-    echo "</form>";
+    echo "</form></div>
+            <div class=\"clear\"></div>";
 }

@@ -45,10 +45,9 @@ function buildContent(){
 function showOptions(){
     ?>
     <ul>
-        <div class="left"><li><a href="news.php?mode=publish">Pubblica una nuova notizia</a></li></div>
-        <div class="left"><li><a href="news.php?mode=edit">Modifica una notizia esistente</a></li></div>
-        <div class="left"><li><a href="news.php?mode=delete">Elimina una o pi&ugrave notizie esistenti</a></li></div>
-        <div class="clear"></div>
+        <div><li><a href="news.php?mode=publish"><img src="img/create.png" class="small-thumbnail" /><span>Pubblica una nuova notizia</span></a></li></div>
+        <div><li><a href="news.php?mode=edit"><img src="img/edit.png" class="small-thumbnail" /><span>Modifica una notizia esistente</span></a></li></div>
+        <div><li><a href="news.php?mode=delete"><img src="img/delete.png" class="small-thumbnail" /><span>Elimina una o pi&ugrave notizie esistenti</span></a></li></div>
     </ul>
     <?php
 }
@@ -77,7 +76,7 @@ function publish(){
                 echo "<p class=\"error\">".$e->getMessage()."</p>";
             }
             showOptions();
-            echo "<p>La notizia &egrave stata aggiunta</p>";
+            echo "<p class=\"main-notice\">La notizia &egrave stata aggiunta</p>";
         }else{
             $prev = array("title" => $_POST["title"],
                           "content" => $_POST["content"]);
@@ -87,6 +86,10 @@ function publish(){
 }
 
 function showPublishForm($error = null, $prev = null){
+    echo "<div class=\"left\">
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">";
     echo "<form action=\"news.php?mode=publish\" method=\"POST\">";
     if($error){
         echo "<p class=\"error\">";
@@ -96,14 +99,16 @@ function showPublishForm($error = null, $prev = null){
         echo "</p>";
     }
     $old_title = $prev["title"];
-    echo "<p><label for=\"title\">Titolo: </label><input type=\"text\" id=\"title\" name=\"title\" value=\"$old_title\"/></p>";     
+    echo "<p class=\"title\"><label for=\"title\">Titolo: </label><input type=\"text\" id=\"title\" name=\"title\" value=\"$old_title\"/></p>";     
     $old_content = $prev["content"];
-    echo "<p><textarea id=\"editor\" name=\"content\">$old_content</textarea></p>";
+    echo "<p class=\"editor\"><textarea id=\"editor\" name=\"content\">$old_content</textarea></p>";
     echo "<script type=\"text/javascript\">
             CKEDITOR.replace( 'editor' );
         </script>
         <p><input type=\"submit\" value=\"Pubblica\" /></p>
-        </form>";
+        </form>
+        </div>
+        <div class=\"clear\"></div>";
 }
 
 function edit(){
@@ -126,7 +131,7 @@ function edit(){
                 echo "<p class=\"error\">".$e->getMessage()."</p>";
             }
             showOptions();
-            echo "<p>La notizia &egrave stata modificata</p>";
+            echo "<p class=\"main-notice\">La notizia &egrave stata modificata</p>";
         }else{
             $newsID = $_POST["news"];
             showEditForm(false, $error, $newsID);
@@ -146,6 +151,13 @@ function edit(){
 }
 
 function showEditForm($select = true, $error = null, $newsID = null){
+    echo "<div class=\"left\">
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">";
+    if($select){
+        echo "<p class=\"list-title\">Seleziona una notizia:</p>";
+    }
     echo "<form action=\"news.php?mode=edit\" method=\"POST\">";
     if($error){
         echo "<p class=\"error\">";
@@ -159,7 +171,7 @@ function showEditForm($select = true, $error = null, $newsID = null){
         $newsList = $newsController->loadAll();
         if(count($newsList) > 0){
             foreach($newsList as $news){
-                echo"<p><input type=\"radio\" id=\"news".$news->getID()."\" name=\"news\" value=\"".$news->getID()."\" />
+                echo"<p class=\"form-list\"><input type=\"radio\" id=\"news".$news->getID()."\" name=\"news\" value=\"".$news->getID()."\" />
                         <label for=\"news".$news->getID()."\">".$news->getTitle()."</label></p>";
             }
             echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
@@ -171,8 +183,8 @@ function showEditForm($select = true, $error = null, $newsID = null){
         try{
             $newsController = new NewsController();
             $news = $newsController->loadByID($newsID);
-            echo "<p>Titolo: <input type=\"text\" name=\"title\" value=\"".$news->getTitle()."\"/></p>";     
-            echo "<p><textarea id=\"editor\" name=\"content\">".$news->getContent()."</textarea></p>";
+            echo "<p class=\"title\">Titolo: <input type=\"text\" name=\"title\" value=\"".$news->getTitle()."\"/></p>";     
+            echo "<p class=\"editor\"><textarea id=\"editor\" name=\"content\">".$news->getContent()."</textarea></p>";
             echo "<p><input type=\"hidden\" name=\"news\" value=\"".$news->getID()."\" /></p>";
             echo "<script type=\"text/javascript\">
                     CKEDITOR.replace( 'editor' );
@@ -184,7 +196,8 @@ function showEditForm($select = true, $error = null, $newsID = null){
     } else{
         echo "<p class=\"error\">Something went wrong with the form</p>";
     }
-    echo "</form>";
+    echo "</form></div>
+            <div class=\"clear\"></div>";
 }
 
 function delete(){
@@ -203,13 +216,18 @@ function delete(){
             }
         }
         showOptions();
-        echo "<p>Le notizie selezionate sono state rimosse</p>";
+        echo "<p class=\"main-notice\">Le notizie selezionate sono state rimosse</p>";
     } else {
         showDeleteForm();
     }
 }
 
 function showDeleteForm($error = null){
+    echo "<div class=\"left\">
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"img/back.png\" /></a></p>
+            </div>";
+    echo "<div class=\"sub-menu-container left\">
+            <p class=\"list-title\">Seleziona una o pi&ugrave notizie:</p>";
     echo "<form action=\"news.php?mode=delete\" method=\"POST\">";
     if($error){
         echo "<p class=\"error\">";
@@ -224,13 +242,13 @@ function showDeleteForm($error = null){
         echo "<p class=\"error\">Non ci sono notizie da eliminare!</p>";
     }else{
         foreach($newsList as $news){
-            
-            echo"<p><input type=\"checkbox\" id=\"news".$news->getID()."\"name=\"news[]\" value=\"".$news->getID()."\" />
+            echo"<p class=\"form-list\"><input type=\"checkbox\" id=\"news".$news->getID()."\"name=\"news[]\" value=\"".$news->getID()."\" />
                     <label for=\"news".$news->getID()."\">".$news->getTitle()."</label></p>";
         }
         echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
         echo "<p><input type=\"submit\" value=\"Elimina selezionati\" /></p>";
     }
-    echo "</form>";
+    echo "</form></div>
+            <div class=\"clear\"></div>";
 }
 ?>

@@ -124,7 +124,7 @@ function showForm($error = null){
 	    echo "<div class=\"clear\"></div>";
 	}
 	?>
-	<p><label for="fileselect">Foto da caricare: </label><input type="file" id="fileselect" name="fileselect[]" multiple="multiple" /></p>
+	<p class="file-input"><label for="fileselect">Foto da caricare: </label><input type="file" id="fileselect" name="fileselect[]" multiple="multiple" /></p>
 	<input type="submit" name="action" value="Aggiungi" />
 	<input type="submit" name="action" value="Elimina foto selezionate" />
     </form>
