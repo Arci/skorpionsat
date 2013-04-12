@@ -97,6 +97,7 @@ function showForm($error = null){
 	    $handle = closedir($handle);
     }
     ?>
+    <p class="title">Qui puoi aggiungere o rimuovere le immagini che scorrono nella pagina "Chi siamo":</p>
     <form action="slideshow.php?mode=edit" method="POST" enctype="multipart/form-data">
 	<?php
 	if($error){

@@ -136,7 +136,7 @@ function showCreateForm($error = null, $prev = null){
 
 function edit(){
     if(isset($_POST["action"])){
-        if($_POST["action"] == "Salva"){
+        if($_POST["action"] == "Salva Modifiche"){
             $error = array();
             if($_POST["name"] == null){
                 $error[] = "Il nome &egrave obbligatorio";
@@ -317,8 +317,8 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         }
         echo "<p><input type=\"submit\" name=\"action\" value=\"Salva Modifiche\" />";
         echo " <input type=\"submit\" name=\"action\"value=\"Imposta foto selezionata come copertina\" />";
-        echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" onClick=\"alert('Stai per uscire')\" />";
-        echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" onClick=\"alert('Stai per uscire')\"/></p>";
+        echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" />";
+        echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" /></p>";
     }
     echo "</form></div>
             <div class=\"clear\"></div>";
