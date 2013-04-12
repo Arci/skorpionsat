@@ -4,7 +4,10 @@ require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/photoController.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/database.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/album.php");
-define("ALBUMS", pathinfo(__FILE__, PATHINFO_DIRNAME)."/../albums/");
+
+//define("ALBUMS", "http://www.skorpionsat.com/albums/");
+//define("ALBUMS_RELATIVE", "../albums/");
+define("ALBUMS", "/Skorpionsat/site/albums/");
 define("ALBUMS_RELATIVE", "../albums/");
 
 class AlbumController implements Controller{

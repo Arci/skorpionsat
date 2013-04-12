@@ -15,7 +15,7 @@ buildBottomPage();
 
 function buildContent(){
     echo "<table
-        style='width: 100%; font-size: 1.1em; background-image: url(img/background_05.png); margin: 0 auto; line-height: 3em;
+        style='width: 100%; font-size: 1.1em; background-image: url(".IMAGES_PATH."background_05.png); margin: 0 auto; line-height: 3em;
         '><tr valign='top'>";
     
     //creo il database (lo droppo se esiste)

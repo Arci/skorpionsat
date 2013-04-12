@@ -66,9 +66,9 @@ function getHeader($pageName, $goodLogon){
 	?>
 	<div id="wrapper">
 	<div id="header">
-                <div id="logo" class="left"><a href="admin.php"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
+                <div id="logo" class="left"><a href="<?php echo ADMIN_PATH ?>"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
                 <div id="container-right" class="right">
-                    <div id="text" class="shadow"><a href="admin.php">Skorpion S.A.T.</a></div>
+                    <div id="text" class="shadow"><a href="<?php echo ADMIN_PATH ?>">Skorpion S.A.T.</a></div>
                     <div id="menu">
 			<?php if($goodLogon == true){ ?>
                         <ul>
@@ -90,7 +90,7 @@ function getFooter(){
 	<div id="footer">
 		<p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
 		Designed By <a href="#">Alice Vittoria Cappelletti</a>
-		<div id="admin"><p><a href="../index.php">Torna al sito</a></p></div>
+		<div id="admin"><p><a href="<?php echo ROOT_PATH ?>">Torna al sito</a></p></div>
 	</div></div>
 	<?php
 }

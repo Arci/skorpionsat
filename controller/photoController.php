@@ -119,9 +119,14 @@ class PhotoController implements Controller{
         return $photoAlbum;
     }
     
-    public function buildPath($photo){
+    public function buildRelativePath($photo){
         $albumController = new AlbumController();
         return $albumController->getRelativePath($photo->getAlbumID())."/".$photo->getName();
+    }
+    
+    public function buildPath($photo){
+        $albumController = new AlbumController();
+        return $albumController->getPath($photo->getAlbumID())."/".$photo->getName();
     }
         
     private function createFromDBRow($row){

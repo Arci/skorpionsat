@@ -32,12 +32,12 @@ function buildContent(){
                             $photoController = new PhotoController();
                             $photo = $photoController->loadAlbumCover($album->getID());
                             //TODO link a pagina per visualizazzione di tutte le immagini dell'album
-                            echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"#\"><img src=\"site/".$photoController->buildPath($photo)."\" /></a></div>";
+                            echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"#\"><img src=\"".$photoController->buildPath($photo)."\" /></a></div>";
                         }
                         ?>
                     </div>
                     <div class="description">
-                        <div class="button-container left"><img id="button-left" src="img/left-button.png" /></div>
+                        <div class="button-container left"><img id="button-left" src="<?php echo IMAGES_PATH."left-button.png"; ?>" /></div>
                         <div class="info-container left">
                             <?php
                             for($i=0; $i < count($albumList); $i++){
@@ -51,7 +51,7 @@ function buildContent(){
                             }
                             ?>
                         </div>
-                        <div class="button-container left"><img id="button-right" src="img/right-button.png" /></div>
+                        <div class="button-container left"><img id="button-right" src="<?php echo IMAGES_PATH."right-button.png"; ?>" /></div>
                         <div class="clear"></div>
                     </div>
                 </div>

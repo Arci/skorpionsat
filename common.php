@@ -93,15 +93,15 @@ function getHeader($pageName){
 	?>
 	<div id="wrapper">
 	<div id="header">
-                <div id="logo" class="left"><a href="board.php"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
+                <div id="logo" class="left"><a href="<?php echo ROOT_PATH ?>"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
                 <div id="container-right" class="right">
-                    <div id="text" class="shadow"><a href="board.php">Skorpion S.A.T.</a></div>
+                    <div id="text" class="shadow"><a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a></div>
                     <div id="menu">
                         <ul>
                            <li <?php if($pageName == "board") echo "class=\"active\""; ?>><a href='board.php'><span class="shadow">News</span></a></li>
                            <li <?php if($pageName == "who") echo "class=\"active\""; ?>><a href='who.php'><span class="shadow">Chi siamo</span></a></li>
                            <li <?php if($pageName == "play") echo "class=\"active\""; ?>><a href='play.php'><span class="shadow">Gioca con noi</span></a></li>
-                           <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_ROOT; ?>'><span class="shadow">Forum</span></a></li>
+                           <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_PATH; ?>'><span class="shadow">Forum</span></a></li>
                            <li <?php if($pageName == "gallery") echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a></li>
                         </ul>
                     </div>
@@ -116,7 +116,7 @@ function getFooter(){
 	<div id="footer">
                 <p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
 		Designed By <a href="#">Alice Vittoria Cappelletti</a>
-		<div id="admin"><p><a href="<?php echo ADMIN_ROOT ?>">Pannello di controllo</a></p></div>
+		<div id="admin"><p><a href="<?php echo ADMIN_PATH ?>">Pannello di controllo</a></p></div>
         </div></div>
 	<?php
 }
