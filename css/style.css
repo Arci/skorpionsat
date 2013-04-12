@@ -167,12 +167,12 @@ body{
 	background-image: url(../img/background_05.png);
 	line-height: 2.5em;
 	border-radius: 1em;
-	padding: 1em 2.5%;
+	padding: 1.5em 2.5%;
 }
 
 .keep-calm{
 	width: 20em;
-	margin: 1.5% 0 0 1%;
+	margin: 1em 1% 0 1%;
 }
 
 #download{
@@ -218,7 +218,7 @@ body{
 	background-image: url(../img/background_05.png);
 	border-radius: 1em;
 	line-height: 2.5em;
-	padding: 1em 4% 1.5em 4%;
+	padding: 1em 4% 1.3em 4%;
 }
 
 #contact span:first-child{
@@ -229,7 +229,6 @@ body{
 #contact div{
 	display: block;
 	margin-left: 1em;
-	margin-bottom: 0.33em;
 	letter-spacing: 0.1em;
 }
 
@@ -241,6 +240,11 @@ body{
 	margin-right: 0.5em;
 	vertical-align: middle;
 	margin-bottom: 0.5em;
+}
+
+.email-thumbnail{
+	width: 1.2em;
+	height: 1.2em;
 }
 
 .phone-thumbnail{

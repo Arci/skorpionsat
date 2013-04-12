@@ -25,6 +25,7 @@ function buildContent(){
 }
 
 function showNewsList(){
+    //TODO grafica
     $newsController = new NewsController();
     $newsList = $newsController->loadAll();
     if(count($newsList) == 0){

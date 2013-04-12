@@ -32,23 +32,55 @@ function openHtml(){
 function getHead($pageName){
 	?>
 	<head>
-		<meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti, " /><!-- TODO one foreach page -->
+		<?php
+		if($pageName == "board"){
+			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
+				news dalla squadra" /><?php
+		} else if($pageName == "who"){
+		     	?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
+				chi siamo, la nostra storia" /><?php
+		} else if($pageName == "play"){
+			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
+				gioca con noi" /><?php
+		} else if($pageName == "gallery"){
+			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti, photogallery,
+				guarda le foto delle nostre partite" /><?php		     
+		} else {
+			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti" /><?php
+		}
+		?>
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow" />
 		<meta name="google" content="notranslate" />
 		<meta name="copyright" content="Arcidiacono Fabio 2012" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Skorpion S.A.T.</title><!-- TODO one foreach page -->
-
+		<?php
+		if($pageName == "board"){
+			?><title>News</title><?php
+		} else if($pageName == "who"){
+			?><title>Chi Siamo</title><?php
+		} else if($pageName == "play"){
+			?><title>Gioca con noi</title><?php  
+		} else if($pageName == "gallery"){
+			?><title>Gallery</title><?php 
+		} else {
+			?><title>Skorpion S.A.T.</title><?php 	
+		}
+		?>
 		<link rel="shortcut icon" href= "<?php echo IMAGES_PATH."favicon.ico" ?>"/>
 		
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
 		<link href="<?php echo CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
-		
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="<?php echo JS_PATH."slideshow.js" ?> "></script>
-		<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script>
+		<?php
+		if($pageName == "who"){
+			?><script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script type="text/javascript" src="<?php echo JS_PATH."slideshow.js" ?> "></script><?php
+		} else if($pageName == "gallery"){
+			?><script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script><?php
+		}
+		?>
 	</head>
 	<?php
 }

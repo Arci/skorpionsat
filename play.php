@@ -26,10 +26,11 @@ function buildContent(){
             </div>
             <div id="contact">
                 <span>Contatti:</span>
-                <div><a href="mailto:presidente@skorpionsat.com">Presidente</a></div>
-                <div><a href="mailto:segretario@skorpionsat.com">Segretario</a></div>
-                <div><a href="mailto:noleggi@skorpionsat.com">Responsabile noleggi</a></div>
-                <div><img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />3287526556</div> <!-- TODO vero numero -->
+                <div><img src="<?php echo IMAGES_PATH."email.png"?>" class="email-thumbnail" /><a href="mailto:presidente@skorpionsat.com">Presidente</a></div>
+                <div><img src="<?php echo IMAGES_PATH."email.png"?>" class="email-thumbnail" /><a href="mailto:segretario@skorpionsat.com">Segretario</a></div>
+                <div><img src="<?php echo IMAGES_PATH."email.png"?>" class="email-thumbnail" /><a href="mailto:noleggi@skorpionsat.com">Responsabile noleggi</a></div>
+                <div><img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />333 8130339 (Presidente)</div>
+                <div><img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />333 4819041 - 347 4374801 (Noleggi)</div>
             </div> 
         </div>
         <div id="play-right" class="right">
