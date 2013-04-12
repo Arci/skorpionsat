@@ -101,7 +101,7 @@ function getHeader($pageName){
                            <li <?php if($pageName == "board") echo "class=\"active\""; ?>><a href='board.php'><span class="shadow">News</span></a></li>
                            <li <?php if($pageName == "who") echo "class=\"active\""; ?>><a href='who.php'><span class="shadow">Chi siamo</span></a></li>
                            <li <?php if($pageName == "play") echo "class=\"active\""; ?>><a href='play.php'><span class="shadow">Gioca con noi</span></a></li>
-                           <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='forum'><span class="shadow">Forum</span></a></li>
+                           <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_ROOT; ?>'><span class="shadow">Forum</span></a></li>
                            <li <?php if($pageName == "gallery") echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a></li>
                         </ul>
                     </div>

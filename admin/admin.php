@@ -21,7 +21,7 @@ define('ROOT_PATH', "../forum");
 //$user->setup();
 //$loggedGood = false;
 //if ($user->data['user_id'] == ANONYMOUS ) {
-//    $message = '<p class="error">Effettua il login su <a href="forum/">forum</a> per usufruire di questo servizio!</p>';
+//    $message = '<p class="error">Effettua il login su <a href="../forum">forum</a> per usufruire di questo servizio!</p>';
 //} elseif($user->data['group_id'] == 9 /*Direttivo*/ || $user->data['group_id'] == 5 /*Admin*/) {
 //    $message =  '<p>Sei loggato come, ' . $user->data['username_clean'] ."</p>";
 //    $_SESSION["username"] = $user->data['username_clean'];
