@@ -27,7 +27,7 @@ define('ROOT_PATH', "../forum");
 //    $_SESSION["username"] = $user->data['username_clean'];
     $loggedGood = true;
 //} else {
-//    $message = "<p>Ciao <span class=\"admin-username\">".$user->data['username_clean']."</span>, non hai i permessi, torna alla <a class="\back-to\" href=\"../index.php\">home</a></p>";
+//    $message = "<p>Ciao <span class=\"admin-username\">".$user->data['username_clean']."</span>, non hai i permessi, torna alla <a class=\"back-to\" href=\"../index.php\">home</a></p>";
 //}
 
 buildTopPage("", $loggedGood);
