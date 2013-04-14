@@ -39,6 +39,7 @@ function getHead(){
 		<link rel="shortcut icon" href= "<?php echo IMAGES_PATH."favicon.ico" ?>"/>
 		
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
 		<link href="<?php echo CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
@@ -66,7 +67,7 @@ function getHeader($pageName, $goodLogon){
 	?>
 	<div id="wrapper">
 	<div id="header">
-                <div id="logo" class="left"><a href="<?php echo ADMIN_PATH ?>"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
+                <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
                     <div id="text" class="shadow"><a href="<?php echo ADMIN_PATH ?>">Skorpion S.A.T.</a></div>
                     <div id="menu">

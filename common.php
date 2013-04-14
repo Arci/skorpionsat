@@ -14,7 +14,9 @@ function reverseDate($date){
 function buildTopPage($pageName){
 	openHtml();
 	getHead($pageName);
-	getHeader($pageName);
+	if($pageName != "photogallery"){
+		getHeader($pageName);
+	}
 	openBody();
 }
 
@@ -70,6 +72,7 @@ function getHead($pageName){
 		<link rel="shortcut icon" href= "<?php echo IMAGES_PATH."favicon.ico" ?>"/>
 		
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
 		<link href="<?php echo CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
 		<?php
@@ -79,6 +82,16 @@ function getHead($pageName){
 		} else if($pageName == "gallery"){
 			?><script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 			<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script><?php
+		} else if($pageName == "photogallery"){
+			?>
+			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<link href="<?php echo CSS_PATH."smart-gallery.css" ?> " rel="stylesheet" type="text/css" />
+			<script src="<?php echo JS_PATH."smart-gallery.min.js" ?> " type="text/javascript"></script>
+			<script type="text/javascript">
+			    $(document).ready(function() {
+				$('#smart-gallery').gallery({ stickthumbnails: true, random: true});
+			    });
+			</script><?php
 		}
 		?>
 	</head>
@@ -93,7 +106,7 @@ function getHeader($pageName){
 	?>
 	<div id="wrapper">
 	<div id="header">
-                <div id="logo" class="left"><a href="<?php echo ROOT_PATH ?>"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></a></div>
+                <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
                     <div id="text" class="shadow"><a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a></div>
                     <div id="menu">

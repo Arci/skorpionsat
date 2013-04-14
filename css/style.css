@@ -18,6 +18,7 @@ body{
 
 /*----- PAGE WRAPPER -----*/
 #wrapper{
+	font-family: 'Roboto', sans-serif;
 	max-width: 96em;
 	margin: 3% auto;
 }
@@ -67,6 +68,7 @@ body{
 #menu{
 	position: relative;
 	margin-top: 8%;
+	z-index: 1;
 	left: -20%;
 	width: 130%;
 	font-family: 'Julius Sans One', sans-serif;
@@ -137,7 +139,6 @@ body{
 }
 
 #upper-shadow{
-	margin-top: 0.1%;
 	width: 100%;
 }
 
@@ -154,13 +155,13 @@ body{
 
 #play-left{
 	font-size: 1.2em;
-	width: 31%;
+	width: 68%;
 	margin-right: 1%;
 }
 
 #play-right{
 	font-size: 1.2em;
-	width: 68%;
+	width: 31%;
 }
 
 #play{
@@ -172,7 +173,8 @@ body{
 
 .keep-calm{
 	width: 20em;
-	margin: 1em 1% 0 1%;
+	margin: 1em 2% 0 0;
+	border-radius: 1em;
 }
 
 #download{
@@ -191,7 +193,7 @@ body{
 	margin-bottom: 1em;
 	display: block;
 	cursor: pointer;
-	margin-left: 1em;
+	margin-left: 0.5em;
 }
 
 #download div a span:hover{
@@ -203,13 +205,13 @@ body{
 }
 
 #download img{
-	margin-right: 1em;
+	margin-right: 0.8em;
 	vertical-align: middle;
 }
 
 .download-thumbnail{
-	width: 2em;
-	height: 2em;
+	width: 1.4em;
+	height: 1.4em;
 }
 
 #contact{
@@ -228,7 +230,7 @@ body{
 
 #contact div{
 	display: block;
-	margin-left: 1em;
+	margin-left: 0.5em;
 	letter-spacing: 0.1em;
 }
 
@@ -278,9 +280,8 @@ div#album-image{
 	top: 42em;
 	z-index: 1;
 	height: 8em;
-	color: #909090;
-	/*background-color: #303030;*/
-	background-color: #FFFFFF;
+	color: #B0B0B0;
+	background-color: #303030;
 	opacity: 0.85;
 	width: 100%;
 }
@@ -338,13 +339,59 @@ div#album-image{
 	text-decoration: underline;
 }
 
+/*----- BOARD -----*/
+.post{
+	font-size: 1.4em;
+	padding: 2.8em 2.5% 2.8em 2.5%;
+	background-image: url(../img/background_05.png);
+	border-radius: 1em;
+	margin-bottom:  0.9em;
+}
+
+.transparent{
+	opacity: 0.8;
+}
+
+.post:hover{
+	opacity: 1;
+}
+
+.last{
+	margin-bottom: 0 !important;
+}
+
+.post .title{
+	font-size: 2em;
+	text-transform: uppercase;
+	margin-bottom: 0.4em;
+}
+
+.meta{
+	font-size: 0.8em;
+	margin: 0 0 1em;
+}
+
+.meta .author{
+	font-weight: bold;
+}
+
+.entry p{
+	font-family: 'Roboto', sans-serif !important;
+	font-size: 1em !important;
+	text-align: justify !important;
+	line-height: 1.7em !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	color:  inherit !important;
+}
+
 /*----- FOOTER -----*/
 #footer{
 	color: #888888;
 	text-align: center;
 	padding: 1.5em 2.5%;
 	border-radius: 1em;
-	letter-spacing: 0.17em;
+	letter-spacing: 0.19em;
 }
 
 #footer a{

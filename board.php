@@ -16,16 +16,11 @@ buildBottomPage();
 
 function buildContent(){
     ?>
-    <div id="page" class="wrapper">
-        <div id="content">
-            <?php showNewsList(); ?>
-        </div>
-    </div>
+    <?php showNewsList(); ?>
     <?php
 }
 
 function showNewsList(){
-    //TODO grafica
     $newsController = new NewsController();
     $newsList = $newsController->loadAll();
     if(count($newsList) == 0){
@@ -34,13 +29,17 @@ function showNewsList(){
         for($i=0; $i <= count($newsList)-1; $i++){
             $news = $newsList[$i];
             if($i < count($newsList)-1){
-                echo "<div class=\"post withSuccessor\">";
+                if($i == 0){
+                    echo "<div class=\"post\">";
+                } else {
+                    echo "<div class=\"post transparent\">";
+                }
             }else{
-                echo "<div class=\"post\">";
+                echo "<div class=\"post transparent last\">";
             }
             ?>
                 <p class="title"><?php echo $news->getTitle(); ?></p>
-                <p class="meta"><?php echo "Pubblicato il <span class=\"date\">".$news->getDate()."</span> da
+                <p class="meta"><?php echo "Pubblicato il <span class=\"date\">".$news->getDate()."</span> da 
                         <span class=\"author\">".$news->getAuthor()."</span>"; ?></p>
                 <div class="entry">
                     <?php echo $news->getContent(); ?>
