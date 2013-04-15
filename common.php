@@ -84,6 +84,17 @@ function getHead($pageName){
 			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 			<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script>
 			<?php
+		} else if($pageName == "photogallery"){
+			?>
+			<link rel="stylesheet" href="<?php echo CSS_PATH."prettyPhoto.css"; ?>" type="text/css" media="screen" charset="utf-8" />
+			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script type="text/javascript" src="<?php echo JS_PATH."prettyPhoto.js"; ?>" charset="utf-8"></script>
+			<script type="text/javascript" charset="utf-8">
+				$(document).ready(function(){
+					$("a[rel^='prettyPhoto']").prettyPhoto();
+				});
+		        </script>
+			<?php
 		}
 		?>
 	</head>

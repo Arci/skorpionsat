@@ -153,7 +153,8 @@ body{
 
 #content .album-div{
     margin: 0.5% 0.5% 0.5% 0;
-    padding: 0.5%;
+    padding: 1%;
+    border-radius: 1em;
     border: 0.2em solid #303030;
 }
 
@@ -274,8 +275,7 @@ form input[type=submit]{
 }
 
 .thumbnail{
-    width: 19em;
-    max-height: 14em;
+    width: 18em;
 }
 
 .main-notice{

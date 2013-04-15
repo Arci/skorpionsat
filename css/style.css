@@ -385,6 +385,24 @@ div#album-image{
 	color:  inherit !important;
 }
 
+/*----- PHOTOGALLERY -----*/
+.back{
+	width: 5%;
+}
+
+#photogallery{
+	width: 95%;
+}
+
+#photogallery img{
+	margin: 0.5% 0.5% 0.5% 0;
+	padding: 1%;
+	border: 0.2em solid #303030;
+	border-radius: 1em;
+	vertical-align: middle;
+	width: 25em;
+}
+
 /*----- FOOTER -----*/
 #footer{
 	color: #888888;
