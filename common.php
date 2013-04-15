@@ -14,9 +14,7 @@ function reverseDate($date){
 function buildTopPage($pageName){
 	openHtml();
 	getHead($pageName);
-	if($pageName != "photogallery"){
-		getHeader($pageName);
-	}
+	getHeader($pageName);
 	openBody();
 }
 
@@ -77,21 +75,15 @@ function getHead($pageName){
 		<link href="<?php echo CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
 		<?php
 		if($pageName == "who"){
-			?><script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-			<script type="text/javascript" src="<?php echo JS_PATH."slideshow.js" ?> "></script><?php
-		} else if($pageName == "gallery"){
-			?><script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-			<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script><?php
-		} else if($pageName == "photogallery"){
 			?>
 			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-			<link href="<?php echo CSS_PATH."smart-gallery.css" ?> " rel="stylesheet" type="text/css" />
-			<script src="<?php echo JS_PATH."smart-gallery.min.js" ?> " type="text/javascript"></script>
-			<script type="text/javascript">
-			    $(document).ready(function() {
-				$('#smart-gallery').gallery({ stickthumbnails: true, random: true});
-			    });
-			</script><?php
+			<script type="text/javascript" src="<?php echo JS_PATH."slideshow.js" ?> "></script>
+			<?php
+		} else if($pageName == "gallery"){
+			?>
+			<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+			<script type="text/javascript" src="<?php echo JS_PATH."gallery.js" ?> "></script>
+			<?php
 		}
 		?>
 	</head>

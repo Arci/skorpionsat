@@ -24,18 +24,18 @@ function showNewsList(){
     $newsController = new NewsController();
     $newsList = $newsController->loadAll();
     if(count($newsList) == 0){
-        echo "<p class=\"error\">Non ci sono notizie!</p>";
+        echo "<div class=\"post\"><p class=\"error\">Non ci sono notizie!</p></div>";
     }else{
         for($i=0; $i <= count($newsList)-1; $i++){
             $news = $newsList[$i];
-            if($i < count($newsList)-1){
-                if($i == 0){
-                    echo "<div class=\"post\">";
-                } else {
+            if($i == 0){
+                echo "<div class=\"post\">";
+            } else {
+                if($i < count($newsList)-1){
                     echo "<div class=\"post transparent\">";
+                } else {
+                    echo "<div class=\"post transparent last\">";
                 }
-            }else{
-                echo "<div class=\"post transparent last\">";
             }
             ?>
                 <p class="title"><?php echo $news->getTitle(); ?></p>

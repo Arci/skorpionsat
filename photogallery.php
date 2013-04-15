@@ -5,6 +5,8 @@ ini_set('display_errors', true);
 
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
+require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/albumController.php");
+require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/photoController.php");
 
 buildTopPage("photogallery");
 
@@ -14,22 +16,26 @@ buildBottomPage();
 
 function buildContent(){
     ?>
-    <div id="back-to-albums">
-        
-    </div>
-    <div id="smart-gallery">
-        <img src="images/cubagallery-img-1.jpg" /> 
-        <img src="images/cubagallery-img-2.jpg" />
-        <img src="images/cubagallery-img-3.jpg" />
-        <img src="images/cubagallery-img-4.jpg" />
-        <img src="images/cubagallery-img-5.jpg" />
-        <img src="images/cubagallery-img-6.jpg" />
-        <img src="images/cubagallery-img-7.jpg" />
-        <img src="images/cubagallery-img-8.jpg" />
-        <img src="images/cubagallery-img-9.jpg" />
-        <img src="images/cubagallery-img-10.jpg" />
-        <img src="images/cubagallery-img-11.jpg" />
-        <img src="images/cubagallery-img-12.jpg" /></a>
+    <div id="content">
+        <div id="back-to-albums">
+            <a href="gallery.php"><p>Torna agli album</p></a>
+        </div>
+        <?php
+            if(array_key_exists("id", $_GET) && is_int(intval($_GET["id"]))){
+                $albumController = new AlbumController();
+                $photoController = new PhotoController();
+                $photoList = $photoController->loadByAlbum(intval($_GET["id"]));
+                echo "<div id=\"gallery\">";
+                foreach($photoList as $photo){
+                    echo "<a href=\"".$photoController->buildPath($photo)."\" title=\"".$photo->getDescription()."\">
+                            <img src=\"".$photoController->buildPath($photo)."\" /></a>";
+                }
+                echo "</div>";
+                
+            } else {
+                echo "<p class=\"error\">Impossibile determinare l'album da visualizzare</p>";
+            }
+        ?>
     </div>
     <?php
 }

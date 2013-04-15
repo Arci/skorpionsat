@@ -375,7 +375,7 @@ div#album-image{
 	font-weight: bold;
 }
 
-.entry p{
+.entry p, .entry span{
 	font-family: 'Roboto', sans-serif !important;
 	font-size: 1em !important;
 	text-align: justify !important;
@@ -414,6 +414,10 @@ div#album-image{
 }
 
 /*----- COMMON -----*/
+.error{
+	color: #C00000;
+}
+
 a{
 	color: inherit;
 	text-decoration: none;

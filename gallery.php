@@ -31,8 +31,7 @@ function buildContent(){
                         foreach($albumList as $album){
                             $photoController = new PhotoController();
                             $photo = $photoController->loadAlbumCover($album->getID());
-                            //TODO link a pagina per visualizazzione di tutte le immagini dell'album
-                            echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"#\"><img src=\"".$photoController->buildPath($photo)."\" /></a></div>";
+                            echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"photogallery.php?id=".$album->getID()."\"><img src=\"".$photoController->buildPath($photo)."\" /></a></div>";
                         }
                         ?>
                     </div>
@@ -42,10 +41,9 @@ function buildContent(){
                             <?php
                             for($i=0; $i < count($albumList); $i++){
                                 $album = $albumList[$i];
-                                //TODO link a pagina per visualizazzione di tutte le immagini dell'album
                                 echo "<div class=\"info left\" id=\"".($i+1)."\">
                                     <p class=\"album-date\">".reverseDate($album->getDate())."</p>
-                                    <p class=\"album-title\"><a class=\"title-link\" href=\"#\">".$album->getName()."</a></p> 
+                                    <p class=\"album-title\"><a class=\"title-link\" href=\"photogallery.php?id=".$album->getID()."\">".$album->getName()."</a></p> 
                                     <p class=\"album-description\">".$album->getDescription()."</p>
                                 </div>";
                             }
