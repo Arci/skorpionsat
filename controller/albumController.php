@@ -3,6 +3,7 @@
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/photoController.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/database.php");
+require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../logger.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/album.php");
 
 //define("ALBUMS", "http://www.skorpionsat.com/albums/");
@@ -13,7 +14,10 @@ define("ALBUMS_RELATIVE", "../albums/");
 class AlbumController implements Controller{
     
     public function save($album){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "saving ". $album->getName());
         $query = "INSERT INTO ".Database::TABLE_ALBUM." (".Database::ALBUM_NAME.", ".Database::ALBUM_DATE.", ".Database::ALBUM_DESCRIPTION.") VALUES ('".$album->getName()."', '".$album->getDate()."', '".$album->getDescription()."')";
+        $logger->query(__METHOD__, $query);
         DbConnection::getConnection();
         $result = mysql_query($query);        
         if(!$result){
@@ -23,10 +27,13 @@ class AlbumController implements Controller{
     }
     
     public function update($album){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "updating ". $album->getName());
         $oldAlbum = self::loadByID($album->getID());
         $query = "UPDATE ".Database::TABLE_ALBUM."
                 SET ".Database::ALBUM_DATE." = '".$album->getDate()."', ".Database::ALBUM_DESCRIPTION." = '".$album->getDescription()."', ".Database::ALBUM_NAME." = '".$album->getName()."'
                 WHERE ".Database::ALBUM_ID." = ".$album->getID()."";
+        $logger->query(__METHOD__, $query);
         DbConnection::getConnection();
         $result = mysql_query($query);        
         if(!$result){
@@ -45,6 +52,8 @@ class AlbumController implements Controller{
     }
     
     public function delete($album){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "deleting ". $album->getName());
         $photoController = new PhotoController();
         try{
             $photoList = $photoController->loadByAlbum($album->getID());
@@ -52,6 +61,7 @@ class AlbumController implements Controller{
                 $photoController->delete($photo);
             }
             $query = "DELETE FROM ".Database::TABLE_ALBUM." WHERE ".Database::ALBUM_ID." = ".$album->getID()."";
+            $logger->query(__METHOD__, $query);
             DbConnection::getConnection();
             $result = mysql_query($query);        
             if(!$result){
@@ -64,10 +74,13 @@ class AlbumController implements Controller{
     }
 
     public function loadByID($id){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "loading album ". $id);
         if(is_null($id)){
             throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca dell'album.");
         }
         $query = "SELECT * FROM ".Database::TABLE_ALBUM." WHERE ".Database::ALBUM_ID." = $id";
+        $logger->query(__METHOD__, $query);
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(mysql_num_rows($result) != 1){
@@ -78,11 +91,14 @@ class AlbumController implements Controller{
     }
 
     public function loadAll($limit = 0){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "load all limit: ". $limit);
         if($limit > 0 ){
             $query = "SELECT * FROM ".Database::TABLE_ALBUM." ORDER BY ".Database::ALBUM_DATE." DESC LIMIT $limit";
         }else{
             $query = "SELECT * FROM ".Database::TABLE_ALBUM." ORDER BY ".Database::ALBUM_DATE." DESC";
         }
+        $logger->query(__METHOD__, $query);
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(!$result){
@@ -96,10 +112,13 @@ class AlbumController implements Controller{
     }
     
     public function loadByName($name){
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "loading album: ". $name);
         if(is_null($name)){
             throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca dell'album.");
         }
         $query = "SELECT * FROM ".Database::TABLE_ALBUM." WHERE ".Database::ALBUM_NAME." = '$name'";
+        $logger->query(__METHOD__, $query);
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(!$result){
@@ -113,17 +132,25 @@ class AlbumController implements Controller{
         if(!($album instanceof Album)){
             $album = self::loadByID($album);
         }
-        return ALBUMS.$album->getName();
+        $path = ALBUMS.$album->getName();
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "retriving ". $path);
+        return $path;
     }
     
     public function getRelativePath($albumID){
         $album = self::loadByID($albumID);
-        return ALBUMS_RELATIVE.$album->getName();
+        $path = ALBUMS_RELATIVE.$album->getName();
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "retriving ". $path);
+        return $path;
     }
     
     private function createFromDBRow($row){
         $album = new Album($row[Database::ALBUM_NAME],$row[Database::ALBUM_DATE],$row[Database::ALBUM_DESCRIPTION]);
         $album->setID(intval($row[Database::ALBUM_ID]));
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "retriving from database album: ". $album->getName());
         return $album;
     }
     
@@ -132,6 +159,8 @@ class AlbumController implements Controller{
         $album->setDescription($row[Database::ALBUM_DESCRIPTION]);
         $album->setDate($row[Database::ALBUM_DATE]);
         $album->setID(intval($row[Database::ALBUM_ID]));
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "updating from databae album: ". $album->getName());
         return $album;
     }
     
@@ -139,5 +168,7 @@ class AlbumController implements Controller{
         if(!file_exists(ALBUMS.$name)){
             Mkdir(ALBUMS.$name,0777);
         }
+        $logger = Logger::getLogger();
+        $logger->debug(__METHOD__, "creating folder for album: ". $name);
     }
 }

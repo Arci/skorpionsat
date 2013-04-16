@@ -15,12 +15,6 @@ buildContent();
 buildBottomPage();
 
 function buildContent(){
-    ?>
-    <?php showNewsList(); ?>
-    <?php
-}
-
-function showNewsList(){
     $newsController = new NewsController();
     $newsList = $newsController->loadAll();
     if(count($newsList) == 0){

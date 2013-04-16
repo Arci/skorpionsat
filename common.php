@@ -139,7 +139,6 @@ function getFooter(){
 
 function getAnalytics(){
        ?>
-       <!-- GOOGLE ANALYTICS -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-32258069-1']);

@@ -5,6 +5,7 @@ ini_set('display_errors', true);
 
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
+require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/logger.php");
 require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/database.php");
 
 buildTopPage("");
@@ -33,11 +34,11 @@ function buildContent(){
     echo "<p><span style='color:green'>DATABASE CREATED</span></p>";
     echo "</td>";
     
-    //elimino precedenti upload
+    //elimino precedenti upload e log
     echo "<td style='border-right: 0.5em solid #000000; width: 280em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Gestione File System</u></b></span></p>";
     if(!file_exists("albums")){
-        echo "<p>Trying to create albums folder</p>";
+        echo "<p>Trying to create 'albums' folder</p>";
         mkdir("albums", 0777);
         echo "<p><span style='color:green'>FOLDER 'ALBUMS' CREATED</span></p>";
     } else {
@@ -49,7 +50,21 @@ function buildContent(){
         mkdir("albums", 0777);
         echo "<p><span style='color:green'>FOLDER 'ALBUMS' CREATED</span></p>";
     }
+    if(!file_exists("log")){
+        echo "<p>Trying to create 'log' folder</p>";
+        mkdir("log", 0777);
+        echo "<p><span style='color:green'>FOLDER 'LOG' CREATED</span></p>";
+    } else {
+        echo "<p><span style='color:orange'>FOLDER 'LOG' ALREADY EXISTS!</span></p>";
+        echo "<p>Trying to delete 'log' folder</p>";
+        delfolder("albums", true);
+        echo "<p><span style='color:green'><b><i><u>FOLDER 'LOG' DELETED!</u></i></b></span></p>";
+        echo "<p>Trying to create 'log' folder</p>";
+        mkdir("albums", 0777);
+        echo "<p><span style='color:green'>FOLDER 'LOG' CREATED</span></p>";
+    }
     echo "</td>";
+
     
     //creo le tabelle
     echo "<td style='width: 220em; padding: 1.5em;'>";
@@ -76,6 +91,9 @@ function buildContent(){
     echo "</td>";
     
     echo "</tr></table>";
+    
+    $logger = Logger::getLogger();
+    $logger->debug(pathinfo(__FILE__, PATHINFO_BASENAME)."::install()", "INSTALLING APPLICATION"); 
 }
 
 /*
