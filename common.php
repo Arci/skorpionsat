@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/settings.php");
+require_once(dirname(__FILE__)."/settings.php");
 require_once(DOCUMENT_ROOT."/logger.php");
 
 function reverseDate($date){
@@ -112,7 +112,12 @@ function getHeader($pageName){
 	<div id="header">
                 <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
-                    <div id="text" class="shadow"><a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a></div>
+                    <div id="text" class="shadow">
+			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.
+			<p style ='color: #C00000 !important; font-size: 0.2em !important;
+					letter-spacing: 0.4em !important; padding-top: 1em;'>BETA</p>
+			</a>
+		    </div>
                     <div id="menu">
                         <ul>
                            <li <?php if($pageName == "board") echo "class=\"active\""; ?>><a href='board.php'><span class="shadow">News</span></a></li>

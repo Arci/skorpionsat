@@ -17,7 +17,6 @@ define("ADMIN_PATH", ROOT_PATH."/admin");
 
 //Document Root
 define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site");
-define("ADMIN_DOCUMENT_ROOT", DOCUMENT_ROOT."/admin");
 
 //Files
 define("IMAGES_PATH", ROOT_PATH."/img/");
@@ -28,7 +27,7 @@ define("ADMIN_CSS_PATH", ADMIN_PATH."/css/");
 define("ADMIN_JS_PATH", ADMIN_PATH."/js/");
 
 //Directories
-define("LOG_PATH", DOCUMENT_ROOT."/log/");
+define("LOG_DIR", DOCUMENT_ROOT."/log/");
 define("SLIDESHOW_PATH", ROOT_PATH."/slideshow/");
 define("SLIDESHOW_DIR", DOCUMENT_ROOT."/slideshow/");
 define("DOCUMENTS_PATH", ROOT_PATH."/documents/");

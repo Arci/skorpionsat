@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/admin/common.php");
+require_once(dirname(__FILE__)."/common.php");
 require_once(DOCUMENT_ROOT."/controller/newsController.php");
 require_once(DOCUMENT_ROOT."/model/news.php");
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/controller/database.php");
+require_once(dirname(__FILE__)."/database.php");
 require_once(DOCUMENT_ROOT."/logger.php");
 interface Controller {
     

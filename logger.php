@@ -17,7 +17,7 @@ class Logger {
 	private function __construct($name) {
 		$this->name = $name;
 		date_default_timezone_set('Europe/Rome');
-		$this->fileDescriptor = fopen(LOG_PATH . self::$filePrefix . date("Ymd", time()) . ".log", "a+");
+		$this->fileDescriptor = fopen(LOG_DIR . self::$filePrefix . date("Ymd", time()) . ".log", "a+");
 	}
 	
 	private function buildLogEntry($type, $clazz, $message){

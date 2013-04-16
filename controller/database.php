@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/settings.php");
+require_once(dirname(__FILE__)."/../settings.php");
 
 class Database{
     

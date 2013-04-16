@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/controller/controller.php");
+require_once(dirname(__FILE__)."/controller.php");
 require_once(DOCUMENT_ROOT."/model/news.php");
 
 class NewsController implements Controller{
