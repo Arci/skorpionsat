@@ -21,7 +21,7 @@ function buildContent(){
         $albumController = new AlbumController();
         $albumList = $albumController->loadAll();
         if(count($albumList) == 0){
-            echo "<p>Non ci sono album!</p>";
+            echo "<p class=\"normalized-error\">Non ci sono album!</p>";
         }else{
             ?>
             <div id="main-wrapper">

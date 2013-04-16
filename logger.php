@@ -1,6 +1,6 @@
 <?php
 
-define("LOG_PATH", "log/");
+define("LOG_PATH", pathinfo(__FILE__, PATHINFO_DIRNAME)."/log/");
 
 class Logger {
 	private static $filePrefix = "log_";
@@ -18,7 +18,8 @@ class Logger {
 	
 	private function __construct($name) {
 		$this->name = $name;
-		$this->fileDescriptor = fopen(LOG_PATH . self::$filePrefix . date("Ymd", time()), "a+");
+		date_default_timezone_set('Europe/Rome');
+		$this->fileDescriptor = fopen(LOG_PATH . self::$filePrefix . date("Ymd", time()) . ".log", "a+");
 	}
 	
 	private function buildLogEntry($type, $clazz, $message){
@@ -34,6 +35,10 @@ class Logger {
 	
 	public function debug($clazz, $message) {
 		self::buildLogEntry("DEBUG", $clazz, $message);
+	}
+	
+	public function error($clazz, $message) {
+		self::buildLogEntry("ERROR", $clazz, $message);
 	}
 }
 

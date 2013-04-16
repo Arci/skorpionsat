@@ -57,15 +57,14 @@ function buildContent(){
     } else {
         echo "<p><span style='color:orange'>FOLDER 'LOG' ALREADY EXISTS!</span></p>";
         echo "<p>Trying to delete 'log' folder</p>";
-        delfolder("albums", true);
+        delfolder("log", true);
         echo "<p><span style='color:green'><b><i><u>FOLDER 'LOG' DELETED!</u></i></b></span></p>";
         echo "<p>Trying to create 'log' folder</p>";
-        mkdir("albums", 0777);
+        mkdir("log", 0777);
         echo "<p><span style='color:green'>FOLDER 'LOG' CREATED</span></p>";
     }
     echo "</td>";
 
-    
     //creo le tabelle
     echo "<td style='width: 220em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Inserimento Tabelle </b></u></span></p>";
@@ -93,7 +92,7 @@ function buildContent(){
     echo "</tr></table>";
     
     $logger = Logger::getLogger();
-    $logger->debug(pathinfo(__FILE__, PATHINFO_BASENAME)."::install()", "INSTALLING APPLICATION"); 
+    $logger->debug("Install::install", "INSTALLING APPLICATION"); 
 }
 
 /*

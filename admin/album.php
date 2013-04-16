@@ -184,17 +184,29 @@ function edit(){
                 $error[] = "devi selezionare almeno una foto!";
             }
             if(count($error) == 0){
-                $selectedPhoto = array();
                 $photoController = new PhotoController();
+                $albumCoverDeleted = false;
+                $albumID = null;
                 foreach($_POST["photo"] as $selected){
                     try{
-                        $photoController->delete($photoController->loadByID($selected));
-                        showOptions();
-                        echo "<p class=\"main-notice\">Le foto selezionate sono state eliminate</p>";
+                        $photo = $photoController->loadByID($selected);
+                        if($photo->isAlbumCover()){
+                            $albumID = $photo->getAlbumID();
+                            $albumCoverDeleted = true;
+                        }
+                        $photoController->delete($photo);
                     }catch (Exception $e){
                         echo "<p class=\"error\">".$e->getMessage()."</p>";
                     }
                 }
+                if($albumCoverDeleted){
+                    $photoList = $photoController->loadByAlbum($albumID, 1);
+                    $photo = $photoList[0];
+                    $photo->setIfIsAlbumCover(true);
+                    $photoController->update($photo);
+                }
+                showOptions();
+                echo "<p class=\"main-notice\">Le foto selezionate sono state eliminate</p>";
             }else{
                 $prev = array("name" => $_POST["name"],
                                 "date" => $_POST["date"],
