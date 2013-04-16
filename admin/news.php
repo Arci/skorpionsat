@@ -3,12 +3,13 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-//session_start();
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/admin/common.php");
+require_once(DOCUMENT_ROOT."/controller/newsController.php");
+require_once(DOCUMENT_ROOT."/model/news.php");
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../controller/newsController.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/news.php");
+if(DEPLOY){
+    session_start();
+}
 
 buildTopPage("news", true);
 
@@ -46,9 +47,9 @@ function buildContent(){
 function showOptions(){
     ?>
     <ul>
-        <div><li><a href="news.php?mode=publish"><img src="<?php echo IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Pubblica una nuova notizia</span></a></li></div>
-        <div><li><a href="news.php?mode=edit"><img src="<?php echo IMAGES_PATH."edit.png"; ?>" class="small-thumbnail" /><span>Modifica una notizia esistente</span></a></li></div>
-        <div><li><a href="news.php?mode=delete"><img src="<?php echo IMAGES_PATH."delete.png"; ?>" class="small-thumbnail" /><span>Elimina una o pi&ugrave notizie esistenti</span></a></li></div>
+        <div><li><a href="news.php?mode=publish"><img src="<?php echo ADMIN_IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Pubblica una nuova notizia</span></a></li></div>
+        <div><li><a href="news.php?mode=edit"><img src="<?php echo ADMIN_IMAGES_PATH."edit.png"; ?>" class="small-thumbnail" /><span>Modifica una notizia esistente</span></a></li></div>
+        <div><li><a href="news.php?mode=delete"><img src="<?php echo ADMIN_IMAGES_PATH."delete.png"; ?>" class="small-thumbnail" /><span>Elimina una o pi&ugrave notizie esistenti</span></a></li></div>
     </ul>
     <?php
 }
@@ -67,8 +68,11 @@ function publish(){
         if(count($error) == 0){
             date_default_timezone_set('Europe/Rome');
             $date = date("d/m/Y", $_SERVER["REQUEST_TIME"]);
-            $author = "Avvocata";
-            //$author = $_SESSION["username"];
+            if(DEPLOY){
+                $author = $_SESSION["username"];
+            }else{
+                $author = "Arci";
+            }
             $news = new News($_POST["title"], $date, $author, $_POST["content"]);
             $newsController = new NewsController();
             try{
@@ -88,7 +92,7 @@ function publish(){
 
 function showPublishForm($error = null, $prev = null){
     echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">";
     echo "<form action=\"news.php?mode=publish\" method=\"POST\">";
@@ -153,7 +157,7 @@ function edit(){
 
 function showEditForm($select = true, $error = null, $newsID = null){
     echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">";
     if($select){
@@ -225,7 +229,7 @@ function delete(){
 
 function showDeleteForm($error = null){
     echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">
             <p class=\"list-title\">Seleziona una o pi&ugrave notizie:</p>";

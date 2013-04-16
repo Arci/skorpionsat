@@ -3,10 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/albumController.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/photoController.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/common.php");
+require_once(DOCUMENT_ROOT."/controller/albumController.php");
+require_once(DOCUMENT_ROOT."/controller/photoController.php");
 
 buildTopPage("gallery");
 
@@ -30,7 +29,7 @@ function buildContent(){
                         <?php
                         foreach($albumList as $album){
                             $photoController = new PhotoController();
-                            $photo = $photoController->loadAlbumCover($album->getID());
+                            $photo = $photoController->loadAlbumCover($album);
                             echo "<div class=\"album-slider\"><a class=\"image-link\" href=\"photogallery.php?id=".$album->getID()."\"><img src=\"".$photoController->buildPath($photo)."\" /></a></div>";
                         }
                         ?>

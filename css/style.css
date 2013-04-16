@@ -373,6 +373,7 @@ div#album-image{
 
 .meta .author{
 	font-weight: bold;
+	text-transform: capitalize;
 }
 
 .entry p, .entry span{

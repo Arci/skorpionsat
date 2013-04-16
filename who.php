@@ -3,8 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/common.php");
 
 buildTopPage("who");
 
@@ -20,7 +19,7 @@ function buildContent(){
                 <?php
                 $arrayfiles = array();
                 $extensions = array('.jpg','.jpeg','.png');
-                $dirname = SLIDESHOW_PATH;
+                $dirname = SLIDESHOW_DIR;
                 if(file_exists($dirname)){
                         $handle = opendir($dirname);
                         while (false !== ($file = readdir($handle))) { 

@@ -1,7 +1,5 @@
 <?php
 
-define("LOG_PATH", pathinfo(__FILE__, PATHINFO_DIRNAME)."/log/");
-
 class Logger {
 	private static $filePrefix = "log_";
 	private static $instance;

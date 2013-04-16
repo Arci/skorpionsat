@@ -3,8 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/admin/common.php");
 
 buildTopPage("slideshow", true);
 
@@ -58,7 +57,7 @@ function edit(){
 		try{
 		    if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
 			for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-			    if (!move_uploaded_file($_FILES["fileselect"]["tmp_name"][$i], SLIDESHOW_PATH.$_FILES["fileselect"]["name"][$i])){
+			    if (!move_uploaded_file($_FILES["fileselect"]["tmp_name"][$i], SLIDESHOW_DIR.$_FILES["fileselect"]["name"][$i])){
 				echo "Si &egrave verificato un errore caricando la foto.";
 			    }
 			}
@@ -74,8 +73,12 @@ function edit(){
 	    showForm($error);
 	}
     }else if($_POST["action"] == "Elimina foto selezionate"){
-	foreach($_POST["photo"] as $photo){
-	    unlink(SLIDESHOW_PATH.$photo);
+	if(array_key_exists("photo", $_POST)){
+	    foreach($_POST["photo"] as $photo){
+		unlink(SLIDESHOW_DIR.$photo);
+	    }
+	}else{
+	    $error[] = "Devi selezionare almeno una foto";
 	}
 	showForm($error);
     }

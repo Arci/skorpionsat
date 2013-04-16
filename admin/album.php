@@ -3,11 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../controller/albumController.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/photo.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../controller/photoController.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/admin/common.php");
+require_once(DOCUMENT_ROOT."/controller/albumController.php");
+require_once(DOCUMENT_ROOT."/model/photo.php");
+require_once(DOCUMENT_ROOT."/controller/photoController.php");
 
 buildTopPage("album", true);
 
@@ -45,9 +44,9 @@ function buildContent(){
 function showOptions(){
     ?>
     <ul>
-        <div><li><a href="album.php?mode=create"><img src="<?php echo IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Crea nuovo album</span></a></li></div>
-        <div><li><a href="album.php?mode=edit"><img src="<?php echo IMAGES_PATH."edit.png"; ?>" class="small-thumbnail" /><span>Modifica un album esistente</span></a></li></div>
-        <div><li><a href="album.php?mode=add"><img src="<?php echo IMAGES_PATH."add.png"; ?>" class="small-thumbnail" /><span>Aggiungi foto ad un album esistente</span></a></li></div>
+        <div><li><a href="album.php?mode=create"><img src="<?php echo ADMIN_IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Crea nuovo album</span></a></li></div>
+        <div><li><a href="album.php?mode=edit"><img src="<?php echo ADMIN_IMAGES_PATH."edit.png"; ?>" class="small-thumbnail" /><span>Modifica un album esistente</span></a></li></div>
+        <div><li><a href="album.php?mode=add"><img src="<?php echo ADMIN_IMAGES_PATH."add.png"; ?>" class="small-thumbnail" /><span>Aggiungi foto ad un album esistente</span></a></li></div>
     </ul>
     <?php
 }
@@ -111,7 +110,7 @@ function create(){
 
 function showCreateForm($error = null, $prev = null){
     echo "<div class=\"left\">
-            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">";
     echo "<form action=\"album.php?mode=create\" method=\"POST\" enctype=\"multipart/form-data\">";
@@ -266,7 +265,7 @@ function edit(){
 
 function showEditForm($select = true, $error = null, $albumID = null, $prev = null){
     echo "<div class=\"left\">
-            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">";
     if($select){
@@ -398,7 +397,7 @@ function add(){
 
 function showAddForm($select = true, $error = null, $albumID = null){
     echo "<div class=\"back-menu-container left\">
-            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".IMAGES_PATH."back.png\" /></a></p>
+            <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
             </div>";
     echo "<div class=\"sub-menu-container left\">";
     if($select){

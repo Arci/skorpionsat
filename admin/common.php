@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/settings.php");
 	
 function reverseDate($date){
     $dateArray = explode("/", $date);
@@ -36,18 +36,18 @@ function getHead(){
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>Skorpion S.A.T. - admin panel</title>
 
-		<link rel="shortcut icon" href= "<?php echo IMAGES_PATH."favicon.ico" ?>"/>
+		<link rel="shortcut icon" href= "<?php echo ADMIN_IMAGES_PATH."favicon.ico" ?>"/>
 		
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
 		<link href='http://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
-		<link href="<?php echo CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
+		<link href="<?php echo ADMIN_CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
 		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-		<script src="<?php echo JS_PATH."/jqueryui/jquery.ui.datepicker-it.js" ?>"></script>
-		<script src="<?php echo JS_PATH."/ckeditor/ckeditor.js" ?>"></script>
+		<script src="<?php echo ADMIN_JS_PATH."/jqueryui/jquery.ui.datepicker-it.js" ?>"></script>
+		<script src="<?php echo ADMIN_JS_PATH."/ckeditor/ckeditor.js" ?>"></script>
 		<script>
 			$(function() {
 				$("#date").datepicker({ changeMonth: true, changeYear: true });
@@ -67,9 +67,9 @@ function getHeader($pageName, $goodLogon){
 	?>
 	<div id="wrapper">
 	<div id="header">
-                <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
+                <div id="logo" class="left"><img src="<?php echo ADMIN_IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
-                    <div id="text" class="shadow"><a href="<?php echo ADMIN_PATH ?>">Skorpion S.A.T.</a></div>
+                    <div id="text" class="shadow"><a href="<?php echo ADMIN_ADMIN_PATH ?>">Skorpion S.A.T.</a></div>
                     <div id="menu">
 			<?php if($goodLogon == true){ ?>
                         <ul>

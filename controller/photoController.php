@@ -1,9 +1,7 @@
 <?php
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/database.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../logger.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/photo.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/controller/controller.php");
+require_once(DOCUMENT_ROOT."/model/photo.php");
 
 class PhotoController implements Controller{
     
@@ -77,14 +75,15 @@ class PhotoController implements Controller{
     }
 
     public function loadByID($id){
+        $logger = Logger::getLogger();
         if(is_null($id)){
+            $logger->error(__METHOD__, "Attenzione! Non hai inserito il parametro per la ricerca della foto - ". $id);
             throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca della foto.");
         }
         $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ID." = $id";
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(mysql_num_rows($result) != 1){
-            $logger = Logger::getLogger();
             $logger->query(__METHOD__, $query); 
             $logger->error(__METHOD__, "La  foto cercata non &egrave stata trovata");
             throw new Exception("La  foto cercata non &egrave stata trovata.");
@@ -114,20 +113,6 @@ class PhotoController implements Controller{
         return $photoList;
     }
     
-    public function loadAlbumCover($albumID){
-        $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID AND ".Database::IS_ALBUM_COVER." = 't'";
-        DbConnection::getConnection();
-        $result = mysql_query($query);
-        if(!$result || count($result) > 1){
-            $logger = Logger::getLogger();
-            $logger->query(__METHOD__, $query);
-            $logger->error(__METHOD__, "La  foto cercata non &egrave stata trovata");
-            throw new Exception("La foto cercata non &egrave stata trovata.");
-        }
-        $row = mysql_fetch_array($result);
-        return self::createFromDBRow($row);
-    }
-    
     public function loadByAlbum($albumID, $limit = 0){
         if($limit > 0 ){
             $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID ORDER BY '".Database::PHOTO_RATING."' ASC LIMIT $limit";
@@ -147,6 +132,25 @@ class PhotoController implements Controller{
             $photoAlbum[] = self::createFromDBRow($row);
         }
         return $photoAlbum;
+    }
+    
+    public function loadAlbumCover($album){
+        if($album instanceof Album){
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = ".$album->getID()." AND ".Database::IS_ALBUM_COVER." = 't'";
+        }else{
+            //album = albumID
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $album AND ".Database::IS_ALBUM_COVER." = 't'";
+        }
+        DbConnection::getConnection();
+        $result = mysql_query($query);
+        if(!$result || count($result) > 1){
+            $logger = Logger::getLogger();
+            $logger->query(__METHOD__, $query);
+            $logger->error(__METHOD__, "La foto di copertina non &egrave stata trovata");
+            throw new Exception("La foto di copertina non &egrave stata trovata.");
+        }
+        $row = mysql_fetch_array($result);
+        return self::createFromDBRow($row);
     }
     
     public function buildPath($photo){

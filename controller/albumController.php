@@ -1,15 +1,8 @@
 <?php
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/photoController.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/database.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../logger.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/album.php");
-
-//define("ALBUMS", "http://www.skorpionsat.com/albums/");
-//define("ALBUMS_DIR", "../albums/");
-define("ALBUMS", "/Skorpionsat/site/albums/");
-define("ALBUMS_DIR", "../albums/");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/controller/controller.php");
+require_once(DOCUMENT_ROOT."/controller/photoController.php");
+require_once(DOCUMENT_ROOT."/model/album.php");
 
 class AlbumController implements Controller{
     
@@ -27,7 +20,7 @@ class AlbumController implements Controller{
                 throw new Exception("Si &egrave verificato un errore salvando l'album.");
             }
         }catch (Exception $e){
-            
+            $logger->error(__METHOD__, $e->getMessage());
             throw new Exception($e->getMessage());
         }
     }
@@ -77,20 +70,21 @@ class AlbumController implements Controller{
             }
             rmdir(ALBUMS_DIR."/".$album->getName());
         }catch (Exception $e){
-            
+            $logger->error(__METHOD__, "Si &egrave verificato un errore eliminando le foto dell'album");            
             throw new Exception("Si &egrave verificato un errore eliminando le foto dell'album.");
         }
     }
 
     public function loadByID($id){
+        $logger = Logger::getLogger();
         if(is_null($id)){
+            $logger->error(__METHOD__, "Attenzione! Non hai inserito il parametro per la ricerca dell'album - ". $id);            
             throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca dell'album.");
         }
         $query = "SELECT * FROM ".Database::TABLE_ALBUM." WHERE ".Database::ALBUM_ID." = $id";
         DbConnection::getConnection();
         $result = mysql_query($query);
         if(mysql_num_rows($result) != 1){
-            $logger = Logger::getLogger();
             $logger->query(__METHOD__, $query);
             $logger->error(__METHOD__, "L'album cercato non &egrave stato trovato");
             throw new Exception("L'album cercato non &egrave stato trovato.");
@@ -123,6 +117,7 @@ class AlbumController implements Controller{
     public function loadByName($name){
         $logger = Logger::getLogger();
         if(is_null($name)){
+            $logger->error(__METHOD__, "Attenzione! Non hai inserito il parametro per la ricerca dell'album - " . $name);
             throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca dell'album.");
         }
         $query = "SELECT * FROM ".Database::TABLE_ALBUM." WHERE ".Database::ALBUM_NAME." = '$name'";
@@ -141,7 +136,7 @@ class AlbumController implements Controller{
         if(!($album instanceof Album)){
             $album = self::loadByID($album);
         }
-        $path = ALBUMS.$album->getName();
+        $path = ALBUMS_PATH.$album->getName();
         return $path;
     }
     
@@ -163,7 +158,7 @@ class AlbumController implements Controller{
         $logger = Logger::getLogger();
         if(!file_exists(ALBUMS_DIR.$name)){
             if(!Mkdir(ALBUMS_DIR.$name, 0777)){
-                $logger->error(__METHOD__, "Impossibile creare la cartella: ". ALBUMS.$name);
+                $logger->error(__METHOD__, "Impossibile creare la cartella: ". ALBUMS_PATH.$name);
                 throw new Exception("Impossibile creare la cartella per l'album");
             }else{
                 $logger->debug(__METHOD__, "create folder for album: ". $name);

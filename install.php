@@ -3,10 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/settings.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/common.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/logger.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller/database.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/common.php");
+require_once(DOCUMENT_ROOT."/controller/database.php");
 
 buildTopPage("");
 

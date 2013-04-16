@@ -1,21 +1,11 @@
 <?php
 
-// Local Database settings.
-define("DB_HOSTNAME", "localhost");
-define("DB_USERNAME", "root");
-define("DB_PASSWORD", "root");
-
-//Netsons Database settings
-//define("DB_HOSTNAME", "mysql.netsons.com");
-//define("DB_USERNAME", "viiaosdl_admin");
-//define("DB_PASSWORD", "skorpion");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/settings.php");
 
 class Database{
     
     //database
-    const DB_NAME = "skorpion";
-    //Netsons Database settings
-    //const DB_NAME = "viiaosdl_skorpion";
+    const DB_NAME = DATABASE_NAME;
     
     //table
     const TABLE_NEWS = "news";

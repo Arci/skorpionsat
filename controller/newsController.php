@@ -1,9 +1,7 @@
 <?php
 
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/controller.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/database.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../logger.php");
-require_once(pathinfo(__FILE__, PATHINFO_DIRNAME)."/../model/news.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site/controller/controller.php");
+require_once(DOCUMENT_ROOT."/model/news.php");
 
 class NewsController implements Controller{
     
