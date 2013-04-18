@@ -9,9 +9,7 @@ class PhotoController implements Controller{
         $logger = Logger::getLogger();
         try{
             self::save($photo);
-            $albumController = new AlbumController();
-            $album = $albumController->loadByID($photo->getAlbumID());
-            if (!move_uploaded_file($tmp_name, ALBUMS_DIR."/".$album->getName()."/".$photo->getName())){
+            if (!move_uploaded_file($tmp_name, ALBUMS_DIR.$photo->getAlbumID()."/".$photo->getName())){
                 $logger->error(__METHOD__, "Si &egrave verificato un errore caricando la foto"); 
                 throw new Exception("Si &egrave verificato un errore caricando la foto.");
             }
@@ -69,11 +67,27 @@ class PhotoController implements Controller{
             $logger->error(__METHOD__, "Si &egrave verificato un errore eliminando la foto");
             throw new Exception("Si &egrave verificato un errore eliminando la foto.");
         }
-        $albumController = new AlbumController();
-        $album = $albumController->loadByID($photo->getAlbumID());
-        unlink(ALBUMS_DIR."/".$album->getName()."/".$photo->getName());
+        unlink(ALBUMS_DIR.$photo->getAlbumID()."/".$photo->getName());
     }
 
+    public function countNumberOfPhoto($albumID){
+        $logger = Logger::getLogger();
+        if(is_null($albumID)){
+            $logger->error(__METHOD__, "Attenzione! Non hai inserito il parametro per la ricerca dell'album - " . $albumID);
+            throw new Exception("Attenzione! Non hai inserito il parametro per la ricerca dell'album.");
+        }
+        $query = "SELECT COUNT(*) AS count FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = '$albumID'";
+        $result = mysql_query($query);
+        DbConnection::getConnection();
+        if(!$result){
+            $logger->query(__METHOD__, $query);
+            $logger->error(__METHOD__, "L'album cercato non &egrave stato trovato");
+            throw new Exception("L'album cercato non &egrave stato trovato.");
+        }
+        $row = mysql_fetch_array($result);
+        return $row['count'];
+    }
+    
     public function loadByID($id){
         $logger = Logger::getLogger();
         if(is_null($id)){

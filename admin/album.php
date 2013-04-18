@@ -41,7 +41,7 @@ function buildContent(){
     <?php
 }
 
-function showOptions(){
+function showOptions($message = null){
     ?>
     <ul>
         <div><li><a href="album.php?mode=create"><img src="<?php echo ADMIN_IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Crea nuovo album</span></a></li></div>
@@ -49,7 +49,12 @@ function showOptions(){
         <div><li><a href="album.php?mode=add"><img src="<?php echo ADMIN_IMAGES_PATH."add.png"; ?>" class="small-thumbnail" /><span>Aggiungi foto ad un album esistente</span></a></li></div>
     </ul>
     <?php
+    if($message){
+        ?><p class="main-notice"><?php echo $message; ?></p><?php
+    }
 }
+
+//----- CONTROL LOGIC -----//
 
 function create(){
     if(!isset($_POST["name"]) && !isset($_POST["date"])){ 
@@ -75,11 +80,13 @@ function create(){
                     $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
                 }
             }
+        }else{
+            $error[] = "Devi selezionare almeno un file";
         }
         if(count($error) == 0){
             try{
                 $date = reverseDate($_POST["date"]);
-                $album = new Album($_POST["name"], $date, $_POST["description"]);
+                $album = new Album(Filter::sqlEscape($_POST["name"]), $date, Filter::sqlEscape($_POST["description"]));
                 $albumController = new AlbumController();
                 $albumController->save($album);
                 $album = $albumController->loadByName($album->getName());
@@ -91,13 +98,22 @@ function create(){
                         }else{
                             $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i]);
                         }
-                        $photoController = new PhotoController();
-                        $photoController->upload($photo, $_FILES["fileselect"]["tmp_name"][$i]);
+                        try{
+                            $photoController = new PhotoController();
+                            $photoController->upload($photo, $_FILES["fileselect"]["tmp_name"][$i]);
+                        }catch(Exception $e){
+                            $error[] = "Problemi nel caricare la foto: ".$_FILES["fileselect"]["name"][$i];
+                        }
                     }
                 }
-                showEditForm(false, null, $album->getID());
+                if(count($error) > 0){
+                    showEditForm($error);
+                }else{
+                    showEditForm(false, null, $album->getID());
+                }
             }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
+                $error[] = "Problemi nel caricare le foto";
+                showCreateForm($error);
             }
         }else{
             $prev = array("name" => $_POST["name"],
@@ -107,6 +123,225 @@ function create(){
         }
     }
 }
+
+function edit(){
+    if(isset($_POST["action"])){
+        if($_POST["action"] == "Salva Modifiche"){
+            $error = array();
+            if($_POST["name"] == null){
+                $error[] = "Il nome &egrave obbligatorio";
+            }
+            if($_POST["date"] == null){
+                $error[] = "La data &egrave obbligatoria";
+            }
+            if(count($error) == 0){
+                $albumID = $_POST['album'];
+                $albumController = new AlbumController();
+                $album = $albumController->loadByID($albumID);
+                $album->setName(Filter::sqlEscape($_POST["name"]));
+                $album->setDate(reverseDate($_POST["date"]));
+                $album->setDescription(Filter::sqlEscape($_POST["description"]));
+                $albumController->update($album);
+
+                $photoController = new PhotoController();
+                $photoList = $photoController->loadByAlbum($album->getID());
+                foreach($photoList as $photo){
+                    $description = "description".$photo->getID();
+                    if(isset($_POST[$description])){
+                        $photo->setDescription(Filter::sqlEscape($_POST[$description]));
+                        try{
+                            $photoController->update($photo);
+                        }catch(Exception $e){
+                            $error[] = "Problemi nel modificare la foto: ".$photo->getName();
+                        }
+                    }
+                }
+                if(count($error) > 0){
+                    showEditForm($error);
+                } else{
+                    showOptions("L'album &egrave stato registrato");
+                }
+            }else{
+                $selectedPhoto = array();
+                if(array_key_exists("photo", $_POST)){
+                    foreach($_POST["photo"] as $selected){
+                        $selectedPhoto[] = $selected;
+                    }
+                }
+                $prev = array("name" => $_POST["name"],
+                                "date" => $_POST["date"],
+                                "description" => $_POST["description"],
+                                "selected" => $selectedPhoto);
+                showEditForm(false,$error,$_POST["album"],$prev);
+            }
+        }else if($_POST["action"] == "Elimina foto selezionate"){
+            $error = array();
+            if(!array_key_exists("photo", $_POST)){
+                $error[] = "devi selezionare almeno una foto!";
+            }else{
+                $albumController = new AlbumController();
+                $photoController = new PhotoController();
+                $photo = $photoController->loadByID($_POST["photo"][0]);
+                $numOfPhoto = $photoController->countNumberOfPhoto($photo->getAlbumID());
+                if($numOfPhoto == count($_POST["photo"])){
+                    $error[] = "Non puoi eliminare tutte le foto dall'album!";
+                }
+            }
+            if(count($error) == 0){
+                $photoController = new PhotoController();
+                $albumCoverDeleted = false;
+                $albumID = null;
+                foreach($_POST["photo"] as $selected){
+                    try{
+                        $photo = $photoController->loadByID($selected);
+                        if($photo->isAlbumCover()){
+                            $albumID = $photo->getAlbumID();
+                            $albumCoverDeleted = true;
+                        }
+                        $photoController->delete($photo);
+                    }catch (Exception $e){
+                        $error[] = "Problemi nell'eliminare la foto: ".$selected;
+                    }
+                }
+                if($albumCoverDeleted){
+                    try{
+                        $photoList = $photoController->loadByAlbum($albumID, 1);
+                        $photo = $photoList[0];
+                        $photo->setIfIsAlbumCover(true);
+                        $photoController->update($photo);
+                    }catch (Exception $e){
+                        $error[] = "Problemi nell'aggiornare la copertina";
+                    }
+                }
+                if(count($error) > 0){
+                    showEditForm($error);
+                }else{
+                    showOptions("Le foto selezionate sono state eliminate");
+                }
+            }else{
+                $prev = array("name" => $_POST["name"],
+                                "date" => $_POST["date"],
+                                "description" => $_POST["description"]);
+                showEditForm(false,$error, $_POST["album"], $prev);
+            }
+        }else if($_POST["action"] == "Elimina Album"){
+            $albumID = $_POST['album'];
+            $albumController = new AlbumController();
+            try{
+                try{
+                    $albumController->delete($albumController->loadByID($albumID));
+                    showOptions("L'album &egrave stato eliminato");
+                }catch (Exception $e){
+                    $error[] = "Problemi nell''eliminare l'album";
+                    showEditForm($error);
+                }
+            }catch (Exception $e){
+                $error[] = "Problemi nell'eliminare l'album";
+                showEditForm($error);
+            }
+        }else if($_POST["action"] == "Imposta foto selezionata come copertina"){
+            $error = array();
+            if(!array_key_exists("photo", $_POST)){
+                $error[] = "devi selezionare una foto!";
+            } else if(count($_POST["photo"]) > 1){
+                $error[] = "devi selezionare al p&ugrave una foto!";
+            }
+            if(count($error) == 0){
+                $photoController = new PhotoController();
+                $selected = $_POST["photo"][0];
+                try{
+                    $photo = $photoController->loadByID($selected);
+                    $exCover = $photoController->loadAlbumCover($photo->getAlbumID());
+                    $exCover->setIfIsAlbumCover(false);
+                    $photoController->update($exCover);
+                    $photo->setIfIsAlbumCover(true);
+                    $photoController->update($photo);
+                    showOptions("La foto selezionata &egrave stata impostata come copertina");
+                }catch (Exception $e){
+                    $error[] = "Problemi nell'impostare la copertina";
+                    showEditForm($error);
+                }
+            }else{
+                $prev = array("name" => $_POST["name"],
+                                "date" => $_POST["date"],
+                                "description" => $_POST["description"]);
+                showEditForm(false,$error, $_POST["album"], $prev);
+            }
+        }
+    }else{
+        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
+            showEditForm(true);
+        } else if(!isset($_POST["album"]) && isset($_POST["select"])){
+            $error = array();
+            $error[] = "Devi selezionare un album da modificare";
+            showEditForm(true, $error);
+        }else{
+            $albumID = $_POST["album"];
+            showEditForm(false, null, $albumID);
+        }
+    }
+}
+
+function add(){
+    if(array_key_exists("fileselect", $_FILES)){
+        $error = array();
+	$allowed_mime_types = array('image/jpeg', 'image/png', 'image/gif');
+        if(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == ""){
+            $error[] = "Devi selezionare almeno un file";
+        }else{
+            $photoController = new PhotoController();
+            $photoList = $photoController->loadByAlbum($_POST["album"]);
+            for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
+                if($_FILES["fileselect"]["error"][$i] > 0){
+                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>"; 
+                }
+                if($_FILES["fileselect"]["size"][$i] > MAX_BYTE){
+                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
+                }
+                if(!in_array($_FILES["fileselect"]["type"][$i], $allowed_mime_types)){
+                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
+                }
+                foreach($photoList as $photo){
+                    if($photo->getName() == $_FILES["fileselect"]["name"][$i]){
+                        $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> &egrave gi&agrave presente nell'album";
+                    }
+                }
+            }
+        }
+        if(count($error) == 0){
+            try{
+                $albumController = new AlbumController();
+                $album = $albumController->loadByID($_POST["album"]);
+                if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
+                    for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
+                        $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i]);
+                        $photoController = new PhotoController();
+                        $photoController->upload($photo, $_FILES["fileselect"]["tmp_name"][$i]);
+                    }
+                }
+                showEditForm(false, null, $album->getID());
+            }catch (Exception $e){
+                echo "<p class=\"error\">".$e->getMessage()."</p>";
+            }
+        }else{
+            $albumID = $_POST["album"];
+            showAddForm(false, $error, $albumID);
+        }
+    }else{
+        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
+            showAddForm(true);
+        } else if(!isset($_POST["album"]) && isset($_POST["select"])){
+            $error = array();
+            $error[] = "Devi selezionare un album da modificare";
+            showAddForm(true, $error);
+        }else{
+            $albumID = $_POST["album"];
+            showAddForm(false, null, $albumID);
+        }
+    }
+}
+
+//----- FORMS -----//
 
 function showCreateForm($error = null, $prev = null){
     echo "<div class=\"left\">
@@ -134,135 +369,6 @@ function showCreateForm($error = null, $prev = null){
             <div class=\"clear\"></div>";
 }
 
-function edit(){
-    if(isset($_POST["action"])){
-        if($_POST["action"] == "Salva Modifiche"){
-            $error = array();
-            if($_POST["name"] == null){
-                $error[] = "Il nome &egrave obbligatorio";
-            }
-            if($_POST["date"] == null){
-                $error[] = "La data &egrave obbligatoria";
-            }
-            if(count($error) == 0){
-                $albumID = $_POST['album'];
-                $albumController = new AlbumController();
-                $album = $albumController->loadByID($albumID);
-                $album->setName($_POST["name"]);
-                $album->setDate(reverseDate($_POST["date"]));
-                $album->setDescription($_POST["description"]);
-                $albumController->update($album);
-
-                $photoController = new PhotoController();
-                $photoList = $photoController->loadByAlbum($album->getID());
-                foreach($photoList as $photo){
-                    $description = "description".$photo->getID();
-                    if(isset($_POST[$description])){
-                        $photo->setDescription($_POST[$description]);
-                        $photoController->update($photo);
-                    }
-                }
-                showOptions();
-                echo "<p class=\"main-notice\">L'album &egrave stato registrato</p>";
-            }else{
-                $selectedPhoto = array();
-                if(array_key_exists("photo", $_POST)){
-                    foreach($_POST["photo"] as $selected){
-                        $selectedPhoto[] = $selected;
-                    }
-                }
-                $prev = array("name" => $_POST["name"],
-                                "date" => $_POST["date"],
-                                "description" => $_POST["description"],
-                                "selected" => $selectedPhoto);
-                showEditForm(false,$error,$_POST["album"],$prev);
-            }
-        }else if($_POST["action"] == "Elimina foto selezionate"){
-            $error = array();
-            if(!array_key_exists("photo", $_POST)){
-                $error[] = "devi selezionare almeno una foto!";
-            }
-            if(count($error) == 0){
-                $photoController = new PhotoController();
-                $albumCoverDeleted = false;
-                $albumID = null;
-                foreach($_POST["photo"] as $selected){
-                    try{
-                        $photo = $photoController->loadByID($selected);
-                        if($photo->isAlbumCover()){
-                            $albumID = $photo->getAlbumID();
-                            $albumCoverDeleted = true;
-                        }
-                        $photoController->delete($photo);
-                    }catch (Exception $e){
-                        echo "<p class=\"error\">".$e->getMessage()."</p>";
-                    }
-                }
-                if($albumCoverDeleted){
-                    $photoList = $photoController->loadByAlbum($albumID, 1);
-                    $photo = $photoList[0];
-                    $photo->setIfIsAlbumCover(true);
-                    $photoController->update($photo);
-                }
-                showOptions();
-                echo "<p class=\"main-notice\">Le foto selezionate sono state eliminate</p>";
-            }else{
-                $prev = array("name" => $_POST["name"],
-                                "date" => $_POST["date"],
-                                "description" => $_POST["description"]);
-                showEditForm(false,$error, $_POST["album"], $prev);
-            }
-        }else if($_POST["action"] == "Elimina Album"){
-            $albumID = $_POST['album'];
-            $albumController = new AlbumController();
-            try{
-                $albumController->delete($albumController->loadByID($albumID));
-                showOptions();
-                echo "<p class=\"main-notice\">L'album &egrave stato eliminato</p>";
-            }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
-            }
-        }else if($_POST["action"] == "Imposta foto selezionata come copertina"){
-            $error = array();
-            if(!array_key_exists("photo", $_POST)){
-                $error[] = "devi selezionare almeno una foto!";
-            }
-            if(count($error) == 0){
-                $photoController = new PhotoController();
-                $selected = $_POST["photo"][0];
-                try{
-                    $photo = $photoController->loadByID($selected);
-                    $exCover = $photoController->loadAlbumCover($photo->getAlbumID());
-                    $exCover->setIfIsAlbumCover(false);
-                    $photoController->update($exCover);
-                    $photo->setIfIsAlbumCover(true);
-                    $photoController->update($photo);
-                    showOptions();
-                    echo "<p class=\"main-notice\">La foto selezionata &egrave stata impostata come copertina</p>";
-                }catch (Exception $e){
-                    echo "<p class=\"error\">".$e->getMessage()."</p>";
-                }
-            }else{
-                $prev = array("name" => $_POST["name"],
-                                "date" => $_POST["date"],
-                                "description" => $_POST["description"]);
-                showEditForm(false,$error, $_POST["album"], $prev);
-            }
-        }
-    }else{
-        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
-            showEditForm(true);
-        } else if(!isset($_POST["album"]) && isset($_POST["select"])){
-            $error = array();
-            $error[] = "Devi selezionare un album da modificare";
-            showEditForm(true, $error);
-        }else{
-            $albumID = $_POST["album"];
-            showEditForm(false, null, $albumID);
-        }
-    }
-}
-
 function showEditForm($select = true, $error = null, $albumID = null, $prev = null){
     echo "<div class=\"left\">
             <p><a href=\"album.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
@@ -271,7 +377,7 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
     if($select){
         echo "<p class=\"list-title\">Seleziona un album:</p>";
     }
-    echo "<form action=\"album.php?mode=edit\" method=\"POST\">";
+    echo "<form id=\"form\" action=\"album.php?mode=edit\" method=\"POST\" onsubmit=\"return checkEntries();\">";
     if($error){
         echo "<p class=\"error\">";
         foreach($error as $e){
@@ -334,65 +440,6 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
     }
     echo "</form></div>
             <div class=\"clear\"></div>";
-}
-
-function add(){
-    if(array_key_exists("fileselect", $_FILES)){
-        $error = array();
-	$allowed_mime_types = array('image/jpeg', 'image/png', 'image/gif');
-        if(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == ""){
-            $error[] = "Devi selezionare almeno un file";
-        }else{
-            $photoController = new PhotoController();
-            $photoList = $photoController->loadByAlbum($_POST["album"]);
-            for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-                if($_FILES["fileselect"]["error"][$i] > 0){
-                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>"; 
-                }
-                if($_FILES["fileselect"]["size"][$i] > MAX_BYTE){
-                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
-                }
-                if(!in_array($_FILES["fileselect"]["type"][$i], $allowed_mime_types)){
-                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
-                }
-                foreach($photoList as $photo){
-                    if($photo->getName() == $_FILES["fileselect"]["name"][$i]){
-                        $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> &egrave gi&agrave presente nell'album";
-                    }
-                }
-            }
-        }
-        if(count($error) == 0){
-            try{
-                $albumController = new AlbumController();
-                $album = $albumController->loadByID($_POST["album"]);
-                if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
-                    for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-                        $photo = new Photo($album->getID(), $_FILES["fileselect"]["name"][$i]);
-                        $photoController = new PhotoController();
-                        $photoController->upload($photo, $_FILES["fileselect"]["tmp_name"][$i]);
-                    }
-                }
-                showEditForm(false, null, $album->getID());
-            }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
-            }
-        }else{
-            $albumID = $_POST["album"];
-            showAddForm(false, $error, $albumID);
-        }
-    }else{
-        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
-            showAddForm(true);
-        } else if(!isset($_POST["album"]) && isset($_POST["select"])){
-            $error = array();
-            $error[] = "Devi selezionare un album da modificare";
-            showAddForm(true, $error);
-        }else{
-            $albumID = $_POST["album"];
-            showAddForm(false, null, $albumID);
-        }
-    }
 }
 
 function showAddForm($select = true, $error = null, $albumID = null){

@@ -61,6 +61,19 @@ function buildContent(){
         mkdir("log", 0777);
         echo "<p><span style='color:green'>FOLDER 'LOG' CREATED</span></p>";
     }
+    if(!file_exists("slideshow")){
+        echo "<p>Trying to create 'slideshow' folder</p>";
+        mkdir("slideshow", 0777);
+        echo "<p><span style='color:green'>FOLDER 'SLIDESHOW' CREATED</span></p>";
+    } else {
+        echo "<p><span style='color:orange'>FOLDER 'SLIDESHOW' ALREADY EXISTS!</span></p>";
+        echo "<p>Trying to delete 'slideshow' folder</p>";
+        delfolder("slideshow", true);
+        echo "<p><span style='color:green'><b><i><u>FOLDER 'SLIDESHOW' DELETED!</u></i></b></span></p>";
+        echo "<p>Trying to create 'slideshow' folder</p>";
+        mkdir("slideshow", 0777);
+        echo "<p><span style='color:green'>FOLDER 'SLIDESHOW' CREATED</span></p>";
+    }
     echo "</td>";
 
     //creo le tabelle

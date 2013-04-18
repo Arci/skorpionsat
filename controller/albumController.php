@@ -9,8 +9,6 @@ class AlbumController implements Controller{
     public function save($album){
         $logger = Logger::getLogger();
         try{
-            $logger->debug(__METHOD__, "insert ". $album->getName());
-            self::createAlbumFolder($album->getName());
             $query = "INSERT INTO ".Database::TABLE_ALBUM." (".Database::ALBUM_NAME.", ".Database::ALBUM_DATE.", ".Database::ALBUM_DESCRIPTION.") VALUES ('".$album->getName()."', '".$album->getDate()."', '".$album->getDescription()."')";
             DbConnection::getConnection();
             $result = mysql_query($query);        
@@ -19,6 +17,9 @@ class AlbumController implements Controller{
                 $logger->error(__METHOD__, "Si &egrave verificato un errore salvando l'album");
                 throw new Exception("Si &egrave verificato un errore salvando l'album.");
             }
+            $album = self::loadByName($album->getName());
+            $logger->debug(__METHOD__, "insert ". $album->getID());
+            self::createAlbumFolder($album->getID());
         }catch (Exception $e){
             $logger->error(__METHOD__, $e->getMessage());
             throw new Exception($e->getMessage());
@@ -38,15 +39,6 @@ class AlbumController implements Controller{
             $logger->query(__METHOD__, $query);
             $logger->error(__METHOD__, "Si &egrave verificato un errore modificando l'album");
             throw new Exception("Si &egrave verificato un errore modificando l'album.");
-        }
-        if($oldAlbum->getName() != $album->getName()){
-            self::createAlbumFolder($album->getName());
-            $photoController = new PhotoController();
-            $photoList = $photoController->loadByAlbum($album->getID());
-            foreach($photoList as $photo){
-                rename(ALBUMS_DIR."/".$oldAlbum->getName()."/".$photo->getName(), ALBUMS_DIR."/".$album->getName()."/".$photo->getName());
-            }
-            rmdir(ALBUMS_DIR."/".$oldAlbum->getName());
         }
         return $album;
     }
@@ -68,7 +60,7 @@ class AlbumController implements Controller{
                 $logger->error(__METHOD__, "Si &egrave verificato un errore eliminando l'album");
                 throw new Exception("Si &egrave verificato un errore eliminando l'album.");
             }
-            rmdir(ALBUMS_DIR."/".$album->getName());
+            rmdir(ALBUMS_DIR.$album->getID());
         }catch (Exception $e){
             $logger->error(__METHOD__, "Si &egrave verificato un errore eliminando le foto dell'album");            
             throw new Exception("Si &egrave verificato un errore eliminando le foto dell'album.");
@@ -132,11 +124,8 @@ class AlbumController implements Controller{
         return self::createFromDBRow($row);
     }
     
-    public function getPath($album){
-        if(!($album instanceof Album)){
-            $album = self::loadByID($album);
-        }
-        $path = ALBUMS_PATH.$album->getName();
+    public function getPath($albumID){
+        $path = ALBUMS_PATH.$albumID;
         return $path;
     }
     
