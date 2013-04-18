@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', true);
 
 require_once(dirname(__FILE__)."/../settings.php");
+require_once(dirname(__FILE__)."/filter.php");
 	
 function reverseDate($date){
     $dateArray = explode("/", $date);

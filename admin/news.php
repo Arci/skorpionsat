@@ -44,7 +44,7 @@ function buildContent(){
     <?php
 }
 
-function showOptions(){
+function showOptions($message = null){
     ?>
     <ul>
         <div><li><a href="news.php?mode=publish"><img src="<?php echo ADMIN_IMAGES_PATH."create.png"; ?>" class="small-thumbnail" /><span>Pubblica una nuova notizia</span></a></li></div>
@@ -52,13 +52,18 @@ function showOptions(){
         <div><li><a href="news.php?mode=delete"><img src="<?php echo ADMIN_IMAGES_PATH."delete.png"; ?>" class="small-thumbnail" /><span>Elimina una o pi&ugrave notizie esistenti</span></a></li></div>
     </ul>
     <?php
+    if($message){
+        ?><p class="main-notice"><?php echo $message; ?></p><?php
+    }
 }
 
+//----- CONTROL LOGIC -----//
+
 function publish(){
+    $error = array();
     if(!isset($_POST["title"]) && !isset($_POST["content"])){ 
         showPublishForm();
     } else {
-        $error = array();
         if($_POST["title"] == null){
             $error[] = "Il titolo &egrave obbligatorio";
         }
@@ -73,15 +78,15 @@ function publish(){
             }else{
                 $author = "Arci";
             }
-            $news = new News($_POST["title"], $date, $author, $_POST["content"]);
+            $news = new News(Filter::sqlEscape($_POST["title"]), $date, Filter::sqlEscape($author), $_POST["content"]);
             $newsController = new NewsController();
             try{
                 $newsController->save($news);
+                showOptions("La notizia &egrave stata aggiunta");
             }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
+                $error[] = "Problemi nel salvataggio della notizia";
+                showPublishForm($error);
             }
-            showOptions();
-            echo "<p class=\"main-notice\">La notizia &egrave stata aggiunta</p>";
         }else{
             $prev = array("title" => $_POST["title"],
                           "content" => $_POST["content"]);
@@ -90,35 +95,9 @@ function publish(){
     }
 }
 
-function showPublishForm($error = null, $prev = null){
-    echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
-            </div>";
-    echo "<div class=\"sub-menu-container left\">";
-    echo "<form action=\"news.php?mode=publish\" method=\"POST\">";
-    if($error){
-        echo "<p class=\"error\">";
-        foreach($error as $e){
-            echo $e."<br/>";
-        }
-        echo "</p>";
-    }
-    $old_title = $prev["title"];
-    echo "<p class=\"title\"><label for=\"title\">Titolo: </label><input type=\"text\" id=\"title\" name=\"title\" value=\"$old_title\"/></p>";     
-    $old_content = $prev["content"];
-    echo "<p class=\"editor\"><textarea id=\"editor\" name=\"content\">$old_content</textarea></p>";
-    echo "<script type=\"text/javascript\">
-            CKEDITOR.replace( 'editor' );
-        </script>
-        <p><input type=\"submit\" value=\"Pubblica\" /></p>
-        </form>
-        </div>
-        <div class=\"clear\"></div>";
-}
-
 function edit(){
+    $error = array();
     if(isset($_POST["title"]) || isset($_POST["content"])){ 
-        $error = array();
         if($_POST["title"] == null){
             $error[] = "Il titolo &egrave obbligatorio";
         }
@@ -128,15 +107,15 @@ function edit(){
         if(count($error) == 0){
             try{
                 $newsController = new NewsController();
-                $news = $newsController->loadByID($_POST["news"]);
-                $news->setTitle($_POST["title"]);
+                $news = $newsController->loadByID(Filter::sqlEscape($_POST["news"]));
+                $news->setTitle(Filter::sqlEscape($_POST["title"]));
                 $news->setContent($_POST["content"]);
                 $newsController->update($news);
+                showOptions("La notizia &egrave stata modificata");
             }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
+                $error[] = "Problemi nella modifica  della notizia";
+                showEditForm($error);
             }
-            showOptions();
-            echo "<p class=\"main-notice\">La notizia &egrave stata modificata</p>";
         }else{
             $newsID = $_POST["news"];
             showEditForm(false, $error, $newsID);
@@ -145,7 +124,6 @@ function edit(){
         if(!isset($_POST["news"]) && !isset($_POST["select"])){ 
             showEditForm(true);
         } else if(!isset($_POST["news"]) && isset($_POST["select"])){
-            $error = array();
             $error[] = "Devi selezionare una notizia da modificare";
             showEditForm(true, $error);
         }else{
@@ -155,105 +133,162 @@ function edit(){
     }
 }
 
-function showEditForm($select = true, $error = null, $newsID = null){
-    echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
-            </div>";
-    echo "<div class=\"sub-menu-container left\">";
-    if($select){
-        echo "<p class=\"list-title\">Seleziona una notizia:</p>";
-    }
-    echo "<form action=\"news.php?mode=edit\" method=\"POST\">";
-    if($error){
-        echo "<p class=\"error\">";
-        foreach($error as $e){
-            echo $e."<br/>";
-        }
-        echo "</p>";
-    }
-    if($select){ //selezione notizia
-        $newsController = new NewsController();
-        $newsList = $newsController->loadAll();
-        if(count($newsList) > 0){
-            foreach($newsList as $news){
-                echo"<p class=\"form-list\"><input type=\"radio\" id=\"news".$news->getID()."\" name=\"news\" value=\"".$news->getID()."\" />
-                        <label for=\"news".$news->getID()."\">".$news->getTitle()."</label></p>";
-            }
-            echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
-            echo "<p><input type=\"submit\" value=\"Modifica selezionato\" </p>";
-        }else{
-            echo "<p class=\"error\">Non ci sono notizie da modificare!</p>";
-        }
-    } elseif(!$select && !is_null($newsID)){ //modifica notizia selezionata
-        try{
-            $newsController = new NewsController();
-            $news = $newsController->loadByID($newsID);
-            echo "<p class=\"title\">Titolo: <input type=\"text\" name=\"title\" value=\"".$news->getTitle()."\"/></p>";     
-            echo "<p class=\"editor\"><textarea id=\"editor\" name=\"content\">".$news->getContent()."</textarea></p>";
-            echo "<p><input type=\"hidden\" name=\"news\" value=\"".$news->getID()."\" /></p>";
-            echo "<script type=\"text/javascript\">
-                    CKEDITOR.replace( 'editor' );
-                    </script>
-                    <input type=\"submit\" value=\"Modifica\" />";
-        }catch (Exception $e){
-            echo "<p class=\"error\">".$e->getMessage()."</p>";
-        }
-    } else{
-        echo "<p class=\"error\">Something went wrong with the form</p>";
-    }
-    echo "</form></div>
-            <div class=\"clear\"></div>";
-}
-
 function delete(){
+    $error = array();
     if(!isset($_POST["news"]) && isset($_POST["select"])){ 
-        $error = array();
         $error[] = "Devi selezionare una notizia per eliminarla";
         showDeleteForm($error);
     }else if(isset($_POST["news"])){
         foreach($_POST["news"] as $newsID){
             try{
                 $newsController = new NewsController();
-                $news = $newsController->loadByID($newsID);
+                $news = $newsController->loadByID(Filter::sqlEscape($newsID));
                 $newsController->delete($news);
+                showOptions("Le notizie selezionate sono state rimosse");
             }catch (Exception $e){
-                echo "<p class=\"error\">".$e->getMessage()."</p>";
+                $error[] = "Problemi nel recuperare le notizie selezionate";
+                showDeleteForm($error);
             }
         }
-        showOptions();
-        echo "<p class=\"main-notice\">Le notizie selezionate sono state rimosse</p>";
     } else {
         showDeleteForm();
     }
 }
 
-function showDeleteForm($error = null){
-    echo "<div class=\"left\">
-            <p><a href=\"news.php\"><img class=\"small-thimbnail\" src=\"".ADMIN_IMAGES_PATH."back.png\" /></a></p>
-            </div>";
-    echo "<div class=\"sub-menu-container left\">
-            <p class=\"list-title\">Seleziona una o pi&ugrave notizie:</p>";
-    echo "<form action=\"news.php?mode=delete\" method=\"POST\">";
-    if($error){
-        echo "<p class=\"error\">";
-        foreach($error as $e){
-            echo $e."<br/>";
-        }
-        echo "</p>";
-    }
-    $newsController = new NewsController();
-    $newsList = $newsController->loadAll();
-    if(count($newsList) == 0){
-        echo "<p class=\"error\">Non ci sono notizie da eliminare!</p>";
-    }else{
-        foreach($newsList as $news){
-            echo"<p class=\"form-list\"><input type=\"checkbox\" id=\"news".$news->getID()."\"name=\"news[]\" value=\"".$news->getID()."\" />
-                    <label for=\"news".$news->getID()."\">".$news->getTitle()."</label></p>";
-        }
-        echo "<p><input type=\"hidden\" name=\"select\" value=\"true\" /></p>";
-        echo "<p><input type=\"submit\" value=\"Elimina selezionati\" /></p>";
-    }
-    echo "</form></div>
-            <div class=\"clear\"></div>";
+//----- FORMS -----//
+
+function showPublishForm($error = null, $prev = null){
+    ?>
+    <div class="left">
+        <p><a href="news.php"><img class="small-thimbnail" src="<?php echo ADMIN_IMAGES_PATH."back.png"; ?>" /></a></p>
+    </div>
+    <div class="sub-menu-container left">
+        <form action="news.php?mode=publish" method="POST">
+            <?php
+            if($error){
+                echo "<p class=\"error\">";
+                foreach($error as $e){
+                    echo $e."<br/>";
+                }
+                echo "</p>";
+            }
+            $old_title = $prev["title"];
+            $old_content = $prev["content"];
+            ?>
+            <p class="title"><label for="title">Titolo: </label><input type="text" id="title" name="title" value="<?php echo $old_title; ?>"/></p>    
+            <p class="editor"><textarea id="editor" name="content"><?php echo $old_content; ?></textarea></p>
+            <script type="text/javascript">
+                CKEDITOR.replace( 'editor' );
+            </script>
+            <p><input type="submit" value="Pubblica" /></p>
+        </form>
+    </div>
+    <div class="clear"></div>
+    <?php
 }
-?>
+
+function showEditForm($select = true, $error = null, $newsID = null){
+    ?>
+    <div class="left">
+        <p><a href="news.php"><img class="small-thimbnail" src="<?php echo ADMIN_IMAGES_PATH."back.png"; ?>" /></a></p>
+    </div>
+    <div class="sub-menu-container left">
+        <?php
+        if($select){
+            ?><p class="list-title">Seleziona una notizia:</p><?php
+        }
+        ?>
+        <form action="news.php?mode=edit" method="POST">
+            <?php
+            if($error){
+                echo "<p class=\"error\">";
+                foreach($error as $e){
+                    echo $e."<br/>";
+                }
+                echo "</p>";
+            }
+            if($select){ //selezione notizia
+                $newsController = new NewsController();
+                $newsList = $newsController->loadAll();
+                if(count($newsList) > 0){
+                    foreach($newsList as $news){
+                        ?>
+                        <p class="form-list">
+                            <input type="radio" id="<?php echo "news".$news->getID(); ?>" name="news" value="<?php echo $news->getID(); ?>" />
+                            <label for="<?php echo "news".$news->getID(); ?>"><?php echo $news->getTitle(); ?></label>
+                        </p>
+                        <?php
+                    }
+                    ?>
+                    <p><input type="hidden" name="select" value="true" /></p>
+                    <p><input type="submit" value="Modifica selezionato" </p>
+                    <?php
+                }else{
+                    ?><p class="error">Non ci sono notizie da modificare!</p><?php
+                }
+            }elseif(!$select && !is_null($newsID)){ //modifica notizia selezionata
+                try{
+                    $newsController = new NewsController();
+                    $news = $newsController->loadByID($newsID);
+                    ?>
+                    <p class="title">Titolo: <input type="text" name="title" value="<?php echo $news->getTitle(); ?>"/></p>    
+                    <p class="editor"><textarea id="editor" name="content"><?php echo $news->getContent(); ?></textarea></p>
+                    <p><input type="hidden" name="news" value="<?php echo $news->getID(); ?>" /></p>
+                    <script type="text/javascript">
+                            CKEDITOR.replace( 'editor' );
+                        </script>
+                    <input type="submit" value="Modifica" />
+                    <?php
+                }catch (Exception $e){
+                    ?><p class="error">Impossibile caricare la notizia selezionata</p><?php
+                }
+            }else{
+                ?><p class="error">Something went wrong with the form</p><?php
+            }
+            ?>
+        </form>
+    </div>
+    <div class="clear"></div>
+    <?php
+}
+
+function showDeleteForm($error = null){
+    ?>
+    <div class="left">
+        <p><a href="news.php"><img class="small-thimbnail" src="<?php echo ADMIN_IMAGES_PATH."back.png"; ?>" /></a></p>
+    </div>
+    <div class="sub-menu-container left">
+        <p class="list-title">Seleziona una o pi&ugrave notizie</p>
+        <form action="news.php?mode=delete" method="POST">
+            <?php
+            if($error){
+                echo "<p class=\"error\">";
+                foreach($error as $e){
+                    echo $e."<br/>";
+                }
+                echo "</p>";
+            }
+            $newsController = new NewsController();
+            $newsList = $newsController->loadAll();
+            if(count($newsList) == 0){
+                ?><p class="error">Non ci sono notizie da eliminare!</p><?php
+            }else{
+                foreach($newsList as $news){
+                    ?>
+                    <p class="form-list">
+                        <input type="checkbox" id="<?php echo "news".$news->getID(); ?>" name="news[]" value="<?php echo $news->getID(); ?>" />
+                        <label for="<?php echo "news".$news->getID(); ?>"><?php echo $news->getTitle(); ?></label>
+                    </p>
+                    <?php
+                }
+                ?>
+                <p><input type="hidden" name="select" value="true" /></p>
+                <p><input type="submit" value="Elimina selezionati" /></p>
+                <?php
+            }
+            ?>
+        </form>
+    </div>
+    <div class="clear"></div>
+    <?php
+}
