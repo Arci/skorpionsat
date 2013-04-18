@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', true);
 
 require_once(dirname(__FILE__)."/common.php");
+define("ACTION_ADD", "Aggiungi");
+define("ACTION_DELETE", "Elimina foto selezionate");
 
 buildTopPage("slideshow", true);
 
@@ -33,75 +35,90 @@ function buildContent(){
 }
 
 function edit(){
-    $error = array();
-    if($_POST["action"] == "Aggiungi"){
-	if(array_key_exists("fileselect", $_FILES)){
-	    $error = array();
-	    $allowed_mime_types = array('image/jpeg', 'image/png', 'image/gif');
-	    if(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == ""){
-		$error[] = "Devi selezionare almeno un file";
-	    }else{
-		for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-		    if($_FILES["fileselect"]["error"][$i] > 0){
-			$error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>"; 
-		    }
-		    if($_FILES["fileselect"]["size"][$i] > MAX_BYTE){
-			$error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
-		    }
-		    if(!in_array($_FILES["fileselect"]["type"][$i], $allowed_mime_types)){
-			$error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
-		    }
-		}
+    if($_POST["action"] == ACTION_ADD){
+	$error = checkValidity(ACTION_ADD, $_FILES);
+	if (count($error) == 0){
+	    $error =  performUpload(ACTION_ADD, $_FILES);
+	    if (count($error) == 0){
+		showForm();
+	    } else {
+	    	showForm($error);
 	    }
-	    if(count($error) == 0){
-		try{
-		    if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
-			for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
-			    if (!move_uploaded_file($_FILES["fileselect"]["tmp_name"][$i], SLIDESHOW_DIR.$_FILES["fileselect"]["name"][$i])){
-				echo "Si &egrave verificato un errore caricando la foto.";
-			    }
-			}
-		    }
-		    showForm();
-		}catch (Exception $e){
-		    echo "<p class=\"error\">".$e->getMessage()."</p>";
-		}
-	    }else{
-		showForm($error);
-	    }
-	}else{
+	} else {
 	    showForm($error);
 	}
-    }else if($_POST["action"] == "Elimina foto selezionate"){
-	if(array_key_exists("photo", $_POST)){
-	    foreach($_POST["photo"] as $photo){
-		unlink(SLIDESHOW_DIR.$photo);
+    } else if($_POST["action"] == ACTION_DELETE){
+	$error = checkValidity("Elimina foto selezionate", $_POST);
+	if (count($error) == 0){
+	    $error =  performUpload(ACTION_DELETE, $_POST);
+	    if (count($error) == 0){
+		showForm();
+	    } else {
+	    	showForm($error);
 	    }
-	}else{
-	    $error[] = "Devi selezionare almeno una foto";
+	} else {
+	    showForm($error);
 	}
-	showForm($error);
     }
 }
 
-function showForm($error = null){
-    $arrayfiles = array();
-    $extensions = array('.jpg','.jpeg','.png');
-    $dirname = SLIDESHOW_DIR;
-    if(file_exists($dirname)){
-	    $handle = opendir($dirname);
-	    while (false !== ($file = readdir($handle))) { 
-		    if(is_file($dirname.$file)){
-			    $ext = strtolower(substr($file, strrpos($file, "."), strlen($file)-strrpos($file, ".")));
-			    if(in_array($ext,$extensions)){
-				    array_push($arrayfiles,$file);
-			    }
+function checkValidity($what, $data){
+    $error = array();
+    if ($what == ACTION_ADD){
+	if (array_key_exists("fileselect", $data)){
+	    $allowed_mime_types = array('image/jpeg', 'image/png', 'image/gif');
+	    if (count($data["fileselect"]["name"]) == 1 && $data["fileselect"]["type"][0] == ""){
+		$error[] = "Devi selezionare almeno un file";
+	    } else {
+		for($i=0; $i < count($data["fileselect"]["name"]); $i++){
+		    if($data["fileselect"]["error"][$i] > 0){
+			$error[] = "Si &egrave verificato un'errore caricando il file <strong>".$data["fileselect"]["name"][$i]."</strong>"; 
 		    }
+		    if($data["fileselect"]["size"][$i] > MAX_BYTE){
+			$error[] = "Il file <strong>".$data["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
+		    }
+		    if(!in_array($data["fileselect"]["type"][$i], $allowed_mime_types)){
+			$error[] = "Il file <strong>".$data["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
+		    }
+		}
 	    }
-	    $handle = closedir($handle);
+	} else {
+	    $error = "Problemi nel recuperare i dati";
+	}
+    } else if($what == ACTION_DELETE){
+	if (!array_key_exists("photo", $data)){
+	    $error[] = "Devi selezionare almeno una foto";
+	}
+    } else {
+	$error = "Problemi nel recuperare i dati";
     }
+    return $error;
+}
+
+function performUpload($what, $data){
+    $error = array();
+    if ($what == ACTION_ADD){
+	$error = array();
+	if (!(count($data["fileselect"]["name"]) == 1 && $data["fileselect"]["type"][0] == "")){
+	    for($i=0; $i < count($data["fileselect"]["name"]); $i++){
+		if (!move_uploaded_file($data["fileselect"]["tmp_name"][$i], SLIDESHOW_DIR.$data["fileselect"]["name"][$i])){
+		    $error = "Si &egrave verificato un errore caricando la foto.";
+		}
+	    }
+	}
+    } else if($what == ACTION_DELETE){
+	foreach ($data["photo"] as $photo){
+	    if (!unlink(SLIDESHOW_DIR.$photo)){
+		$error = "Si &egrave verificato un errore eliminando la foto.";
+	    }
+	}
+    }
+    return $error;
+}
+
+function showForm($error = null){
     ?>
-    <p class="title">Qui puoi aggiungere o rimuovere le immagini che scorrono nella pagina "Chi siamo":</p>
+    <p class="title">Puoi aggiungere o rimuovere le immagini che scorrono nella pagina "Chi siamo":</p>
     <form action="slideshow.php?mode=edit" method="POST" enctype="multipart/form-data">
 	<?php
 	if($error){
@@ -112,26 +129,52 @@ function showForm($error = null){
 	    echo "</p>";
 	}
 	$count = 1;
-	foreach($arrayfiles as $img){
-	    ?>
-	    <div class="album-div left">
-		<input class="album-checkbox" type="checkbox" name="photo[]" value="<?php echo $img; ?>">
-		<img class="thumbnail" src="<?php echo SLIDESHOW_PATH.$img; ?>">
-	    </div>
-	    <?php
-	    if($count == 3){
-		echo "<div class=\"clear\"></div>";
-		$count = 0;
+	$arrayfiles = getSlideshowImages();
+	if (count($arrayfiles) == 0){
+	    echo "<p class=\"error\">Attualmente non ci sono immagini nello slideshow</p>";
+	} else {
+	    ?><div class="slideshow"><?php
+	    foreach($arrayfiles as $img){
+		?>
+		<div class="album-div left">
+		    <input class="album-checkbox" type="checkbox" name="photo[]" value="<?php echo $img; ?>">
+		    <img class="thumbnail" src="<?php echo SLIDESHOW_PATH.$img; ?>">
+		</div>
+		<?php
+		if($count == 3){
+		    echo "<div class=\"clear\"></div>";
+		    $count = 0;
+		}
+		$count++;
 	    }
-	    $count++;
-	}
-	if($count > 0){
-	    echo "<div class=\"clear\"></div>";
+	    if($count > 0){
+		echo "<div class=\"clear\"></div>";
+	    }
+	    ?></div><?php
 	}
 	?>
 	<p class="file-input"><label for="fileselect">Foto da caricare: </label><input type="file" id="fileselect" name="fileselect[]" multiple="multiple" /></p>
-	<input type="submit" name="action" value="Aggiungi" />
-	<input type="submit" name="action" value="Elimina foto selezionate" />
+	<input type="submit" name="action" value="<?php echo ACTION_ADD; ?>" />
+	<input type="submit" name="action" value="<?php echo ACTION_DELETE; ?>" />
     </form>
     <?php
+}
+
+function getSlideshowImages(){
+    $arrayfiles = array();
+    $extensions = array('.jpg','.jpeg','.png');
+    $dirname = SLIDESHOW_DIR;
+    if(file_exists($dirname)){
+	$handle = opendir($dirname);
+	while (false !== ($file = readdir($handle))) { 
+	    if(is_file($dirname.$file)){
+		$ext = strtolower(substr($file, strrpos($file, "."), strlen($file)-strrpos($file, ".")));
+		if(in_array($ext,$extensions)){
+			array_push($arrayfiles,$file);
+		}
+	    }
+	}
+	$handle = closedir($handle);
+    }
+    return $arrayfiles;
 }

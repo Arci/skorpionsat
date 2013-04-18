@@ -158,6 +158,10 @@ body{
     border: 0.2em solid #303030;
 }
 
+#content .slideshow{
+    width: 100%;
+}
+
 #content .album-cover{
     border: 0.2em solid #C00000 !important;
 }
