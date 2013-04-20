@@ -1,23 +1,36 @@
 <?php
-//Database settings.
-//define("DB_HOSTNAME", "mysql.netsons.com");
-//define("DB_USERNAME", "viiaosdl_admin");
-//define("DB_PASSWORD", "skorpion");
-//define("DATABASE_NAME", "viiaosdl_skorpion");
-define("DB_HOSTNAME", "localhost");
-define("DB_USERNAME", "root");
-define("DB_PASSWORD", "root");
-define("DATABASE_NAME", "skorpion");
+//Deploy
+define("DEPLOY", false);
 
+//Database settings.
+if(DEPLOY){
+    define("DB_HOSTNAME", "mysql.netsons.com");
+    define("DB_USERNAME", "viiaosdl_admin");
+    define("DB_PASSWORD", "skorpion");
+    define("DATABASE_NAME", "viiaosdl_skorpion");
+} else {
+    define("DB_HOSTNAME", "localhost");
+    define("DB_USERNAME", "root");
+    define("DB_PASSWORD", "root");
+    define("DATABASE_NAME", "skorpion");
+}
 //Domains and subdomains
-define("ROOT_PATH", "/Skorpionsat/site");
-//define("ROOT_PATH", "http://www.skorpionsat.com");
-define("FORUM_PATH", ROOT_PATH."/forum/");;
-define("ADMIN_PATH", ROOT_PATH."/admin");
+if(DEPLOY){
+    define("ROOT_PATH", "http://www.skorpionsat.com");
+    define("FORUM_PATH", ROOT_PATH."/forum/");
+    define("ADMIN_PATH", ROOT_PATH."/admin");
+}else{
+    define("ROOT_PATH", "/Skorpionsat/site");
+    define("FORUM_PATH", ROOT_PATH."#");
+    define("ADMIN_PATH", ROOT_PATH."/admin");
+}
 
 //Document Root
-define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site");
-//define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]);
+if(DEPLOY){
+    define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]);
+}else{
+    define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site");
+}
 
 //Files
 define("IMAGES_PATH", ROOT_PATH."/img/");
@@ -37,7 +50,6 @@ define("ALBUMS_DIR", DOCUMENT_ROOT."/albums/");
 
 //Miscellaneous
 define("MAX_BYTE", 10000000);
-define("DEPLOY", false);
 
 
 

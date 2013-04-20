@@ -30,7 +30,7 @@ if(DEPLOY){
         $message = "<p>Ciao <span class=\"admin-username\">".$user->data['username_clean']."</span>, non hai i permessi, torna alla <a class=\"back-to\" href=\"".ROOT_PATH."\">home</a></p>";
     }
 }else{
-    $message = "<p style=\"color: FF9933; font-weight: bold;\">You're running on debug mode</p>";
+    $message = "<p style=\"color: FF9933; font-weight: bold; padding: 0.5em 1% 1em 1%;\">You're running on debug mode</p>";
     $loggedGood = true;
 
 }
@@ -38,10 +38,8 @@ if(DEPLOY){
 buildTopPage("", $loggedGood);
 
 ?>
-<div id="page">
 <div id="content">
     <?php echo $message; ?>
-</div>
 </div>
 <?php
 

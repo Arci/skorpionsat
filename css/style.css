@@ -28,7 +28,7 @@ body{
 	margin-bottom: 1%;
 	background-image: url(../img/background_05.png);
 	border-radius: 1em;
-	max-height: 20em;
+	max-height: 17em;
 }
 
 #logo{
@@ -41,9 +41,9 @@ body{
 #logo img{
 	z-index: 1;
 	position: relative;
-	width: 130%;
-	margin-top: -13.5%;
-	left: -25%;
+	width: 115%;
+	margin-top: -12.5%;
+	left: -15%;
 }
 
 #container-right{
@@ -59,20 +59,20 @@ body{
 	color: #303030;
 	font-weight: bold;
 	text-transform: uppercase;
-	font-size: 5.2em;
+	font-size: 5em;
 	text-align: center;
 	letter-spacing: 0.25em;
-	margin-top: 7%;
+	margin-top: 5%;
 }
 
 #menu{
 	position: relative;
-	margin-top: 6%;
+	margin-top: 4%;
 	z-index: 1;
 	left: -20%;
 	width: 130%;
 	font-family: 'Julius Sans One', sans-serif;
-	font-size: 1.5em;
+	font-size: 1.4em;
 	text-align: center;
 }
 
@@ -123,7 +123,7 @@ body{
 }
 
 #main-container{
-	height: 36em;
+	height: 39em;
 }
 
 .slide{
@@ -348,7 +348,7 @@ div#album-image{
 	font-size: 1.4em;
 	padding: 2.8em 2.5% 2.8em 2.5%;
 	background-image: url(../img/background_05.png);
-	border-radius: 1em;
+	border-radius: 0.8em;
 	margin-bottom:  0.9em;
 }
 
