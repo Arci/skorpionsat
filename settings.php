@@ -36,7 +36,7 @@ define("ALBUMS_PATH", ROOT_PATH."/albums/");
 define("ALBUMS_DIR", DOCUMENT_ROOT."/albums/");
 
 //Miscellaneous
-define("MAX_BYTE", 1500000);
+define("MAX_BYTE", 10000000);
 define("DEPLOY", false);
 
 

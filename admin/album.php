@@ -364,6 +364,8 @@ function showCreateForm($error = null, $prev = null){
     echo "<p class=\"description-label\"><label for=\"description\">Descrizione: </label></p>
             <p class=\"description\"><textarea id=\"description\" name=\"description\">$old_description</textarea></p>";
     echo "<p class=\"file-input\"><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
+    echo "<p>Dimensione massima: ".(MAX_BYTE/1000000)." MB</p>";
+    echo "<p>Consigliato un massimo di 20 file contemporaneamente</p>";
     echo "<p><input type=\"submit\" value=\"Crea\" /></p>";
     echo "</form></div>
             <div class=\"clear\"></div>";
@@ -503,6 +505,8 @@ function showAddForm($select = true, $error = null, $albumID = null){
         }
         echo "<p><input type=\"hidden\" name=\"album\" value=\"$albumID\" /></p>";
         echo "<p class=\"file-input\"><label for=\"fileselect\">Foto da caricare: </label><input type=\"file\" id=\"fileselect\" name=\"fileselect[]\" multiple=\"multiple\" /></p>";
+        echo "<p>Dimensione massima: ".(MAX_BYTE/1000000)." MB</p>";
+        echo "<p>Consigliato un massimo di 20 file contemporaneamente</p>";
         echo "<p><input type=\"submit\" value=\"Aggiungi\" /></p>";
     }
     echo "</form></div>

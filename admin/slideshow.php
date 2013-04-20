@@ -48,7 +48,7 @@ function edit(){
 	    showForm($error);
 	}
     } else if($_POST["action"] == ACTION_DELETE){
-	$error = checkValidity("Elimina foto selezionate", $_POST);
+	$error = checkValidity(ACTION_DELETE, $_POST);
 	if (count($error) == 0){
 	    $error =  performAction(ACTION_DELETE, $_POST);
 	    if (count($error) == 0){
@@ -62,9 +62,9 @@ function edit(){
     }
 }
 
-function checkValidity($what, $data){
+function checkValidity($action, $data){
     $error = array();
-    if ($what == ACTION_ADD){
+    if ($action == ACTION_ADD){
 	if (array_key_exists("fileselect", $data)){
 	    $allowed_mime_types = array('image/jpeg', 'image/png', 'image/gif');
 	    if (count($data["fileselect"]["name"]) == 1 && $data["fileselect"]["type"][0] == ""){
@@ -85,7 +85,7 @@ function checkValidity($what, $data){
 	} else {
 	    $error[] = "Problemi nel recuperare i dati";
 	}
-    } else if($what == ACTION_DELETE){
+    } else if($action == ACTION_DELETE){
 	if (!array_key_exists("photo", $data)){
 	    $error[] = "Devi selezionare almeno una foto";
 	}
@@ -95,9 +95,9 @@ function checkValidity($what, $data){
     return $error;
 }
 
-function performAction($what, $data){
+function performAction($action, $data){
     $error = array();
-    if ($what == ACTION_ADD){
+    if ($action == ACTION_ADD){
 	if (!(count($data["fileselect"]["name"]) == 1 && $data["fileselect"]["type"][0] == "")){
 	    for($i=0; $i < count($data["fileselect"]["name"]); $i++){
 		if (!move_uploaded_file($data["fileselect"]["tmp_name"][$i], SLIDESHOW_DIR.$data["fileselect"]["name"][$i])){
@@ -105,7 +105,7 @@ function performAction($what, $data){
 		}
 	    }
 	}
-    } else if($what == ACTION_DELETE){
+    } else if($action == ACTION_DELETE){
 	foreach ($data["photo"] as $photo){
 	    if (!unlink(SLIDESHOW_DIR.$photo)){
 		$error[] = "Si &egrave verificato un errore eliminando la foto.";

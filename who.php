@@ -44,11 +44,30 @@ function buildContent(){
         </div>
         <div id="upper-shadow"><img src="<?php echo IMAGES_PATH . "upper_shadow.png" ?>" /></div>
         <div id="description">
-            <!-- TODO contenuto -->
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor semper scelerisque. Donec dui lacus, scelerisque eu sollicitudin et, condimentum quis diam. Morbi libero tortor, congue non feugiat in, luctus vitae odio. Donec risus mi, pulvinar vel aliquet in, volutpat eu erat. In eget sem leo, vitae scelerisque lorem. Nam aliquam lacinia ante ut mollis. Aliquam erat volutpat.</p>
-            <p>Nunc malesuada varius risus et blandit. Nullam vel turpis ipsum, eu congue eros. Duis malesuada turpis quis ante scelerisque quis cursus orci elementum. Donec eleifend scelerisque luctus. Mauris vitae metus est, a pellentesque nulla. Donec mollis suscipit sodales. Sed luctus facilisis elementum. Curabitur felis nisi, ullamcorper sed malesuada nec, mollis gravida massa. Nunc felis arcu, aliquet at gravida ac, euismod at ante. Proin ante lorem, feugiat molestie commodo sed, fermentum vitae ante. Integer fermentum rutrum magna, eget faucibus ligula lobortis ac. Aliquam tristique scelerisque massa vestibulum facilisis. Vestibulum laoreet mauris et purus porta sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-            <p>Morbi sit amet felis erat. Nulla vitae lobortis lectus. Mauris sit amet diam metus, nec consequat mi. Pellentesque auctor ipsum id libero ullamcorper semper. Duis quis massa at arcu venenatis lobortis. Sed condimentum, felis sed placerat tempus, leo magna sodales magna, at auctor purus ligula vitae magna. Vestibulum eleifend ante non justo porttitor bibendum. Etiam a aliquet nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non ipsum lorem. Aenean a velit mauris.</p>
-            <p>Etiam lacinia placerat vestibulum. Etiam euismod orci lacinia justo vehicula in cursus tortor ultricies. Suspendisse a justo a lectus consectetur porta. Mauris volutpat turpis eu arcu posuere ultricies. Duis sem nunc, pretium quis volutpat id, posuere in ante. Integer consequat leo pharetra nibh pharetra ut euismod massa tempus. Quisque in quam odio, a mollis nulla. Curabitur eget tristique libero. Vivamus iaculis, ligula vitae auctor tincidunt, tortor nisi vestibulum purus, at feugiat nisi sem ut turpis. Pellentesque at facilisis arcu. Pellentesque vitae diam id dolor rhoncus lobortis eget eu dolor. Suspendisse nec enim ante. Integer vitae nulla a tellus bibendum facilisis. Proin a purus turpis. Vestibulum sit amet placerat nisi. Nam vitae elit orci, sit amet euismod odio.</p>
+            <p>Il nostro Club nasce il 22 maggio 2012! Un Club voluto a tutti i costi dalla cocciutaggine della Presidente
+                Elisa &ldquo;Avvocata&rdquo; Milani e dagli altri cinque fondatori che, per un forte legame di amicizia, hanno voluto seguirla in
+                questa nuova sfida!</p>
+            <p class="text-paragraph">Nonostante il Club sia nato da poco, vanta tra gli associati dei softgunner con una buonissima esperienza sul campo!
+                Ma non solo, anche chi di esperienza non ne ha moltissima, sin dal primo momento in cui si &egrave; giocato insieme, i nuovi
+                hanno dato prova delle loro abilit&agrave; e della loro voglia di giocare in modo &ldquo;sano&rdquo;! Ma comunque tutti
+                hanno manifestato il sentimento di forte aggregazione ed amicizia che ci unisce sia sul campo sia quando siamo vestiti
+                &ldquo;civilmente&rdquo;!Si perch&egrave; oltre a incontrarci ogni mercoled&igrave; per le consuete riunioni ci
+                piace anche organizzare cene e serate da passare in compagnia dei soci e rispettive/e consorti!</p> 
+            <p class="text-paragraph">Non siamo solo un Club di softair, siamo una famiglia dove tutti sono alla pari e dove ognuno ha un ruolo importante e
+                fondamentale per l'organizzazione e l'unione della squadra! Abbiamo la fortuna di avere in questa nostra famiglia una
+                fotografa e chef che durante le nostre giocate ci vizia e delizia che le sue prelibatezze e che riesce ad immortalare
+                alla perfezione  i momenti di gioco e le emozioni che scaturiscono da ogni giocatore mentre &egrave; concentrato nel game!
+                E non solo! La nostra meravigliosa Noemi &ldquo;Nelly&rdquo;Cilenti riesce sempre a descrivere negli articoli del suo blog
+                <a class="in-text-link" href="http://www.bacididama-blog.com/">Baci di Dama</a> in modo molto &ldquo;romantico&rdquo;
+                il nostro sport tra una ricetta e l'altra!</p>
+            <p class="text-paragraph">In pi&ugrave; abbiamo la fortuna di avere un preparatissimo verniciatore e meccanico che, oltre a risolvere le problematiche
+                dei nostri fucili, li sistema con un'accurata pulizia e se lo desideriamo a seconda dei nostri gusti, apporta delle
+                modifiche estetiche di tipo mimetico alle nostre asg!
+                <a class="in-text-link" href="http://www.facebook.com/pages/Spray-Gun/299120606849070">Spraygun</a>
+                &egrave; il nome della pagina facebook del nostro Riccardo &ldquo;Fato&rdquo; Villa, in cui potrete vedere i lavori,
+                o meglio le opere d'arte, che ha fatto fino ad ora!</p>
+            <p class="text-paragraph">Siamo determinati nel far crescere questa nostra famiglia in un clima di amicizia, fratellanza e sempre con la voglia di
+                divertirsi, senza mai perdere il nostro sorriso disarmante!</p>
         </div>
     </div>
     <?php

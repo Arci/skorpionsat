@@ -16,15 +16,38 @@ function buildContent(){
     <div id="play-container">
         <div id="play-left" class="left">
             <div id="play">
-                <!-- TODO contenuto -->
                 <img class="keep-calm left" src="<?php echo IMAGES_PATH."play_with_us.jpg"; ?>" />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor semper scelerisque. Donec dui lacus, scelerisque eu sollicitudin et, condimentum quis diam. Morbi libero tortor, congue non feugiat in, luctus vitae odio. Donec risus mi, pulvinar vel aliquet in, volutpat eu erat. In eget sem leo, vitae scelerisque lorem. Nam aliquam lacinia ante ut mollis. Aliquam erat volutpat.</p>
-                <p>Nunc malesuada varius risus et blandit. Nullam vel turpis ipsum, eu congue eros. Duis malesuada turpis quis ante scelerisque quis cursus orci elementum. Donec eleifend scelerisque luctus. Mauris vitae metus est, a pellentesque nulla. Donec mollis suscipit sodales. Sed luctus facilisis elementum. Curabitur felis nisi, ullamcorper sed malesuada nec, mollis gravida massa. Nunc felis arcu, aliquet at gravida ac, euismod at ante. Proin ante lorem, feugiat molestie commodo sed, fermentum vitae ante. Integer fermentum rutrum magna, eget faucibus ligula lobortis ac. Aliquam tristique scelerisque massa vestibulum facilisis. Vestibulum laoreet mauris et purus porta sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                <p>Benvenuti nel nostro sito!</p>
+                <p class="text-paragraph">In questa sezione saranno spiegate brevemente le direttive per partecipare ad una giornata di
+                    prova con il nostro Club!</p>
+                <p class="text-paragraph">Innanzi tutto nella sezione &ldquo;partite&rdquo; del nostro forum si potranno trovare le
+                    date programmate per le giornate che si svolgeranno in casa a cui potranno partecipare coloro
+                    i quali desiderano provare a giocare con noi.</p>
+                <p class="text-paragraph">Per poter &ldquo;prenotare&rdquo; la giornata di gioco &egrave; necessario mettersi
+                    in contatto con il responsabile noleggi (Riccardo alias Fato) o in alternativa potrete chiamare il presidente
+                    (Elisa alias Avvocata) ai numeri presenti in basso a destra su questa pagina.</p>
+                <br/>
+                <p class="text-paragraph">Se invece di una telefonata preferite conoscerci di persona, saremo ben
+                    lieti di rendervi partecipi durante le nostre riunioni che si svolgono il mercoled&igrave; sera alle
+                    21.30, presso la sede del Club in via Nazario Sauro 13 a Senago!</p>
+                <p class="text-paragraph">Al momento della prenotazione dovrete specificare il numero dei partecipanti
+                    totali, suddividendoli in partecipanti che necessitano di tutta l'attrezzatura e in
+                    partecipanti gi&agrave; attrezzati.</p>
+                <p class="text-paragraph">In base alla disponibilit&agrave; delle date vi si dar&agrave; conferma del giorno,
+                    orario e luogo di ritrovo.
+                    Una volta definito iltutto si dovr&agrave; consegnare il modulo di scarico di responsabilit&agrave;,
+                    oltre al modulo di trattamento dei dati personali ed alla fotocopia della carta di identit&agrave; e del codice fiscale.
+                    Detti moduli sono reperibili sempre su questa pagina nella sezione &ldquo;modulistica&rdquo; presente sulla destra.
+                    Inoltre sar&agrave; necessario versare una piccola caparra
+                    per &ldquo;bloccare&rdquo; la giocata ed assicurarsi una domenica di sano divertimento! </p>
+                <p class="text-paragraph">Quindi vi aspettiamo numerosi alle nostre giornate di sport a contatto con la natura!</p>
+                <p class="text-paragraph">Con l'augurio di poter avere il piacere di giocare insieme per pi&ugrave; di una volta!!!</p>
+                <p class="text-paragraph">A presto!</p>
             </div>
         </div>
         <div id="play-right" class="right">
             <div id="download" >
-                <span>Download:</span>
+                <span>Modulistica:</span>
                 <div class="first"><a href="<?php echo DOCUMENTS_PATH."Domanda_di_Ammissione.pdf"?>"><img src="<?php echo IMAGES_PATH."download.png"; ?>" class="download-thumbnail" /><span>Domanda di ammissione</span></a></div>
                 <div><a href="<?php echo DOCUMENTS_PATH."Mod.Autorizzazione_Trattamento_Dati_Personali.pdf"?>"><img src="<?php echo IMAGES_PATH."download.png"; ?>" class="download-thumbnail" /><span>Trattamento dei dati personali</span></a></div>
                 <div><a href="<?php echo DOCUMENTS_PATH."Regolamento_Interno.pdf"?>"><img src="<?php echo IMAGES_PATH."download.png"; ?>" class="download-thumbnail" /><span>Regolamento interno</span></a></div>
