@@ -110,7 +110,7 @@ function getHeader($pageName){
 	?>
 	<div id="wrapper">
 	<div id="header">
-		<a class="facebook" style="display:none;"href ="#"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
+		<a class="facebook" href ="https://www.facebook.com/skorpionsoftairteam"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
                 <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
                     <div id="text" class="shadow">
