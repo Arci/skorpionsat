@@ -55,6 +55,7 @@ function getHead($pageName){
 		<meta name="google" content="notranslate" />
 		<meta name="copyright" content="Arcidiacono Fabio 2012" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="p:domain_verify" content="1c091f2df0df0b77826b0adde1615fc3" />
 		<?php
 		if($pageName == "board"){
 			?><title>News</title><?php
@@ -110,10 +111,13 @@ function getHeader($pageName){
 	?>
 	<div id="wrapper">
 	<div id="header">
-		<a class="facebook" href ="https://www.facebook.com/skorpionsoftairteam"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
-                <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
-                <div id="container-right" class="right">
-                    <div id="text" class="shadow">
+		<div class="social" >
+			<a href ="https://www.facebook.com/skorpionsoftairteam"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
+			<a href ="http://pinterest.com/skorpionsat/"><img src="<?php echo IMAGES_PATH."pinterest.png" ?>" /></a>
+		</div>
+        <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
+        <div id="container-right" class="right">
+            <div id="text" class="shadow">
 			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a>
 			<p style ='color: #C00000 !important; font-size: 0.2em !important;
 					letter-spacing: 0.4em !important; padding-top: 1em;'>BETA</p>

@@ -32,15 +32,16 @@ body{
 	position: relative;
 }
 
-.facebook{
+.social{
 	z-index: 1;
 	position: absolute;
-	margin-left: 97%;
+	margin-left: 94%;
 	margin-top: 0.5em;
 }
 
-.facebook img{
+.social img{
 	width: 2em;
+	margin-left: 0.em;
 }
 
 #logo{
@@ -155,13 +156,9 @@ body{
 }
 
 #description{
-	font-size: 1.3em;
+	font-size: 1.4em;
 	margin-top: -5%;
 	line-height: 2.5em;
-}
-
-.text-paragraph{
-	margin-top: 0.5em;
 }
 
 /*----- PLAY WITH US-----*/
@@ -173,6 +170,10 @@ body{
 	font-size: 1.2em;
 	width: 68%;
 	margin-right: 1%;
+}
+
+#play-left p{
+	font-size: 1.2em;
 }
 
 #play-right{
@@ -400,6 +401,7 @@ div#album-image{
 	margin: 0 !important;
 	padding: 0 !important;
 	color:  inherit !important;
+	letter-spacing: 0.05em;
 }
 
 .entry a{
@@ -466,6 +468,10 @@ div#album-image{
 	color: #C00000;
 	font-size: 1.4em;
 	padding: 1em 1%;
+}
+
+.text-paragraph{
+	margin-top: 0.5em;
 }
 
 .in-text-link{

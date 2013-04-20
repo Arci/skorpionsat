@@ -26,7 +26,6 @@ function buildContent(){
                 <p class="text-paragraph">Per poter &ldquo;prenotare&rdquo; la giornata di gioco &egrave; necessario mettersi
                     in contatto con il responsabile noleggi (Riccardo alias Fato) o in alternativa potrete chiamare il presidente
                     (Elisa alias Avvocata) ai numeri presenti in basso a destra su questa pagina.</p>
-                <br/>
                 <p class="text-paragraph">Se invece di una telefonata preferite conoscerci di persona, saremo ben
                     lieti di rendervi partecipi durante le nostre riunioni che si svolgono il mercoled&igrave; sera alle
                     21.30, presso la sede del Club in via Nazario Sauro 13 a Senago!</p>
