@@ -29,6 +29,18 @@ body{
 	background-image: url(../img/background_05.png);
 	border-radius: 1em;
 	max-height: 17em;
+	position: relative;
+}
+
+.facebook{
+	z-index: 1;
+	position: absolute;
+	margin-left: 97%;
+	margin-top: 0.3em;
+}
+
+.facebook img{
+	width: 2em;
 }
 
 #logo{

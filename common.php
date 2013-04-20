@@ -110,13 +110,13 @@ function getHeader($pageName){
 	?>
 	<div id="wrapper">
 	<div id="header">
+		<a class="facebook" style="display:none;"href ="#"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
                 <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
                 <div id="container-right" class="right">
                     <div id="text" class="shadow">
-			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.
+			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a>
 			<p style ='color: #C00000 !important; font-size: 0.2em !important;
 					letter-spacing: 0.4em !important; padding-top: 1em;'>BETA</p>
-			</a>
 		    </div>
                     <div id="menu">
                         <ul>
