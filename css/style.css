@@ -36,7 +36,7 @@ body{
 	z-index: 1;
 	position: absolute;
 	margin-left: 97%;
-	margin-top: 0.3em;
+	margin-top: 0.5em;
 }
 
 .facebook img{
@@ -392,7 +392,7 @@ div#album-image{
 	text-transform: capitalize;
 }
 
-.entry p, .entry span{
+.entry *{
 	font-family: 'Roboto', sans-serif !important;
 	font-size: 1em !important;
 	text-align: justify !important;
@@ -400,6 +400,15 @@ div#album-image{
 	margin: 0 !important;
 	padding: 0 !important;
 	color:  inherit !important;
+}
+
+.entry a{
+	font-weight: bold;
+}
+
+
+.entry a:hover{
+	text-decoration: underline;
 }
 
 /*----- PHOTOGALLERY -----*/
