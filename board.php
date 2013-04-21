@@ -18,12 +18,12 @@ function buildContent(){
     if(count($newsList) == 0){
         echo "<div class=\"post\"><p class=\"error\">Non ci sono notizie!</p></div>";
     }else{
-        for($i=0; $i <= count($newsList)-1; $i++){
+        for($i=(count($newsList)-1); $i >=0 ; $i--){
             $news = $newsList[$i];
-            if($i == 0){
+            if($i == (count($newsList)-1)){
                 echo "<div class=\"post\">";
             } else {
-                if($i < count($newsList)-1){
+                if($i >=0){
                     echo "<div class=\"post transparent\">";
                 } else {
                     echo "<div class=\"post transparent last\">";
