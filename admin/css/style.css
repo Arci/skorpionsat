@@ -106,6 +106,10 @@ body{
     border-bottom: 0.15em solid #303030;
 }
 
+input[type=submit]{
+    font-size: inherit;
+}
+
 /*----- PAGE CONTENT -----*/
 #content{
     padding: 3.5% 2.5% 2.5% 2.5%;

@@ -20,7 +20,7 @@ if(DEPLOY){
     define("FORUM_PATH", ROOT_PATH."/forum/");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }else{
-    define("ROOT_PATH", "/Skorpionsat/site");
+    define("ROOT_PATH", "/Web/Skorpionsat/site");
     define("FORUM_PATH", ROOT_PATH."#");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }
@@ -29,7 +29,7 @@ if(DEPLOY){
 if(DEPLOY){
     define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]);
 }else{
-    define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]."/Skorpionsat/site");
+    define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"].ROOT_PATH);
 }
 
 //Files
