@@ -35,19 +35,17 @@ function getHead($pageName){
 	<head>
 		<?php
 		if($pageName == "board"){
-			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
-				news dalla squadra" /><?php
+			?><meta name="description" content="News dalla skorpion Soft Air Team - visualizza le ultime notizie riguardanti 
+				la squadra, le ultime partite di softair e altro ancora!"><?php
 		} else if($pageName == "who"){
-		     	?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
-				chi siamo, la nostra storia" /><?php
+		     	?><meta name="description" content="Chi sono gli skorpion, perchè giocano a softiar, come sono nati" /><?php
 		} else if($pageName == "play"){
-			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti,
-				gioca con noi" /><?php
-		} else if($pageName == "gallery"){
-			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti, photogallery,
-				guarda le foto delle nostre partite" /><?php		     
+			?><meta name="description" content="Contatti della skorpion Soft Air Team - cosa fare se vuoi giocare a softair 
+				con noi, modulistica" /><?php
+		} else if($pageName == "gallery" || $pageName == "photogallery"){
+			?><meta name="description" content="Foto delle nostre partite a softair, partecipazioni ad eventi" /><?php		     
 		} else {
-			?><meta name="description" content="Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti" /><?php
+			?><meta name="description" content=" Skorpion - softair team - Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti" /><?php
 		}
 		?>
 		<meta name="robots" content="index, follow" />
@@ -64,10 +62,8 @@ function getHead($pageName){
 			?><title>Chi Siamo</title><?php
 		} else if($pageName == "play"){
 			?><title>Gioca con noi</title><?php  
-		} else if($pageName == "gallery"){
+		} else if($pageName == "gallery" || $pageName == "photogallery"){
 			?><title>Gallery</title><?php 
-		} else if($pageName == "photogallery"){
-			?><title>Photogallery</title><?php 
 		} else {
 			?><title>Skorpion S.A.T.</title><?php 	
 		}
@@ -131,7 +127,9 @@ function getHeader($pageName){
                            <li <?php if($pageName == "who") echo "class=\"active\""; ?>><a href='who.php'><span class="shadow">Chi siamo</span></a></li>
                            <li <?php if($pageName == "play") echo "class=\"active\""; ?>><a href='play.php'><span class="shadow">Gioca con noi</span></a></li>
                            <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_PATH; ?>'><span class="shadow">Forum</span></a></li>
-                           <li <?php if($pageName == "gallery") echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a></li>
+                           <li <?php if($pageName == "gallery" || $pageName == "photogallery") 
+                        		echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a>
+                           </li>
                         </ul>
                     </div>
                 </div>
