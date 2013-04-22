@@ -55,6 +55,7 @@ function getHead($pageName){
 		<meta name="google" content="notranslate" />
 		<meta name="copyright" content="Arcidiacono Fabio 2012" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no"/>
 		<meta name="p:domain_verify" content="1c091f2df0df0b77826b0adde1615fc3" />
 		<?php
 		if($pageName == "board"){
@@ -65,6 +66,8 @@ function getHead($pageName){
 			?><title>Gioca con noi</title><?php  
 		} else if($pageName == "gallery"){
 			?><title>Gallery</title><?php 
+		} else if($pageName == "photogallery"){
+			?><title>Photogallery</title><?php 
 		} else {
 			?><title>Skorpion S.A.T.</title><?php 	
 		}
@@ -93,9 +96,11 @@ function getHead($pageName){
 			<script type="text/javascript" src="<?php echo JS_PATH."prettyPhoto.js"; ?>" charset="utf-8"></script>
 			<script type="text/javascript" charset="utf-8">
 				$(document).ready(function(){
-					$("a[rel^='prettyPhoto']").prettyPhoto();
+					if($(window).width() >= 768){
+						$("a[rel^='prettyPhoto']").prettyPhoto();
+					}
 				});
-		        </script>
+		    </script>
 			<?php
 		}
 		?>
@@ -116,7 +121,7 @@ function getHeader($pageName){
 			<a href ="http://pinterest.com/skorpionsat/"><img src="<?php echo IMAGES_PATH."pinterest.png" ?>" /></a>
 		</div>
         <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
-        <div id="container-right" class="right">
+        <div id="container-right" class="left">
             <div id="text" class="shadow">
 			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a>
 			<p style ='color: #C00000 !important; font-size: 0.2em !important;
@@ -140,7 +145,10 @@ function getHeader($pageName){
 function getFooter(){
 	?>
 	<div id="footer">
-                <p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
+        <p>skorpionsat.com. &copy; 2013.
+        <span class="break-line"><br/></span>
+        Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
+        <span class="break-line"><br/></span>
 		Designed By <a href="#">Alice Vittoria Cappelletti</a>
 		<div id="admin"><p><a href="<?php echo ADMIN_PATH ?>">Pannello di controllo</a></p></div>
         </div></div>

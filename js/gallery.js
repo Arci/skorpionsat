@@ -2,12 +2,17 @@ $(document).ready(function()
 {
     var numberOfImages = 0;
     var current = 1;
-    var width_box = $('.album-slider').width();
-    var height_box = $('.album-slider').height();
+    var albumPreview = $('#album-preview');
+    var albumImage = $('#album-image');
+    var albumSlider = $('.album-slider');
+    var buttonLeft = $("#button-left");
+    var buttonRight = $("#button-right")
+    var width_box = albumSlider.width();
+    var height_box = albumSlider.height();
     var rightVisible = true;
     var leftVisible = false;
     
-    $('.album-slider').each(function(){
+    albumSlider.each(function(){
         $(this).css("left",(width_box*numberOfImages));
         numberOfImages++;
     });
@@ -19,29 +24,29 @@ $(document).ready(function()
         }
     });
     
-    $("#album-image img").load(function(){
+    $("#albumImage img").load(function(){
         var offset_y = ($(this).height()/10 - height_box/10)/2;
         $(this).css({"position" : "relative", "top" : -offset_y+"em"});
     });
     
-    $('#album-preview').css("width", width_box);
-    $('#album-preview').css("height", height_box);
-    $('#album-image').css("width", width_box*numberOfImages);
-    $('#album-image').css("height", height_box);
-    $("#button-left").css({"opacity": "0" });
-    $("#button-left").css({"cursor": "default" });
+    albumPreview.css("width", width_box);
+    albumPreview.css("height", height_box);
+    albumImage.css("width", width_box*numberOfImages);
+    albumImage.css("height", height_box);
+    buttonLeft.css({"opacity": "0" });
+    buttonLeft.css({"cursor": "default" });
     if(numberOfImages < 2){
-          $("#button-right").css({"opacity": "0" });
-          $("#button-right").css({"cursor": "default" });      
+          buttonRight.css({"opacity": "0" });
+          buttonRight.css({"cursor": "default" });      
     }
     
     //TODO rimuovere stampe su console
     console.log("@load - numberOfImages: " + numberOfImages + ", current: " + current);
 
-    $("#button-right").click(function(){
+    buttonRight.click(function(){
         if(!leftVisible){
-            $("#button-left").animate({"opacity": "0.8" },1000);
-            $("#button-left").css({"cursor": "pointer" });
+            buttonLeft.animate({"opacity": "0.8" },1000);
+            buttonLeft.css({"cursor": "pointer" });
         }
         if(current != numberOfImages){
             console.log("right pressed - current: " + current + ", go to: " + (current+1));
@@ -54,7 +59,7 @@ $(document).ready(function()
             console.log("hide description of: " + current);
             $("#"+current).fadeOut("slow");
             current ++;
-            $('.album-slider').each(function(){
+            albumSlider.each(function(){
                 $(this).animate({"left":"-="+width_box+"px"}, 1000);
             });
             console.log("show description of: " + current);
@@ -65,10 +70,10 @@ $(document).ready(function()
         }
     });  
     
-    $("#button-left").click(function(){
+    buttonLeft.click(function(){
         if(!rightVisible){
-            $("#button-right").animate({"opacity": "0.8" }, 1000);
-            $("#button-right").css({"cursor": "pointer" });
+            buttonRight.animate({"opacity": "0.8" }, 1000);
+            buttonRight.css({"cursor": "pointer" });
         }
         if(current != 1){
             console.log("left pressed - current: " + current + ", go to: " + (current-1));
@@ -81,7 +86,7 @@ $(document).ready(function()
             console.log("hide description of: " + current);
             $("#"+current).fadeOut("slow");
             current--;
-            $('.album-slider').each(function(){
+            albumSlider.each(function(){
                 $(this).animate({"left":"+="+width_box+"px"}, 1000);
             });
             console.log("show description of: " + current);

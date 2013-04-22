@@ -20,7 +20,7 @@ if(DEPLOY){
     define("FORUM_PATH", ROOT_PATH."/forum/");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }else{
-    define("ROOT_PATH", "/Web/Skorpionsat/site");
+    define("ROOT_PATH", "/Skorpionsat/site");
     define("FORUM_PATH", ROOT_PATH."#");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }

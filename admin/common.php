@@ -35,6 +35,7 @@ function getHead(){
 		<meta name="robots" content="noindex, nofollow" />
 		<meta name="googlebot" content="noindex, nofollow" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no"/>
 		<title>Skorpion S.A.T. - admin panel</title>
 
 		<link rel="shortcut icon" href= "<?php echo ADMIN_IMAGES_PATH."favicon.ico" ?>"/>

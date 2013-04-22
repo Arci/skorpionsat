@@ -29,11 +29,23 @@ body{
     background-image: url(../img/background_05.png);
     border-radius: 1em;
     max-height: 17em;
+    position: relative;
+}
+
+.social{
+    z-index: 1;
+    position: absolute;
+    margin-left: 94.5%;
+    margin-top: 0.5em;
+}
+
+.social img{
+    width: 2em;
+    margin-left: 0.em;
 }
 
 #logo{
     width: 25%;
-    position: relative;
     z-index: 1;
     max-height: inherit;
 }
@@ -43,34 +55,29 @@ body{
     position: relative;
     width: 115%;
     margin-top: -12.5%;
-    left: -15%;
+    left: -12.5%;
 }
 
 #container-right{
     width: 75%;
-    max-height: inherit;
-    position: relative;
     text-align: center;
 }
 
 #text{
-    position: relative;
     font-family: 'Julius Sans One', sans-serif;
     color: #303030;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 5em;
+    font-size: 500%;
+    width: 100%;
     text-align: center;
     letter-spacing: 0.25em;
     margin-top: 5%;
 }
 
 #menu{
-    position: relative;
     margin-top: 4%;
-    z-index: 1;
-    left: -20%;
-    width: 130%;
+    width: 100%;
     font-family: 'Julius Sans One', sans-serif;
     font-size: 1.4em;
     text-align: center;
@@ -78,14 +85,12 @@ body{
 
 #menu ul{
     list-style:none;
-    max-width: 100%;
-    margin: 0;
     padding: 0;
 }
 
 #menu li{
     display: inline;
-    margin-right: 4.5em;
+    margin-right: 5em;
     padding: 0 0.4em;
     text-align: center;
 }
@@ -104,10 +109,6 @@ body{
 
 #menu .active, #menu li:hover{
     border-bottom: 0.15em solid #303030;
-}
-
-input[type=submit]{
-    font-size: inherit;
 }
 
 /*----- PAGE CONTENT -----*/
@@ -319,4 +320,62 @@ a{
 
 .clear{
     clear: both;
+}
+
+/*----- MEDIA QUERIES -----*/
+@media only screen and (max-width: 768px) {
+    #wrapper{
+        margin: 1% 1.5%;
+    }
+
+    #logo{
+        float: none;
+        display: none;
+    }
+
+    .social{
+        margin-left: 96%;
+    }
+
+    #container-right{
+        width: 100%;
+        float: none;
+        padding: 1em 0 3em 0;
+    }
+
+    #header .clear{
+        clear: none;
+    }
+
+    #text{
+        margin-top: 3%;
+    }
+
+    .keep-calm{
+        width: 16em;
+    }
+
+    #play-right{
+        width: 34%;
+    }
+
+    #play-left{
+        width: 65%;
+    }
+
+    #play .break-line{
+        display: none;
+    }
+
+    .post{
+        margin: 0.4em 0;
+    }
+
+    .transparent{
+        margin-top: 0.5em !important;
+    }
+
+    #play-container, #content{
+        margin-top: 0.7em;
+    }
 }
