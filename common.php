@@ -124,8 +124,6 @@ function getHeader($pageName){
         <div id="container-right" class="left">
             <div id="text" class="shadow">
 			<a href="<?php echo ROOT_PATH ?>">Skorpion S.A.T.</a>
-			<p style ='color: #C00000 !important; font-size: 0.2em !important;
-					letter-spacing: 0.4em !important; padding-top: 1em;'>BETA</p>
 		    </div>
                     <div id="menu">
                         <ul>

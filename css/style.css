@@ -76,7 +76,7 @@ body{
 }
 
 #menu{
-	margin-top: 4%;
+	margin-top: 6%;
 	width: 100%;
 	font-family: 'Julius Sans One', sans-serif;
 	font-size: 1.4em;
@@ -393,6 +393,7 @@ div#album-image{
 }
 
 .entry a{
+	color: #B40404 !important;
 	font-weight: bold;
 }
 

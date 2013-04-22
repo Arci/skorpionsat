@@ -211,11 +211,11 @@ function showEditForm($select = true, $error = null, $newsID = null){
                 $newsController = new NewsController();
                 $newsList = $newsController->loadAll();
                 if(count($newsList) > 0){
-                    foreach($newsList as $news){
+                    for($i = (count($newsList)-1); $i >= 0; $i--){
                         ?>
                         <p class="form-list">
-                            <input type="radio" id="<?php echo "news".$news->getID(); ?>" name="news" value="<?php echo $news->getID(); ?>" />
-                            <label for="<?php echo "news".$news->getID(); ?>"><?php echo $news->getTitle(); ?></label>
+                            <input type="radio" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="newsList[$i]" value="<?php echo $newsList[$i]->getID(); ?>" />
+                            <label for="<?php echo "news".$newsList[$i]->getID(); ?>"><?php echo $newsList[$i]->getTitle(); ?></label>
                         </p>
                         <?php
                     }
@@ -273,11 +273,11 @@ function showDeleteForm($error = null){
             if(count($newsList) == 0){
                 ?><p class="error">Non ci sono notizie da eliminare!</p><?php
             }else{
-                foreach($newsList as $news){
+                 for($i = (count($newsList)-1); $i >= 0; $i--){
                     ?>
                     <p class="form-list">
-                        <input type="checkbox" id="<?php echo "news".$news->getID(); ?>" name="news[]" value="<?php echo $news->getID(); ?>" />
-                        <label for="<?php echo "news".$news->getID(); ?>"><?php echo $news->getTitle(); ?></label>
+                        <input type="checkbox" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="$newsList[$i][]" value="<?php echo $newsList[$i]->getID(); ?>" />
+                        <label for="<?php echo "news".$newsList[$i]->getID(); ?>"><?php echo $newsList[$i]->getTitle(); ?></label>
                     </p>
                     <?php
                 }
