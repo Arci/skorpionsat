@@ -467,6 +467,10 @@ div#album-image{
 	margin-top: 0.5em;
 }
 
+.text-paragraph a{
+	font-weight: bold;
+}
+
 .in-text-link{
 	font-weight: bold;
 }
@@ -719,5 +723,11 @@ a{
 
 	#admin{
 		display: none;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+	#wrapper{
+		margin: 2% 2%;
 	}
 }
