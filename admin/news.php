@@ -214,7 +214,7 @@ function showEditForm($select = true, $error = null, $newsID = null){
                     for($i = (count($newsList)-1); $i >= 0; $i--){
                         ?>
                         <p class="form-list">
-                            <input type="radio" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="newsList[$i]" value="<?php echo $newsList[$i]->getID(); ?>" />
+                            <input type="radio" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="news" value="<?php echo $newsList[$i]->getID(); ?>" />
                             <label for="<?php echo "news".$newsList[$i]->getID(); ?>"><?php echo $newsList[$i]->getTitle(); ?></label>
                         </p>
                         <?php
@@ -276,7 +276,7 @@ function showDeleteForm($error = null){
                  for($i = (count($newsList)-1); $i >= 0; $i--){
                     ?>
                     <p class="form-list">
-                        <input type="checkbox" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="$newsList[$i][]" value="<?php echo $newsList[$i]->getID(); ?>" />
+                        <input type="checkbox" id="<?php echo "news".$newsList[$i]->getID(); ?>" name="news[]" value="<?php echo $newsList[$i]->getID(); ?>" />
                         <label for="<?php echo "news".$newsList[$i]->getID(); ?>"><?php echo $newsList[$i]->getTitle(); ?></label>
                     </p>
                     <?php
