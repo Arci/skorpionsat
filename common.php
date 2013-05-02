@@ -114,7 +114,6 @@ function getHeader($pageName){
 	<div id="header">
 		<div class="social" >
 			<a href ="https://www.facebook.com/skorpionsoftairteam"><img src="<?php echo IMAGES_PATH."facebook.png" ?>" /></a>
-			<!--<a href ="http://pinterest.com/skorpionsat/"><img src="<?php //echo IMAGES_PATH."pinterest.png" ?>" /></a>-->
 		</div>
         <div id="logo" class="left"><img src="<?php echo IMAGES_PATH."skorpion.png" ?>" /></div>
         <div id="container-right" class="left">
