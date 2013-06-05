@@ -95,7 +95,6 @@ function getFooter(){
 	
 	<div id="footer">
 		<p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
-		Designed By <a href="#">Alice Vittoria Cappelletti</a>
 		<div id="admin"><p><a href="<?php echo ROOT_PATH ?>">Torna al sito</a></p></div>
 	</div></div>
 	<?php
