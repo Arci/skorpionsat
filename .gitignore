@@ -2,6 +2,8 @@
 *.DS_Store
 # Sublime Text 2 Files #
 *.sublime-*
+# Komodo Edit Files #
+*.komodoproject
 # Projects Directories #
 documents/*
 slideshow/*

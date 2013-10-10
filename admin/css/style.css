@@ -1,18 +1,18 @@
 /*----- BODY -----*/
 body{
-    /* default bowser font size 16px, with font size of 62.5% => 1em = 10px */ 
+    /* default bowser font size 16px, with font size of 62.5% => 1em = 10px */
     font-size: 62.5%;
-    /* IE10 Consumer Preview */ 
+    /* IE10 Consumer Preview */
     background-image: -ms-linear-gradient(bottom, #000000 0%, #404040 100%);
-    /* Mozilla Firefox */ 
+    /* Mozilla Firefox */
     background-image: -moz-linear-gradient(bottom, #000000 0%, #404040 100%);
-    /* Opera */ 
+    /* Opera */
     background-image: -o-linear-gradient(bottom, #000000 0%, #404040 100%);
-    /* Webkit (Safari/Chrome 10) */ 
+    /* Webkit (Safari/Chrome 10) */
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #000000), color-stop(1, #404040));
-    /* Webkit (Chrome 11+) */ 
+    /* Webkit (Chrome 11+) */
     background-image: -webkit-linear-gradient(bottom, #000000 0%, #404040 100%);
-    /* W3C Markup, IE10 Release Preview */ 
+    /* W3C Markup, IE10 Release Preview */
     background-image: linear-gradient(to top, #000000 0%, #404040 100%);
 }
 
@@ -45,7 +45,7 @@ body{
 }
 
 #logo{
-    width: 25%;
+    width: 20%;
     z-index: 1;
     max-height: inherit;
 }
@@ -53,13 +53,13 @@ body{
 #logo img{
     z-index: 1;
     position: relative;
-    width: 115%;
+    width: 110%;
     margin-top: -12.5%;
-    left: -12.5%;
+    left: 4%;
 }
 
 #container-right{
-    width: 75%;
+    width: 80%;
     text-align: center;
 }
 
@@ -275,7 +275,7 @@ form input[type=submit]{
 }
 
 #admin{
-    margin-top: 1em;	
+    margin-top: 1em;
 }
 
 /*----- COMMON -----*/
