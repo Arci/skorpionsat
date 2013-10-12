@@ -50,6 +50,4 @@ define("ALBUMS_DIR", DOCUMENT_ROOT."/albums/");
 
 //Miscellaneous
 define("MAX_BYTE", 10000000);
-
-
-
+define("IMAGE_QUALITY", 75);

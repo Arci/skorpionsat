@@ -33,7 +33,7 @@ function buildContent(){
                 default:
                     showOptions();
             }
-        }else{   
+        }else{
             showOptions();
         }
     ?>
@@ -57,7 +57,7 @@ function showOptions($message = null){
 //----- CONTROL LOGIC -----//
 
 function create(){
-    if(!isset($_POST["name"]) && !isset($_POST["date"])){ 
+    if(!isset($_POST["name"]) && !isset($_POST["date"])){
         showCreateForm();
     } else {
         $error = array();
@@ -71,13 +71,13 @@ function create(){
         if(!(count($_FILES["fileselect"]["name"]) == 1 && $_FILES["fileselect"]["type"][0] == "")){
             for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
                 if($_FILES["fileselect"]["error"][$i] > 0){
-                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>"; 
+                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>";
                 }
                 if($_FILES["fileselect"]["size"][$i] > MAX_BYTE){
                     $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
                 }
                 if(!in_array($_FILES["fileselect"]["type"][$i], $allowed_mime_types)){
-                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
+                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")";
                 }
             }
         }else{
@@ -269,7 +269,7 @@ function edit(){
             }
         }
     }else{
-        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
+        if(!isset($_POST["album"]) && !isset($_POST["select"])){
             showEditForm(true);
         } else if(!isset($_POST["album"]) && isset($_POST["select"])){
             $error = array();
@@ -293,13 +293,13 @@ function add(){
             $photoList = $photoController->loadByAlbum($_POST["album"]);
             for($i=0; $i < count($_FILES["fileselect"]["name"]); $i++){
                 if($_FILES["fileselect"]["error"][$i] > 0){
-                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>"; 
+                    $error[] = "Si &egrave verificato un'errore caricando il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong>";
                 }
                 if($_FILES["fileselect"]["size"][$i] > MAX_BYTE){
                     $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
                 }
                 if(!in_array($_FILES["fileselect"]["type"][$i], $allowed_mime_types)){
-                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
+                    $error[] = "Il file <strong>".$_FILES["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")";
                 }
                 foreach($photoList as $photo){
                     if($photo->getName() == $_FILES["fileselect"]["name"][$i]){
@@ -328,7 +328,7 @@ function add(){
             showAddForm(false, $error, $albumID);
         }
     }else{
-        if(!isset($_POST["album"]) && !isset($_POST["select"])){ 
+        if(!isset($_POST["album"]) && !isset($_POST["select"])){
             showAddForm(true);
         } else if(!isset($_POST["album"]) && isset($_POST["select"])){
             $error = array();
@@ -405,7 +405,7 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         $photoController = new PhotoController();
         $album = $albumController->loadByID($albumID);
         $photoList = $photoController->loadByAlbum($album->getID());
-        
+
         echo "<p><input type=\"hidden\" name=\"album\" value=\"".$album->getID()."\" /></p>";
         echo "<p class=\"date\"><label for=\"date\">Data: </label><input type=\"text\" id=\"date\" name=\"date\" value=\"".reverseDate($album->getDate())."\"/></p>";
         echo "<p class=\"title\"><label for=\"name\">Nome: </label><input type=\"text\" id=\"name\" name=\"name\" value=\"".$album->getName()."\"/></p>";
@@ -478,7 +478,7 @@ function showAddForm($select = true, $error = null, $albumID = null){
         $photoController = new PhotoController();
         $album = $albumController->loadByID($albumID);
         $photoList = $photoController->loadByAlbum($album->getID());
-        
+
         echo "<p class=\"date\">Data: <span>".reverseDate($album->getDate())."</span></p>";
         echo "<p class=\"title\">Titolo: <span>".$album->getName()."</span></p>";
         echo "<p class=\"description-label\">Descrizione:</p>";
