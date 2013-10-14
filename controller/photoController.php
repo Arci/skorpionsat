@@ -146,9 +146,9 @@ class PhotoController implements Controller{
 
     public function loadByAlbum($albumID, $limit = 0){
         if($limit > 0 ){
-            $query = "SELECT * FROM ".Database::TABLE_PHOTO." LIMIT $limit";
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID LIMIT $limit";
         }else{
-            $query = "SELECT * FROM ".Database::TABLE_PHOTO;
+            $query = "SELECT * FROM ".Database::TABLE_PHOTO." WHERE ".Database::PHOTO_ALBUM." = $albumID";
         }
         DbConnection::getConnection();
         $result = mysql_query($query);
