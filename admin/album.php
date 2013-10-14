@@ -435,10 +435,11 @@ function showEditForm($select = true, $error = null, $albumID = null, $prev = nu
         if($count > 0){
             echo "<p class=\"clear\"></p>";
         }
-        echo "<p><input type=\"submit\" name=\"action\" value=\"Salva Modifiche\" />";
-        echo " <input type=\"submit\" name=\"action\"value=\"Imposta foto selezionata come copertina\" />";
-        echo " <input type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" />";
-        echo " <input type=\"submit\"  name=\"action\" value=\"Elimina Album\" /></p>";
+        echo "<div class=\"buttonsContainer\">";
+        echo "<input id=\"save\" type=\"submit\" name=\"action\" value=\"Salva Modifiche\" />";
+        echo " <input id=\"cover\" type=\"submit\" name=\"action\"value=\"Imposta foto selezionata come copertina\" />";
+        echo " <input id=\"deletePhoto\" type=\"submit\" name=\"action\"value=\"Elimina foto selezionate\" />";
+        echo " <input id=\"deleteAlbum\" type=\"submit\"  name=\"action\" value=\"Elimina Album\" /></div>";
     }
     echo "</form></div>
             <div class=\"clear\"></div>";

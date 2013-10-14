@@ -236,6 +236,26 @@ form input[type=submit]{
     margin-bottom: 0.7em;
 }
 
+.buttonsContainer{
+    width: 100%;
+}
+
+.buttonsContainer #save{
+    width: 16.5%;
+}
+
+.buttonsContainer #cover{
+    width: 40%;
+}
+
+.buttonsContainer #deletePhoto{
+    width: 25%;
+}
+
+.buttonsContainer #deleteAlbum{
+    width: 16.5%;
+}
+
 /*----- ADMIN MAIN PAGE -----*/
 .admin-username{
     font-weight: bold;
