@@ -12,9 +12,9 @@ function reverseDate($date){
     return $reversedDate;
 }
 
-function buildTopPage($pageName){
+function buildTopPage($pageName, $description = null){
 	openHtml();
-	getHead($pageName);
+	getHead($pageName, $description);
 	getHeader($pageName);
 	openBody();
 }
@@ -30,20 +30,22 @@ function openHtml(){
 	?> <html xmlns="http://www.w3.org/1999/xhtml"> <?php
 }
 
-function getHead($pageName){
+function getHead($pageName,$description = null){
 	?>
 	<head>
 		<?php
 		if($pageName == "board"){
-			?><meta name="description" content="News dalla skorpion Soft Air Team - visualizza le ultime notizie riguardanti 
+			?><meta name="description" content="News dalla skorpion Soft Air Team - visualizza le ultime notizie riguardanti
 				la squadra, le ultime partite di softair e altro ancora!"><?php
 		} else if($pageName == "who"){
 		     	?><meta name="description" content="Chi sono gli skorpion, perchè giocano a softiar, come sono nati" /><?php
 		} else if($pageName == "play"){
-			?><meta name="description" content="Contatti della skorpion Soft Air Team - cosa fare se vuoi giocare a softair 
+			?><meta name="description" content="Contatti della skorpion Soft Air Team - cosa fare se vuoi giocare a softair
 				con noi, modulistica" /><?php
-		} else if($pageName == "gallery" || $pageName == "photogallery"){
-			?><meta name="description" content="Foto delle nostre partite a softair, partecipazioni ad eventi" /><?php		     
+		} else if($pageName == "gallery"){
+			?><meta name="description" content="Foto delle nostre partite a softair, partecipazioni ad eventi" /><?php
+		} else if($pageName == "photogallery" && $description != null){
+			?><meta name="description" content="<?php echo $description ?>" /><?php
 		} else {
 			?><meta name="description" content=" Skorpion - softair team - Author: Fabio Arcidiacono, Designer: Alice Vittoria Cappelletti" /><?php
 		}
@@ -61,15 +63,15 @@ function getHead($pageName){
 		} else if($pageName == "who"){
 			?><title>Chi Siamo</title><?php
 		} else if($pageName == "play"){
-			?><title>Gioca con noi</title><?php  
+			?><title>Gioca con noi</title><?php
 		} else if($pageName == "gallery" || $pageName == "photogallery"){
-			?><title>Gallery</title><?php 
+			?><title>Gallery</title><?php
 		} else {
-			?><title>Skorpion S.A.T.</title><?php 	
+			?><title>Skorpion S.A.T.</title><?php
 		}
 		?>
 		<link rel="shortcut icon" href= "<?php echo IMAGES_PATH."favicon.ico" ?>"/>
-		
+
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
 		<link href='http://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
@@ -126,7 +128,7 @@ function getHeader($pageName){
                            <li <?php if($pageName == "who") echo "class=\"active\""; ?>><a href='who.php'><span class="shadow">Chi siamo</span></a></li>
                            <li <?php if($pageName == "play") echo "class=\"active\""; ?>><a href='play.php'><span class="shadow">Gioca con noi</span></a></li>
                            <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_PATH; ?>'><span class="shadow">Forum</span></a></li>
-                           <li <?php if($pageName == "gallery" || $pageName == "photogallery") 
+                           <li <?php if($pageName == "gallery" || $pageName == "photogallery")
                         		echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a>
                            </li>
                         </ul>
@@ -155,14 +157,14 @@ function getAnalytics(){
 		_gaq.push(['_setAccount', 'UA-32258069-1']);
 		_gaq.push(['_setDomainName', 'skorpionsat.com']);
 		_gaq.push(['_trackPageview']);
-	
+
 		(function() {
 			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
 	</script>
-	<?php 
+	<?php
 }
 
 function closeBody(){

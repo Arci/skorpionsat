@@ -7,7 +7,9 @@ require_once(dirname(__FILE__)."/common.php");
 require_once(DOCUMENT_ROOT."/controller/albumController.php");
 require_once(DOCUMENT_ROOT."/controller/photoController.php");
 
-buildTopPage("photogallery");
+$albumControlelr = new AlbumController();
+$album = $albumControlelr->loadByID(intval($_GET["id"]));
+buildTopPage("photogallery", $album->getDescription());
 
 buildContent();
 
@@ -37,7 +39,7 @@ function buildContent(){
                 echo "<p class=\"normalized-error\">Impossibile determinare l'album da visualizzare</p>";
             }
             ?>
-        
+
     </div>
     <?php
 }
