@@ -2,19 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
     xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-	<url>
-		<loc>http://skorpionsat.com/board.php</loc>
-	</url>
-	<url>
-		<loc>http://skorpionsat.com/who.php</loc>
-	</url>
-	<url>
-		<loc>http://skorpionsat.com/play.php</loc>
-	</url>
-	<url>
-		<loc>http://skorpionsat.com/gallery.php</loc>
-	</url>
-	<url>
-		<loc>http://skorpionsat.com/forum/</loc>
-	</url>
+    <url>
+	    <loc>http://skorpionsat.com/who.php</loc>
+    </url>
+    <url>
+	    <loc>http://skorpionsat.com/play.php</loc>
+    </url>
+    <url>
+	    <loc>http://skorpionsat.com/gallery.php</loc>
+    </url>
+    <url>
+	    <loc>http://skorpionsat.com/forum/</loc>
+    </url>
 </urlset>

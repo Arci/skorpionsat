@@ -21,7 +21,7 @@ class PhotoController implements Controller{
         }
     }
 
-    private function compress($source, $quality) {
+    public function compress($source, $quality) {
         ini_set('memory_limit', '100M'); //imagecreatefrompng causes lot of memory usage
         $info = getimagesize($source);
         if ($info['mime'] == 'image/jpeg'){

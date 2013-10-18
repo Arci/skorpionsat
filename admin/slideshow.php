@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', true);
 
 require_once(dirname(__FILE__)."/common.php");
+require_once(dirname(__FILE__)."/../controller/photoController.php");
 define("ACTION_ADD", "Aggiungi");
 define("ACTION_DELETE", "Elimina foto selezionate");
 
@@ -26,7 +27,7 @@ function buildContent(){
                 default:
                     showForm();
             }
-        }else{   
+        }else{
             showForm();
         }
 	?>
@@ -72,13 +73,13 @@ function checkValidity($action, $data){
 	    } else {
 		for($i=0; $i < count($data["fileselect"]["name"]); $i++){
 		    if($data["fileselect"]["error"][$i] > 0){
-			$error[] = "Si &egrave verificato un'errore caricando il file <strong>".$data["fileselect"]["name"][$i]."</strong>"; 
+			$error[] = "Si &egrave verificato un'errore caricando il file <strong>".$data["fileselect"]["name"][$i]."</strong>";
 		    }
 		    if($data["fileselect"]["size"][$i] > MAX_BYTE){
 			$error[] = "Il file <strong>".$data["fileselect"]["name"][$i]."</strong> eccede le dimesioni massime (".MAX_BYTE." byte)";
 		    }
 		    if(!in_array($data["fileselect"]["type"][$i], $allowed_mime_types)){
-			$error[] = "Il file <strong>".$data["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")"; 
+			$error[] = "Il file <strong>".$data["fileselect"]["name"][$i]."</strong> non &egrave fra i tipi consentiti (\"png\", \"jpeg\", \"gif\")";
 		    }
 		}
 	    }
@@ -99,10 +100,13 @@ function performAction($action, $data){
     $error = array();
     if ($action == ACTION_ADD){
 	if (!(count($data["fileselect"]["name"]) == 1 && $data["fileselect"]["type"][0] == "")){
+	    $photoController = new PhotoController();
 	    for($i=0; $i < count($data["fileselect"]["name"]); $i++){
-		if (!move_uploaded_file($data["fileselect"]["tmp_name"][$i], SLIDESHOW_DIR.$data["fileselect"]["name"][$i])){
+		$photoPath = SLIDESHOW_DIR.$data["fileselect"]["name"][$i];
+		if (!move_uploaded_file($data["fileselect"]["tmp_name"][$i], $photoPath)){
 		    $error[] = "Si &egrave verificato un errore caricando la foto.";
 		}
+		$photoController->compress($photoPath, IMAGE_QUALITY);
 	    }
 	}
     } else if($action == ACTION_DELETE){
@@ -165,7 +169,7 @@ function getSlideshowImages(){
     $dirname = SLIDESHOW_DIR;
     if(file_exists($dirname)){
 	$handle = opendir($dirname);
-	while (false !== ($file = readdir($handle))) { 
+	while (false !== ($file = readdir($handle))) {
 	    if(is_file($dirname.$file)){
 		$ext = strtolower(substr($file, strrpos($file, "."), strlen($file)-strrpos($file, ".")));
 		if(in_array($ext,$extensions)){

@@ -5,7 +5,7 @@ ini_set('display_errors', true);
 
 require_once(dirname(__FILE__)."/../settings.php");
 require_once(dirname(__FILE__)."/filter.php");
-	
+
 function reverseDate($date){
     $dateArray = explode("/", $date);
     $reversedDate = $dateArray[2]."/".$dateArray[1]."/".$dateArray[0];
@@ -39,13 +39,13 @@ function getHead(){
 		<title>Skorpion S.A.T. - admin panel</title>
 
 		<link rel="shortcut icon" href= "<?php echo ADMIN_IMAGES_PATH."favicon.ico" ?>"/>
-		
+
 		<link rel="stylesheet" type="text/css" href="http://css-reset-sheet.googlecode.com/svn/reset.css" />
 		<link href='http://fonts.googleapis.com/css?family=Roboto:700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 		<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
 		<link href="<?php echo ADMIN_CSS_PATH."style.css" ?>" rel="stylesheet" type="text/css" media="screen" />
-		
+
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 		<script src="<?php echo ADMIN_JS_PATH."/jqueryui/jquery.ui.datepicker-it.js" ?>"></script>
@@ -78,7 +78,6 @@ function getHeader($pageName, $goodLogon){
                     <div id="menu">
 			<?php if($goodLogon == true){ ?>
                         <ul>
-				<li <?php if($pageName == "news") echo "class=\"active\""; ?>><a href='news.php'><span class="shadow">Gestisci notizie</span></a></li>
 				<li <?php if($pageName == "album") echo "class=\"active\""; ?>><a href='album.php'><span class="shadow">Gestisci album e foto</span></a></li>
 				<li <?php if($pageName == "slideshow") echo "class=\"active last\""; else echo "class=\"last\""; ?>><a href='slideshow.php'><span class="shadow">Gestisci slideshow</span></a></li>
 			</ul>
@@ -92,7 +91,7 @@ function getHeader($pageName, $goodLogon){
 
 function getFooter(){
 	?>
-	
+
 	<div id="footer">
 		<p>skorpionsat.com. &copy; 2013. Developed By <a href="http://www.linkedin.com/pub/fabio-arcidiacono/61/307/9a0">Arcidiacono Fabio</a>.
 		<div id="admin"><p><a href="<?php echo ROOT_PATH ?>">Torna al sito</a></p></div>

@@ -1,12 +1,31 @@
 <?php
 
-$path =dirname(__FILE__)."/../albums";
-echo "$path<br/><br/>";
-$imagesPath = array();
-$imagesPath = getImagesPath($path);
-foreach($imagesPath as $imagePath){
+require_once(dirname(__FILE__)."/../controller/photoController.php");
+require_once(dirname(__FILE__)."/../settings.php");
+
+$photoController = new PhotoController();
+
+echo "COMPRESS OF ALBUMS IMAGES<br/><br/>";
+$imagePathList = array();
+$imagePathList = getImagesPath(dirname(__FILE__)."/../albums");
+if($imagePathList == null){
+    echo "No images in albums<br/><br/>";
+}
+foreach($imagePathList as $imagePath){
     echo "compressing: " . $imagePath;
-    compress($imagePath, 75);
+    $photoController->compress($imagePath, IMAGE_QUALITY);
+    echo " ----- DONE!<br/>";
+}
+
+echo "<br/>COMPRESS OF SLIDESHOW IMAGES<br/><br/>";
+$imagePathList = array();
+$imagePathList = getImagesPath(dirname(__FILE__)."/../slideshow");
+if($imagePathList == null){
+    echo "No images in slideshow<br/><br/>";
+}
+foreach($imagePathList as $imagePath){
+    echo "compressing: " . $imagePath;
+    $photoController->compress($imagePath, IMAGE_QUALITY);
     echo " ----- DONE!<br/>";
 }
 echo "<br/><br/>EVERYTHING DONE!";
@@ -34,21 +53,6 @@ function getImagesPath($path){
         closedir($handle);
     }
     return $arrfiles;
-}
-
-function compress($source, $quality) {
-    ini_set('memory_limit', '100M'); //imagecreatefrompng causes lot of memory usage
-    $info = getimagesize($source);
-    if ($info['mime'] == 'image/jpeg'){
-        $image = imagecreatefromjpeg($source);
-    }
-    elseif ($info['mime'] == 'image/gif'){
-        $image = imagecreatefromgif($source);
-    }
-    elseif ($info['mime'] == 'image/png'){
-        $image = imagecreatefrompng($source);
-    }
-    imagejpeg($image, $source, $quality);
 }
 
 ?>

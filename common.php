@@ -34,10 +34,7 @@ function getHead($pageName,$description = null){
 	?>
 	<head>
 		<?php
-		if($pageName == "board"){
-			?><meta name="description" content="News dalla skorpion Soft Air Team - visualizza le ultime notizie riguardanti
-				la squadra, le ultime partite di softair e altro ancora!"><?php
-		} else if($pageName == "who"){
+		if($pageName == "who"){
 		     	?><meta name="description" content="Chi sono gli skorpion, perchè giocano a softiar, come sono nati" /><?php
 		} else if($pageName == "play"){
 			?><meta name="description" content="Contatti della skorpion Soft Air Team - cosa fare se vuoi giocare a softair
@@ -58,9 +55,7 @@ function getHead($pageName,$description = null){
 		<meta name="viewport" content="width=device-width, user-scalable=no"/>
 		<meta name="p:domain_verify" content="1c091f2df0df0b77826b0adde1615fc3" />
 		<?php
-		if($pageName == "board"){
-			?><title>News</title><?php
-		} else if($pageName == "who"){
+		if($pageName == "who"){
 			?><title>Chi Siamo</title><?php
 		} else if($pageName == "play"){
 			?><title>Gioca con noi</title><?php
@@ -124,12 +119,10 @@ function getHeader($pageName){
 		    </div>
                     <div id="menu">
                         <ul>
-                           <li <?php if($pageName == "board") echo "class=\"active\""; ?>><a href='board.php'><span class="shadow">News</span></a></li>
                            <li <?php if($pageName == "who") echo "class=\"active\""; ?>><a href='who.php'><span class="shadow">Chi siamo</span></a></li>
                            <li <?php if($pageName == "play") echo "class=\"active\""; ?>><a href='play.php'><span class="shadow">Gioca con noi</span></a></li>
-                           <li <?php if($pageName == "forum") echo "class=\"active\""; ?>><a href='<?php echo FORUM_PATH; ?>'><span class="shadow">Forum</span></a></li>
-                           <li <?php if($pageName == "gallery" || $pageName == "photogallery")
-                        		echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='gallery.php'><span class="shadow">Gallery</span></a>
+                           <li <?php if($pageName == "gallery" || $pageName == "photogallery") echo "class=\"active\""; ?>><a href='gallery.php'><span class="shadow">Gallery</span></a></li>
+                           <li <?php if($pageName == "forum") echo "class=\"active last\""; else echo "class=\"last\"" ?>><a href='<?php echo FORUM_PATH; ?>'><span class="shadow">Forum</span></a>
                            </li>
                         </ul>
                     </div>

@@ -8,16 +8,8 @@ class Database{
     const DB_NAME = DATABASE_NAME;
 
     //table
-    const TABLE_NEWS = "news";
     const TABLE_ALBUM = "album";
     const TABLE_PHOTO = "photo";
-
-    //tabella news
-    const NEWS_ID = "newsID";
-    const NEWS_TITLE = "title";
-    const NEWS_DATE = "date";
-    const NEWS_AUTHOR = "author";
-    const NEWS_CONTENT = "content";
 
     //table album
     const ALBUM_ID = "ID";
@@ -34,14 +26,6 @@ class Database{
 
     static function getStructure(){
         $q = array();
-	$q[] =  "CREATE TABLE `" . self::TABLE_NEWS . "` (
-                `" . self::NEWS_ID . "` bigint(20) NOT NULL AUTO_INCREMENT,
-                `" . self::NEWS_TITLE . "` varchar(100) NOT NULL,
-                `" . self::NEWS_DATE . "` varchar(10) NOT NULL,
-                `" . self::NEWS_AUTHOR . "` varchar(50) NOT NULL,
-                `" . self::NEWS_CONTENT . "` text NOT NULL,
-                PRIMARY KEY (`" . self::NEWS_ID . "`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1;";
 	$q[] =  "CREATE TABLE `" . self::TABLE_ALBUM . "` (
                 `" . self::ALBUM_ID . "` bigint(20) NOT NULL AUTO_INCREMENT,
                 `" . self::ALBUM_NAME . "` varchar(100) UNIQUE NOT NULL,

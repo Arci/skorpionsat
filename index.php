@@ -1,3 +1,3 @@
 <?php
-    header("location:board.php");
+    header("location:who.php");
 ?>
