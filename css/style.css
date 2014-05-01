@@ -282,6 +282,10 @@ div#album-image{
 	height: 50em;
 }
 
+a.image-link img{
+	width: 912px;
+}
+
 .description{
 	position: absolute;
 	top: 42em;
