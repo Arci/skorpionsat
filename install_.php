@@ -16,7 +16,7 @@ function buildContent(){
     echo "<table
         style='width: 100%; font-size: 1.1em; background-image: url(".IMAGES_PATH."background_05.png); margin: 0 auto; line-height: 3em;
         '><tr valign='top'>";
-    
+
     //creo il database (lo droppo se esiste)
     echo "<td style='border-right: 0.5em solid #000000; width: 230em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Installazione Database</u></b></span></p>";
@@ -31,7 +31,7 @@ function buildContent(){
     mysql_query("CREATE DATABASE " . Database::DB_NAME);
     echo "<p><span style='color:green'>DATABASE CREATED</span></p>";
     echo "</td>";
-    
+
     //elimino precedenti upload e log
     echo "<td style='border-right: 0.5em solid #000000; width: 280em; padding: 1.5em;'>";
     echo "<p><span style='color:blue'><b><u>Gestione File System</u></b></span></p>";
@@ -99,11 +99,11 @@ function buildContent(){
     }
     echo "<p><span style='color:green'>INSERTED TABLES</span></p>";
     echo "</td>";
-    
+
     echo "</tr></table>";
-    
+
     $logger = Logger::getLogger();
-    $logger->debug("Install::install", "INSTALLING APPLICATION"); 
+    $logger->debug("Install::install", "INSTALLING APPLICATION");
 }
 
 /*
@@ -135,7 +135,7 @@ function delfolderdeep($dirname){
     if (is_file($dirname) || is_link($dirname)) {
         return unlink($dirname);
     }
-    
+
     $dir = dir($dirname);
     while (false !== $entry = $dir->read()) {
         // Skip pointers
@@ -144,7 +144,7 @@ function delfolderdeep($dirname){
         }
         delfolderdeep($dirname . DIRECTORY_SEPARATOR . $entry);
     }
- 
+
     $dir->close();
     return rmdir($dirname);
 }

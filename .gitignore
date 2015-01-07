@@ -1,11 +1,11 @@
 # System Files #
 *.DS_Store
-# Sublime Text 2 Files #
-*.sublime-*
-# Komodo Edit Files #
-*.komodoproject
-# Projects Directories #
+
+# Projects Media Directories #
 documents/*
 slideshow/*
 albums/*
 log/*
+
+# Google verification #
+google504d1162e0332f7f.html

@@ -20,7 +20,7 @@ if(DEPLOY){
     define("FORUM_PATH", ROOT_PATH."/forum/");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }else{
-    define("ROOT_PATH", "/Skorpionsat/site");
+    define("ROOT_PATH", "/Personals/Skorpionsat/site");
     define("FORUM_PATH", "#");
     define("ADMIN_PATH", ROOT_PATH."/admin");
 }
@@ -50,4 +50,4 @@ define("ALBUMS_DIR", DOCUMENT_ROOT."/albums/");
 
 //Miscellaneous
 define("MAX_BYTE", 10000000);
-define("IMAGE_QUALITY", 75);
+define("IMAGE_QUALITY", 70);
