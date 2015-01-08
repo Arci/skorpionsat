@@ -133,15 +133,15 @@ function buildContent(){
                 </div>
                 <!--<div>
                   <img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />
-                  333 8130339 (Presidente)
+                  <a href="tel:3338130339">333 8130339 (Presidente)</a>
                 </div>-->
                 <div>
                   <img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />
-                  347 0079938 (PR)
+                  <a href="tel:3470079938">347 0079938 (PR)</a>
                 </div>
                 <div>
                   <img src="<?php echo IMAGES_PATH."phone.png"?>" class="phone-thumbnail" />
-                  340 7259854 (Noleggi)
+                  <a href="tel:3407259854">340 7259854 (Noleggi)</a>
                 </div>
             </div>
         </div>
