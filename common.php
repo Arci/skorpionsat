@@ -26,6 +26,18 @@ function buildBottomPage(){
 	closeHtml();
 }
 
+function buildErrorPage($errorMessage){
+	buildTopPage("Ops!", "");
+	?>
+    	<div id="content">
+            <?php
+            	echo "<p class=\"normalized-error\">".$errorMessage."</p>";
+            ?>
+    	</div>
+    	<?php
+	buildBottomPage();
+}
+
 function openHtml(){
 	?> <html xmlns="http://www.w3.org/1999/xhtml"> <?php
 }

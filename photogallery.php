@@ -7,13 +7,18 @@ require_once(dirname(__FILE__)."/common.php");
 require_once(DOCUMENT_ROOT."/controller/albumController.php");
 require_once(DOCUMENT_ROOT."/controller/photoController.php");
 
-$albumControlelr = new AlbumController();
-$album = $albumControlelr->loadByID(intval($_GET["id"]));
-buildTopPage("photogallery", $album->getDescription());
+try{
+	$albumControlelr = new AlbumController();
+	$album = $albumControlelr->loadByID(intval($_GET["id"]));
 
-buildContent();
+	buildTopPage("photogallery", $album->getDescription());
 
-buildBottomPage();
+	buildContent();
+
+	buildBottomPage();
+}catch(Exception $e){
+	buildErrorPage($e->getMessage());
+}
 
 function buildContent(){
     ?>
