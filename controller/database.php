@@ -55,7 +55,7 @@ class DbConnection {
 
     public static function getConnection() {
         if(is_null(self::$conn)) {
-            $conn = mysql_connect(DB_HOSTNAME,DB_USERNAME,DB_PASSWORD);
+            $conn = @mysql_connect(DB_HOSTNAME,DB_USERNAME,DB_PASSWORD);
             mysql_select_db(Database::DB_NAME);
             if (!$conn) {
                 die('Could not connect: ' . mysql_error());
