@@ -31,9 +31,6 @@ function buildContent(){
                     in contatto con il responsabile noleggi (Marco alias Freaky) necessariamente almeno 15/10 giorni prima della data fissata,
                     chiamando il numero presente in basso a destra su questa pagina.
                 </p>
-                <p class="break-line"/>
-                    <br/>
-                </p>
                 <p class="text-paragraph">
                     Se invece di una telefonata preferite conoscerci di persona, saremo ben
                     lieti di rendervi partecipi durante le nostre riunioni che si svolgono il mercoled&igrave; sera alle
